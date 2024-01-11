@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\region\WilayahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::middleware([
+    config('jetstream.auth_session'),
+])->group(function () {
+    Route::get('/provinsi', [WilayahController::class, 'getProvinsi']);
+    Route::get('/kota/{provinsi_id}', [WilayahController::class, 'getKota']);
+    Route::get('/kecamatan/{kota_id}', [WilayahController::class, 'getKecamatan']);
+    Route::get('/desa/{kecamatan_id}', [WilayahController::class, 'getDesa']);
 });
