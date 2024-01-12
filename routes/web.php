@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RouteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,5 +23,10 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('user.test');
-    });
+    })->name('dashboard');
+
+    Route::get('/setting/dprd-madiun-kab', [RouteController::class, 'settingDPRD'])->name('setting-dprd-madiunkab');
+    
+
+
 });

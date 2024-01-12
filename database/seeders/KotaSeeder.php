@@ -15,9 +15,12 @@ class KotaSeeder extends Seeder
     {
         $csvFile = database_path('seeders/Data/kota.csv');
         $csv = array_map('str_getcsv', file($csvFile));
-
+        $i = 0;
         foreach ($csv as $row) {
-            echo "Insert kota $row[2]\n";
+            $i++;
+            $persen = ceil($i / count($csv) * 100);
+            echo "  Insert kota [$persen%]\r";
+            
             DB::table('kotas')->insert([
                 'id' => $row[0],
                 'provinsi_id' => $row[1],

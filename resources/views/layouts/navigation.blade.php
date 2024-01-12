@@ -150,7 +150,7 @@
                         class="flex items-center px-4 py-5 border-x border-gray-50 bg-gray-50/30 dropdown-toggle dark:bg-zinc-700 dark:border-zinc-600 dark:text-gray-100"
                         id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="true">
-                        <img class="h-8 w-8 rounded-full ltr:xl:mr-2 rtl:xl:ml-2" src="assets/images/users/avatar-1.jpg"
+<img class="h-8 w-8 rounded-full ltr:xl:mr-2 rtl:xl:ml-2" src="{{ url('assets/images/users/avatar-1.jpg') }}"
                             alt="Header Avatar">
 <span class="fw-medium hidden xl:block">{{ Auth::user()->name }}</span>
                         <i class="mdi mdi-chevron-down align-bottom hidden xl:block"></i>
@@ -196,8 +196,8 @@
                     Menu</li>
 
                 <li>
-                    <a href="{{ url('/') }}"
-                        class="pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+<a href="{{ route('dashboard') }}"
+    class="pl-6 pr-4 py-3 block text-sm font-medium @if(Route::currentRouteName() == 'dashboard') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500  dark:active:text-white dark:hover:text-white">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard"> Dashboard</span>
                     </a>
@@ -205,101 +205,16 @@
 
                 <li>
                     <a href="javascript: void(0);" aria-expanded="false"
-                        class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 dark:text-gray-300 transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
                         <i data-feather="grid"></i>
-                        <span data-key="t-apps"> Apps</span>
+<span data-key="t-apps"> DPRD</span>
                     </a>
                     <ul>
                         <li>
-                            <a href="app-calendar.html"
-                                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Calendar</a>
-                        </li>
-                        <li>
-                            <a href="app-chat.html"
-                                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Chat</a>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" aria-expanded="false"
-                                class="nav-menu pl-14 pr-4 py-2 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
-                                <span data-key="t-apps">Email</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="apps-email-inbox.html"
-                                        class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Inbox</a>
-                                </li>
-                                <li>
-                                    <a href="apps-email-read.html"
-                                        class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Read
-                                        Email</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" aria-expanded="false"
-                                class="nav-menu pl-14 pr-4 py-2 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
-                                <span data-key="t-apps">Invoices</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="apps-invoices-list.html"
-                                        class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Invoice
-                                        List</a>
-                                </li>
-                                <li>
-                                    <a href="apps-invoices-detail.html"
-                                        class="pl-14 pr-4  py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Invoice
-                                        Detail</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" aria-expanded="false"
-                                class="nav-menu pl-14 pr-4 py-2 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
-                                <span data-key="t-apps">Contacts</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="apps-contacts-grid.html"
-                                        class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">User
-                                        Grid</a>
-                                </li>
-                                <li>
-                                    <a href="apps-contacts-list.html"
-                                        class="pl-14 pr-4  py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">User
-                                        List</a>
-                                </li>
-                                <li>
-                                    <a href="apps-contacts-profile.html"
-                                        class="pl-14 pr-4  py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Profile</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" aria-expanded="false"
-                                class="flex items-center justify-between pl-14 pr-4 py-2  text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
-                                <span data-key="t-apps">Blog</span>
-                                <span
-                                    class="badge px-2 py-0.5 bg-red-100 text-xs rounded-full font-medium text-red-400 text-end">New</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="apps-blog-grid.html"
-                                        class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Blog
-                                        Grid</a>
-                                </li>
-                                <li>
-                                    <a href="apps-blog-list.html"
-                                        class="pl-14 pr-4  py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Blog
-                                        List</a>
-                                </li>
-                                <li>
-                                    <a href="apps-blog-detail.html"
-                                        class="pl-14 pr-4  py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">Blog
-                                        Details</a>
-                                </li>
-                            </ul>
+<a href="{{ route('setting-dprd-madiunkab') }}"
+    class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if(Route::currentRouteName() == 'setting-dprd-madiunkab') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
+    Setting Dapil
+</a>
                         </li>
                     </ul>
                 </li>

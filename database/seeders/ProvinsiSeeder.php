@@ -15,9 +15,11 @@ class ProvinsiSeeder extends Seeder
     {
         $csvFile = database_path('seeders/Data/provinsi.csv');
         $csv = array_map('str_getcsv', file($csvFile));
-
+        $i = 0;
         foreach ($csv as $row) {
-            echo "Insert Provinsi $row[1]\n";
+            $i++;
+            $persen = ceil($i / count($csv) * 100);
+            echo "  Insert provinsi [$persen%]\r";
             DB::table('provinsis')->insert([
                 'id' => $row[0],
                 'nama' => $row[1],

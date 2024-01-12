@@ -14,9 +14,12 @@
 
                 <div class="grid grid-cols-1 mb-5">
                     <div class="flex items-center justify-between">
-                        @yield('content')
-                    </div>
-                </div>
+@yield('page')
+</div>
+</div>
+<div class="grid grid-cols-1">
+@yield('content')
+</div>
                 @include('layouts.footer')
             </div>
         </div>
@@ -26,12 +29,11 @@
     @livewireScripts
     <x-toaster-hub />
     @yield('js')
-    <script src="assets/libs/@popperjs/core/umd/popper.min.js"></script>
-    <script src="assets/libs/feather-icons/feather.min.js"></script>
-    <script src="assets/libs/metismenujs/metismenujs.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/feather-icons/feather.min.js"></script>
-    <script src="assets/js/app.js"></script>
+<script src="{{ url('assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
+<script src="{{ url('assets/libs/feather-icons/feather.min.js') }}"></script>
+<script src="{{ url('assets/libs/metismenujs/metismenujs.min.js') }}"></script>
+<script src="{{ url('assets/libs/simplebar/simplebar.min.js') }}"></script>
+<script src="{{ url('assets/js/app.js') }}"></script>
 </body>
 
 </html>

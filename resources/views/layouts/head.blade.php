@@ -6,10 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico" />
+<link rel="shortcut icon" href="{{ url('assets/images/favicon.ico') }}" />
 
-<link rel="stylesheet" href="assets/css/icons.css" />
-<link rel="stylesheet" href="assets/css/tailwind.css" />
+<link rel="stylesheet" href="{{ url('assets/css/icons.css') }}" />
+<link rel="stylesheet" href="{{ url('assets/css/tailwind.css') }}" />
 @yield('css')
 
 <!-- Scripts -->

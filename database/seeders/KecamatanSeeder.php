@@ -17,8 +17,12 @@ class KecamatanSeeder extends Seeder
         $csvFile = database_path('seeders/Data/kecamatan.csv');
         $csv = array_map('str_getcsv', file($csvFile));
 
+        $i = 0;
         foreach ($csv as $row) {
-            echo "Insert kecamatan $row[2]\n";
+            $i++;
+            $persen = ceil($i / count($csv) * 100);
+            echo "  Insert kecamatan [$persen%]\r";
+            
             DB::table('kecamatans')->insert([
                 'id' => $row[0],
                 'kota_id' => $row[1],

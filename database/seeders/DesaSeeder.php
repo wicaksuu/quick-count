@@ -16,9 +16,11 @@ class DesaSeeder extends Seeder
 
         $csvFile = database_path('seeders/Data/desa.csv');
         $csv = array_map('str_getcsv', file($csvFile));
-
+        $i = 0;
         foreach ($csv as $row) {
-            echo "Insert desa $row[2]\n";
+            $i++;
+            $persen = ceil($i / count($csv) * 100);
+            echo "  Insert desa [$persen%]\r";
             DB::table('desas')->insert([
                 'id' => $row[0],
                 'kecamatan_id' => $row[1],

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kecamatans', function (Blueprint $table) {
+        Schema::create('dapil_d_p_r_provs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kota_id');
-            $table->unsignedBigInteger('dapil_id')->nullable();
-            $table->foreign('kota_id')->references('id')->on('kotas');
             $table->string('nama');
+            $table->integer('kursi')->default(0);
+            $table->unsignedBigInteger('kota_id');
+            $table->foreign('kota_id')->references('id')->on('kotas');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kecamatans');
+        Schema::dropIfExists('dapil_d_p_r_provs');
     }
 };
