@@ -35,14 +35,15 @@ class KecamatanSeeder extends Seeder
             $i++;
             $persen = ceil($i / count($csv) * 100);
             echo "  Insert kecamatan [$persen%]\r";
-
-            DB::table('kecamatans')->insert([
+            $upload =[
                 'id' => $row[0],
                 'kota_id' => $row[1],
                 'nama' => $this->capitalizeAfterSpace($row[2]),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+            ];
         }
+
+        DB::table('kecamatans')->insert($upload);
     }
 }

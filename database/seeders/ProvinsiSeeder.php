@@ -34,12 +34,14 @@ class ProvinsiSeeder extends Seeder
             $i++;
             $persen = ceil($i / count($csv) * 100);
             echo "  Insert provinsi [$persen%]\r";
-            DB::table('provinsis')->insert([
+            $upload = [
                 'id' => $row[0],
                 'nama' => $this->capitalizeAfterSpace($row[1]),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+            ];
         }
+
+        DB::table('provinsis')->insert($upload);
     }
 }

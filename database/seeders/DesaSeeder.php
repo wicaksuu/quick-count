@@ -34,13 +34,15 @@ class DesaSeeder extends Seeder
             $i++;
             $persen = ceil($i / count($csv) * 100);
             echo "  Insert desa [$persen%]\r";
-            DB::table('desas')->insert([
+            $upload_desa[]=[
                 'id' => $row[0],
                 'kecamatan_id' => $row[1],
                 'nama' => $this->capitalizeAfterSpace($row[2]),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+            ];
         }
+        DB::table('desas')->insert($upload_desa);
+
     }
 }
