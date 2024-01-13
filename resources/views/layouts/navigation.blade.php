@@ -219,8 +219,39 @@ class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 dark:text
                     </ul>
                 </li>
 
+{{-- genereal setting --}}
+<li>
+    <a href="javascript: void(0);" aria-expanded="false"
+        class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+        <i class="mdi mdi-database-settings-outline"></i>
+        <span data-key="t-auth">General Setting</span>
+    </a>
+    <ul class="mm-collapse">
+        <li>
+            <a href="{{ route('dashboard') }}"
+                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if(Route::currentRouteName() == 'dashboard') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
+                Setting
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('setting-tps') }}"
+                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if(Route::currentRouteName() == 'setting-tps') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
+                Setting TPS
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('setting-partai') }}"
+                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if(Route::currentRouteName() == 'setting-partai') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
+                Setting Partai
+            </a>
+        </li>
+    </ul>
+</li>
+{{-- end general setting --}}
             </ul>
+
         </div>
+
         <!-- Sidebar -->
     </div>
 </div>

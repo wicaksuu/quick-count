@@ -10,4 +10,13 @@ class RouteController extends Controller
     {
         return view('admin.dprd.setting');
     }
+
+    public function settingTps()
+    {
+        return view('admin.setting.tps');
+    }
+    public function settingPartai()
+    {
+        return view('admin.setting.partai');
+    }
 }

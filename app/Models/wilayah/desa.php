@@ -2,6 +2,7 @@
 
 namespace App\Models\wilayah;
 
+use App\Models\tps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,5 +15,20 @@ class desa extends Model
     public function kecamatan()
     {
         return $this->belongsTo(kecamatan::class);
+    }
+
+    public function kota()
+    {
+        return $this->kecamatan->belongsTo(kota::class);
+    }
+
+    public function provinsi()
+    {
+        return $this->kecamatan->kota->belongsTo(provinsi::class);
+    }
+
+    public function tpss()
+    {
+        return $this->hasMany(tps::class);
     }
 }

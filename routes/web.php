@@ -22,11 +22,13 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('user.test');
+        return view('dashboard');
     })->name('dashboard');
 
     Route::get('/setting/dprd-madiun-kab', [RouteController::class, 'settingDPRD'])->name('setting-dprd-madiunkab');
-    
+    Route::get('/setting/tps', [RouteController::class, 'settingTps'])->name('setting-tps');
+    Route::get('/setting/partai', [RouteController::class, 'settingPartai'])->name('setting-partai');
+
 
 
 });

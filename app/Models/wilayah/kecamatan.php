@@ -22,6 +22,11 @@ class kecamatan extends Model
         return $this->belongsTo(kota::class);
     }
 
+    public function provinsi()
+    {
+        return $this->kota->belongsTo(provinsi::class);
+    }
+
     public function desas()
     {
         return $this->hasMany(desa::class);
