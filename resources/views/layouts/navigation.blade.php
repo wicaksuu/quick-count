@@ -7,7 +7,7 @@
             <div
                 class="navbar-brand flex items-center justify-between shrink px-5 h-[70px] border-r bg-slate-50 border-r-gray-50 dark:border-zinc-700 dark:bg-zinc-800">
                 <a href="#" class="flex items-center text-lg font-bold dark:text-white">
-                    <img src="assets/images/logo-sm.svg" alt="" class="inline-block h-6 mt-1 ltr:mr-2 rtl:ml-2" />
+                    <img src="{{ url('assets/images/logo-sm.svg') }}" alt="" class="inline-block h-6 mt-1 ltr:mr-2 rtl:ml-2" />
                     <span class="hidden align-middle xl:block">Wicaksu</span>
                 </a>
             </div>
@@ -53,7 +53,7 @@
                                     <a href="#!" class="text-reset notification-item">
                                         <div class="flex px-4 py-2 hover:bg-gray-50/50 dark:hover:bg-zinc-700/50">
                                             <div class="flex-shrink-0 ltr:mr-3 rtl:ml-3">
-                                                <img src="assets/images/users/avatar-3.jpg" class="w-8 h-8 rounded-full"
+                                                <img src="{{ url('assets/images/users/avatar-3.jpg') }}" class="w-8 h-8 rounded-full"
                                                     alt="user-pic">
                                             </div>
                                             <div class="flex-grow">
@@ -114,7 +114,7 @@
                                     <a href="#!" class="text-reset notification-item">
                                         <div class="flex px-4 py-2 hover:bg-gray-50/50 dark:hover:bg-zinc-700/50">
                                             <div class="flex-shrink-0 ltr:mr-3 rtl:ml-3">
-                                                <img src="assets/images/users/avatar-6.jpg" class="w-8 h-8 rounded-full"
+                                                <img src="{{url('assets/images/users/avatar-6.jpg')}}" class="w-8 h-8 rounded-full"
                                                     alt="user-pic">
                                             </div>
                                             <div class="flex-grow">
@@ -247,8 +247,8 @@
                     </a>
                     <ul class="mm-collapse">
                         <li>
-                            <a href="{{ route('dashboard') }}"
-                                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if (Route::currentRouteName() == 'dashboard') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
+                            <a href="{{ route('setting-global') }}"
+                                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if (Route::currentRouteName() == 'setting-global') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
                                 Setting
                             </a>
                         </li>

@@ -26,4 +26,9 @@ class RouteController extends Controller
         return view('admin.dprd.calon-partai',['partai' => $partai, 'type'=>'DPRD']);
 
     }
+
+    public function settingGlobal()
+    {
+        return view('admin.setting.global');
+    }
 }

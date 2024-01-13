@@ -31,6 +31,7 @@ Route::middleware([
 
     Route::get('/setting/calon/dprd/{id}', [RouteController::class, 'settingCalonDPRD'])->name('setting-calon-dprd');
 
+    Route::get('/setting/global',[RouteController::class, 'settingGlobal'])->name('setting-global');
 
 
 });

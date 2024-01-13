@@ -82,7 +82,7 @@
 
     <x-slot name="content">
         <div class="fallback">
-            <input type="file" wire:model="logo" wire:loading.attr="disabled">
+            <input type="file" wire:model="logo" class='w-full' wire:loading.attr="disabled">
         </div>
 
         @error('logo')@php Toaster::error($message); $logo = null; @endphp @enderror
@@ -94,7 +94,7 @@
                 @if ($tmp)
                     <img class="w-auto h-20 rounded rtl:ml-3" src="{{ asset('storage/' . $tmp) }}" alt="">
                 @endif
-                <div class="dark:text-white">
+                <div class="dark:text-white w-full">
                     <div class="font-medium text-gray-700 text-17 dark:text-gray-100">
                         Nama Partai
                     </div>

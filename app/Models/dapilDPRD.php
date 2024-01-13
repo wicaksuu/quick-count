@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\wilayah\desa;
 use App\Models\wilayah\kecamatan;
 use App\Models\wilayah\kota;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,18 @@ class dapilDPRD extends Model
     {
         return $this->hasMany(kecamatan::class, 'dapil_id');
     }
+
+    public function desa()
+    {
+        return $this->hasManyThrough(desa::class, kecamatan::class, 'dapil_id', 'kecamatan_id', 'id', 'id');
+    }
+    public function daftarTps()
+    {
+        return $this->hasManyThrough(desa::class, kecamatan::class, 'dapil_id', 'kecamatan_id', 'id', 'id')
+            ->with('tpss');
+    }
+
+
     public function kota()
     {
         return $this->belongsTo(kota::class);

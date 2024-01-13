@@ -79,7 +79,7 @@ class TabelDapil extends Component
 
     public function refresh()
     {
-        $this->results = kecamatan::where('nama', 'like', '%' . $this->query . '%')->where('kota_id', 3519)->with('kota')->first();
+        $this->results = kecamatan::where('nama', 'like', '%' . $this->query . '%')->with('kota')->first();
     }
 
 
@@ -87,7 +87,6 @@ class TabelDapil extends Component
     {
         if ($this->isDapilEdit) {
             try {
-
                 DB::beginTransaction();
                 kecamatan::whereIn('id', array_column($this->kecamatanDump, 'id'))
                     ->update(['dapil_id' => null]);
@@ -114,10 +113,11 @@ class TabelDapil extends Component
 
                 foreach ($this->kecamatan as $value) {
                     $kota_id = $value['kota_id'];
+                    $kota= $value['kota'];
                 }
 
                 $dapil = dapilDPRD::create([
-                    'nama' => $this->nama,
+                    'nama' => $this->nama.' '.$kota,
                     'kursi' => $this->kursi,
                     'kota_id' => $kota_id
                 ]);

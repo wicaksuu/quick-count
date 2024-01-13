@@ -6,7 +6,7 @@ Halaman Test Stater
 
 @section('page')
 <h4 class="mb-sm-0 text-lg font-semibold grow text-gray-800 dark:text-gray-100">
-    Setting Dapil DPRD Madiun Kab.
+    Setting Dapil DPRD
 </h4>
 <nav class="flex" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 ltr:md:space-x-3 rtl:md:space-x-0">
