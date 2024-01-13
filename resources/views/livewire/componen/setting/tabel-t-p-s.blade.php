@@ -55,7 +55,7 @@
             </thead>
             <tbody>
                 @foreach ($data as $datas)
-                    <tr class="text-gray-600 border-b border-gray-50 dark:border-zinc-600">
+                    <tr class="text-gray-600 @if (count($datas->tpss)==0) bg-red-50 @endif border-b border-gray-50 dark:border-zinc-600">
                         <td class="p-4 dark:text-zinc-50">
                             {{ $datas->kota->nama }}
                         </td>
@@ -66,7 +66,7 @@
                             {{ $datas->nama }}
                         </td>
                         <td class="p-4 dark:text-zinc-50">
-                            {{ count($datas->tpss) }}
+                            <span class=" px-1.5 @if (count($datas->tpss)==0) bg-red-500 @else bg-green-500 @endif text-white font-bold rounded-full">{{ count($datas->tpss) }}</span>
                         </td>
                         <td>
                             <div class="flex">
