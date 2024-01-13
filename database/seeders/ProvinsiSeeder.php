@@ -34,7 +34,7 @@ class ProvinsiSeeder extends Seeder
             $i++;
             $persen = ceil($i / count($csv) * 100);
             echo "  Insert provinsi [$persen%]\r";
-            $upload = [
+            $upload[] = [
                 'id' => $row[0],
                 'nama' => $this->capitalizeAfterSpace($row[1]),
                 'created_at' => now(),

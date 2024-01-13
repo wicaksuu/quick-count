@@ -33,14 +33,14 @@ class KotaSeeder extends Seeder
             $i++;
             $persen = ceil($i / count($csv) * 100);
             echo "  Insert kota [$persen%]\r";
-            $upload =[
+
+            DB::table('kotas')->insert([
                 'id' => $row[0],
-                'kota_id' => $row[1],
+                'provinsi_id' => $row[1],
                 'nama' => $this->capitalizeAfterSpace($row[2]),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ];
+            ]);
         }
-        DB::table('kotas')->insert($upload);
     }
 }

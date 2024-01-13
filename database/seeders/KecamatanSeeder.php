@@ -35,7 +35,7 @@ class KecamatanSeeder extends Seeder
             $i++;
             $persen = ceil($i / count($csv) * 100);
             echo "  Insert kecamatan [$persen%]\r";
-            $upload =[
+            $upload[] =[
                 'id' => $row[0],
                 'kota_id' => $row[1],
                 'nama' => $this->capitalizeAfterSpace($row[2]),
