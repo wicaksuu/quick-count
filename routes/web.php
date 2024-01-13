@@ -29,6 +29,8 @@ Route::middleware([
     Route::get('/setting/tps', [RouteController::class, 'settingTps'])->name('setting-tps');
     Route::get('/setting/partai', [RouteController::class, 'settingPartai'])->name('setting-partai');
 
+    Route::get('/setting/calon/dprd/{id}', [RouteController::class, 'settingCalonDPRD'])->name('setting-calon-dprd');
+
 
 
 });

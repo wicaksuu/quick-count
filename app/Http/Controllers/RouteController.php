@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarPartai;
 use Illuminate\Http\Request;
 
 class RouteController extends Controller
@@ -18,5 +19,11 @@ class RouteController extends Controller
     public function settingPartai()
     {
         return view('admin.setting.partai');
+    }
+    public function settingCalonDPRD($id)
+    {
+        $partai = DaftarPartai::find($id);
+        return view('admin.dprd.calon-partai',['partai' => $partai, 'type'=>'DPRD']);
+
     }
 }
