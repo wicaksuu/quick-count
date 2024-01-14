@@ -14,12 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/', function(){
+    return view('auth.login');
+});
+Route::get('/halaman-error', function(){
+    return back();
+})->name('halaman-error');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'role:jj',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
