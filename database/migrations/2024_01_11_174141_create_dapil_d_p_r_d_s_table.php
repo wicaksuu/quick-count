@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dapil_d_p_r_d_s', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->string('nama');
             $table->integer('kursi')->default(0);
             $table->unsignedBigInteger('kota_id');
             $table->foreign('kota_id')->references('id')->on('kotas');
+            $table->string('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

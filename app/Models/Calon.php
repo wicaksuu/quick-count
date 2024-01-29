@@ -5,13 +5,15 @@ namespace App\Models;
 use App\Models\wilayah\kecamatan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Calon extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUlids;
     protected $fillable = [
         'nama',
         'key',
+        'type',
         'foto',
         'suara',
         'tps_id',

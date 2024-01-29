@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,18 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(2500)->create();
 
         \App\Models\User::factory()->create([
             'name' => 'wicaksu',
             'email' => 'wicak@wicak.id',
             'role' => 'admin',
-            'password' => bcrypt('Jack03061997')
-        ]);
-        \App\Models\User::factory()->create([
-            'name' => 'user',
-            'email' => 'user@wicak.id',
-            'role' => 'user',
+            'is_dumy'=> false,
             'password' => bcrypt('Jack03061997')
         ]);
 
@@ -32,7 +29,9 @@ class DatabaseSeeder extends Seeder
             ProvinsiSeeder::class,
             KotaSeeder::class,
             KecamatanSeeder::class,
-            DesaSeeder::class
+            DesaSeeder::class,
+            PemiluSeeder::class,
         ]);
+
     }
 }

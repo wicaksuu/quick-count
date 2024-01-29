@@ -8,13 +8,15 @@ use App\Models\wilayah\kota;
 use App\Models\wilayah\provinsi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class tps extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUlids;
     protected $fillable = [
         'nama',
         'desa_id',
+        "user_id"
     ];
 
     public function desa()
@@ -35,5 +37,9 @@ class tps extends Model
     public function provinsi()
     {
         return $this->desa->kecamatan->kota->belongsTo(provinsi::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

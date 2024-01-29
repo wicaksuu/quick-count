@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kecamatans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('kota_id');
-            $table->unsignedBigInteger('dapil_id')->nullable();
+            $table->string('dapil_id')->nullable();
             $table->foreign('kota_id')->references('id')->on('kotas');
             $table->string('nama');
             $table->timestamps();

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserPasswords;
+use Masmerise\Toaster\Toaster;
 
 class UpdateUserPassword implements UpdatesUserPasswords
 {
@@ -25,8 +26,16 @@ class UpdateUserPassword implements UpdatesUserPasswords
             'current_password.current_password' => __('The provided password does not match your current password.'),
         ])->validateWithBag('updatePassword');
 
-        $user->forceFill([
-            'password' => Hash::make($input['password']),
-        ])->save();
+            if ($user->is_dumy == true) {
+                $user->forceFill([
+                    'password' => Hash::make($input['password']),
+                    'is_dumy' => false,
+                    'password_dumy' =>null
+                ])->save();
+            }else {
+                $user->forceFill([
+                    'password' => Hash::make($input['password']),
+                ])->save();
+            }
     }
 }

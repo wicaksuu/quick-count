@@ -33,7 +33,7 @@ class KecamatanSeeder extends Seeder
         $i = 0;
         foreach ($csv as $row) {
             $i++;
-            $persen = ceil($i / count($csv) * 100);
+            $persen = round($i / count($csv) * 100,2);
             echo "  Insert kecamatan [$persen%]\r";
             $upload[] =[
                 'id' => $row[0],

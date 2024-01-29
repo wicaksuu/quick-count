@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DaftarPartai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class RouteController extends Controller
 {
@@ -20,11 +21,37 @@ class RouteController extends Controller
     {
         return view('admin.setting.partai');
     }
-    public function settingCalonDPRD($id)
-    {
-        $partai = DaftarPartai::find($id);
-        return view('admin.dprd.calon-partai',['partai' => $partai, 'type'=>'DPRD']);
 
+    public function settingCalon($id)
+    {
+        switch (Route::currentRouteName()) {
+            case 'setting-calon-presiden':
+                $data = 'Presiden';
+                break;
+            case 'setting-calon-dpr-ri':
+                $data = 'DPR RI';
+                break;
+            case 'setting-calon-dpd-ri':
+                $data = 'DPD RI';
+                break;
+            case 'setting-calon-dprd-provinsi':
+                $data = 'DPRD Provinsi';
+                break;
+            case 'setting-calon-dprd':
+                $data = 'DPRD Daerah';
+                break;
+            case 'setting-calon-gubernur':
+                $data = 'Gubernur';
+                break;
+            case 'setting-calon-bupati':
+                $data = 'Bupati';
+                break;
+            case 'setting-calon-walikota':
+                $data = 'Walikota';
+                break;
+        }
+        $partai = DaftarPartai::find($id);
+        return view('admin.dprd.calon-partai', ['partai' => $partai, 'type' => $data]);
     }
 
     public function settingGlobal()

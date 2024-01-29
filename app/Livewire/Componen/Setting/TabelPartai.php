@@ -19,6 +19,7 @@ class TabelPartai extends Component
 
     public function load()
     {
+        $this->dispatch('partai-edit');
         $this->data=DaftarPartai::get();
     }
 

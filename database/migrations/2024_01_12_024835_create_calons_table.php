@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('calons', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->string('nama');
             $table->string('key');
             $table->string('tahun');
+            $table->string('type');
             $table->string('foto', 2048)->nullable();
-            $table->unsignedBigInteger('tps_id')->nullable();
-            $table->unsignedBigInteger('partai_id')->nullable();
-            $table->unsignedBigInteger('dapil_id')->nullable();
+            $table->string('tps_id')->nullable();
+            $table->string('partai_id')->nullable();
+            $table->string('dapil_id')->nullable();
             $table->integer('suara')->default(0);
             $table->boolean('is_active')->default(true);
 

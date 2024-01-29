@@ -26,23 +26,35 @@ class DesaSeeder extends Seeder
     }
     public function run(): void
     {
-
         $csvFile = database_path('seeders/Data/desa.csv');
         $csv = array_map('str_getcsv', file($csvFile));
-        $i = 0;
-        foreach ($csv as $row) {
-            $i++;
-            $persen = ceil($i / count($csv) * 100);
-            echo "  Insert desa [$persen%]\r";
-            $upload_desa=[
-                'id' => $row[0],
-                'kecamatan_id' => $row[1],
-                'nama' => $this->capitalizeAfterSpace($row[2]),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+        $chunkSize = 5000;
+        $chunks = array_chunk($csv, $chunkSize);
+
+        $totalChunks = count($chunks);
+        $currentChunk = 0;
+
+        foreach ($chunks as $chunk) {
+            $currentChunk++;
+
+            $upload_desa = [];
+
+            foreach ($chunk as $row) {
+                $upload_desa[] = [
+                    'id' => $row[0],
+                    'kecamatan_id' => $row[1],
+                    'nama' => $this->capitalizeAfterSpace($row[2]),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
             DB::table('desas')->insert($upload_desa);
+            $percentage = ($currentChunk / $totalChunks) * 100;
+            $this->command->getOutput()->write("  Insert desa [" . round($percentage, 2) . "]%"."\r");
         }
 
+
     }
+
 }

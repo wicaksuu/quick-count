@@ -64,14 +64,14 @@
                             <td>
                                 <div class="flex">
                                     <div class="m-1">
-                                        <button wire:click="openModal({{ $datas->id }})" wire:loading.attr="disabled"
+                                        <button wire:click="openModal('{{ $datas->id }}')" wire:loading.attr="disabled"
                                             type="button" class="px-3 text-white bg-green-600 border-0 btn">
                                             <i class="block text-sm mdi mdi-pencil">
                                             </i>
                                         </button>
                                     </div>
                                     <div class="m-1">
-                                        <button wire:click="openDell({{ $datas->id }})" wire:loading.attr="disabled"
+                                        <button wire:click="openDell('{{ $datas->id }}')" wire:loading.attr="disabled"
                                             type="button" class="px-3 text-white bg-red-400 border-0 btn">
                                             <i class="block text-sm mdi mdi-trash-can">
                                             </i>

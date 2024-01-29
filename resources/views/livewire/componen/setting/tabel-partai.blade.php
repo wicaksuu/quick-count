@@ -47,7 +47,7 @@
                         <td>
                             <div class="flex">
                                 <div class="m-1">
-                                    <button wire:click="openModal({{ $datas->id }})" wire:loading.attr="disabled"
+                                    <button wire:click="openModal('{{ $datas->id }}')" wire:loading.attr="disabled"
                                         type="button" class="px-3 text-white bg-green-600 border-0 btn">
                                         <i class="block text-sm mdi mdi-pencil">
                                         </i>
@@ -56,7 +56,7 @@
                                 <div class="grid grid-cols-1 ">
                                     <div class="grid items-stretch grid-cols-12">
                                         <div class="m-1">
-                                            <button wire:click="openDell({{ $datas->id }})" wire:loading.attr="disabled"
+                                            <button wire:click="openDell('{{ $datas->id }}')" wire:loading.attr="disabled"
                                                 type="button" class="px-3 text-white bg-red-400 border-0 btn">
                                                 <i class="block text-sm mdi mdi-trash-can">
                                                 </i>
@@ -94,7 +94,7 @@
                 @if ($tmp)
                     <img class="w-auto h-20 rounded rtl:ml-3" src="{{ asset('storage/' . $tmp) }}" alt="">
                 @endif
-                <div class="dark:text-white w-full">
+                <div class="w-full dark:text-white">
                     <div class="font-medium text-gray-700 text-17 dark:text-gray-100">
                         Nama Partai
                     </div>

@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DaftarCalonPartai extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
     public $isOpen = false;
-    public $title,$button,$isEdit,$foto,$tmp,$nama,$dapil=[],$results,$query,$partai,$data, $tahun,$tahuns,$status,$isDell,$isDells;
+    public $suara, $title,$button,$isEdit,$foto,$tmp,$nama,$dapil=[],$results,$query,$partai,$data, $tahun,$tahuns,$status,$isDell,$isDells;
 
 
     public $selectedYear, $pilihdapil, $dapils, $dataEdits;
@@ -100,11 +102,13 @@ class DaftarCalonPartai extends Component
                 }
 
                 $data = Calon::where('partai_id', $this->partai->id)->where('key', $this->dataEdits->key)->get();
+
                 foreach ($data as $dataEdit) {
                     $calon = Calon::find($dataEdit->id);
                     $calon->foto = $name;
                     $calon->nama = $this->nama;
                     $calon->tahun = $this->tahun;
+                    $calon->dapil_id = $this->dapil['id'];
                     $calon->is_active = $this->status;
                     $calon->save();
                 }
@@ -133,6 +137,19 @@ class DaftarCalonPartai extends Component
                                 'dapil_id' => $this->dapil['id'],
                                 'is_active' => $this->status
                             ];
+                            $sad = [
+                                'nama' => $this->nama,
+                                'foto' => $name,
+                                'key' => $key,
+                                'tps_id' => $value->id,
+                                'partai_id' => $this->partai->id,
+                                'tahun' => $this->tahun,
+                                "type" => "DPRD",
+                                'dapil_id' => $this->dapil['id'],
+                                'is_active' => $this->status
+                            ];
+                Calon::create($sad);
+
                         }
                     }
                 }
@@ -141,7 +158,6 @@ class DaftarCalonPartai extends Component
                     DB::rollBack();
                     return;
                 }
-                Calon::insert($save);
                 Toaster::success('Sukses menambah ' . $this->nama);
             }
 
@@ -158,6 +174,7 @@ class DaftarCalonPartai extends Component
     {
         $this->isOpen = true;
 
+        $this->suara = Calon::where('key', $id)->sum('suara');
         $this->tahun = date('Y');
         if ($id != null) {
             $this->dataEdits = Calon::with('dapil')->where('partai_id', $this->partai->id)->where('key', $id)->first();
@@ -165,10 +182,12 @@ class DaftarCalonPartai extends Component
             $this->nama = $this->dataEdits->nama;
             $this->tahun = $this->dataEdits->tahun;
             $this->status = $this->dataEdits->is_active;
-            $this->dapil = [
-                'id' => $this->dataEdits->dapil->id,
-                'nama' => $this->dataEdits->dapil->nama,
-            ];
+            if (isset($this->dataEdits->dapil->id)) {
+                $this->dapil = [
+                    'id' => $this->dataEdits->dapil->id,
+                    'nama' => $this->dataEdits->dapil->nama,
+                ];
+            }
             $this->isEdit = true;
             $this->title = 'Edit Calon '.$this->partai->nama ;
             $this->button = 'Simpan';

@@ -88,7 +88,7 @@ class TabelTPS extends Component
 
     public function refresh()
     {
-        $this->results = kecamatan::where('nama', 'like', '%' . $this->query . '%')->with('kota')->first();
+        $this->results = kecamatan::where('nama', 'like', '%' . $this->query . '%')->where("kota_id",3519)->with('kota')->first();
     }
 
     public function render()

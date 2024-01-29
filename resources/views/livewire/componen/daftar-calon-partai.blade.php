@@ -1,11 +1,11 @@
 <div>
-    <div class=" grid grid-cols-1">
-        <div class="grid grid-cols-12 items-stretch mb-4">
-            <div class="col-span-12 lg:col-span-6 self-center">
-                <h5 class="text-15 text-gray-600 dark:text-gray-100">Jumlah Calon <span class="text-gray-500 font-normal dark:text-zinc-100 ml-2">({{ count($data) }})</span></h5>
+    <div class="grid grid-cols-1 ">
+        <div class="grid items-stretch grid-cols-12 mb-4">
+            <div class="self-center col-span-12 lg:col-span-6">
+                <h5 class="text-gray-600 text-15 dark:text-gray-100">Jumlah Calon <span class="ml-2 font-normal text-gray-500 dark:text-zinc-100">({{ count($data) }})</span></h5>
             </div>
             <div class="col-span-12 lg:col-span-6">
-                 <div class=" flex flex-wrap items-center gap-2 mt-5 lg:mt-0 lg:justify-end">
+                 <div class="flex flex-wrap items-center gap-2 mt-5 lg:mt-0 lg:justify-end">
                     <div>
                         <select wire:model="selectedYear" wire:click='updateSelectedYear' class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
                             <option value="">Pilih Tahun</option>
@@ -18,7 +18,9 @@
                         <select wire:model="pilihdapil" wire:click='updateDapil' class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
                             <option value="">Pilih Dapil</option>
                             @foreach ($dapils as $dapilx)
-                                <option value="{{ $dapilx->dapil->id }}">{{ $dapilx->dapil->nama }}</option>
+                                @if (isset($dapilx->dapil->id))
+                                    <option value="{{ $dapilx->dapil->id }}">{{ $dapilx->dapil->nama }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -34,51 +36,53 @@
         </div>
         <div class="grid grid-cols-12 gap-5">
             @foreach ($data as $dat )
+                    <div class="col-span-12 md:col-span-6 xl:col-span-3">
+                        <div class="mb-0 card dark:bg-zinc-800 dark:border-zinc-600">
+                            <div class="card-body">
+                                <div class="relative dropstart text-end">
+                                    <span class="inline-block font-medium @if($dat->is_active == true) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-0.5 rounded ltr:ml-0 rtl:ml-2">@if($dat->is_active) <i class="align-middle bx bx-check-double text-16 "></i> @else <i class="align-middle bx bx-block text-16"></i> @endif</span>
+                                    <span class="badge font-medium bg-violet-500 text-white text-11 px-1.5 py-[1.5px] rounded">{{ $dat->tahun }}</span>
+                                    @php
+                                    $suara = App\Models\Calon::where('key', $dat->key)->sum('suara');
+                                    @endphp
+                                    <span class="badge font-medium @if($suara>0) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-[1.5px] rounded-full">{{ $suara }}</span>
 
-                <div class="col-span-12 md:col-span-6 xl:col-span-3">
-                    <div class="card dark:bg-zinc-800 dark:border-zinc-600 mb-0">
-                        <div class="card-body">
-                            <div class="dropstart text-end relative">
-                                <span class="inline-block font-medium @if($dat->is_active == true) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-0.5 rounded ltr:ml-0 rtl:ml-2">@if($dat->is_active) <i class="bx bx-check-double text-16 align-middle "></i> @else <i class="bx bx-block text-16 align-middle"></i> @endif</span>
-                                <span class="badge font-medium bg-violet-500 text-white text-11 px-1.5 py-[1.5px] rounded">{{ $dat->tahun }}</span>
-                                @php
-                                   $suara = App\Models\Calon::where('key', $dat->key)->sum('suara');
-                                @endphp
-                                <span class="badge font-medium @if($suara>0) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-[1.5px] rounded-full">{{ $suara }}</span>
-
+                                </div>
+                                <div class="mb-4">
+                                    @if ($dat->foto == null)
+                                        <img src="{{ asset('storage/' . $partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                    @else
+                                        <img src="{{ asset('storage/' . $dat->foto) }}" alt="null" class="h-20 mx-auto rounded">
+                                    @endif
+                                </div>
+                                <div class="text-center">
+                                    <h5 class="mb-1 text-gray-700 text-16"><a href="#" class="dark:text-gray-100">{{ $dat->nama }}</a></h5>
+                                    <p class="mb-2 text-gray-500 dark:text-zinc-100">
+                                        @if (isset($dat->dapil->nama))
+                                            {{ $dat->dapil->nama }}
+                                        @else
+                                            {{ 'Dapil Telah Dirubah' }}
+                                        @endif
+                                    </p>
+                                @foreach ($dat->kecamatans as $kecamatan)
+                                        <div class="text-11 bg-violet-50/50 hover:bg-violet-50 cursor-pointer transition-all duration-300 inline-block text-violet-500 px-1 py-[1px] rounded font-medium dark:bg-violet-500/20 dark:text-violet-300">
+                                            {{ $kecamatan->nama }}
+                                        </div>
+                                @endforeach
+                                </div>
                             </div>
-                            <div class="mb-4">
-                                @if ($dat->foto == null)
-                                    <img src="{{ asset('storage/' . $partai->logo) }}" alt="null" class="h-20 rounded mx-auto">
-                                @else
-                                    <img src="{{ asset('storage/' . $dat->foto) }}" alt="null" class="h-20 rounded mx-auto">
-                                @endif
-                            </div>
-                            <div class="text-center">
-                                <h5 class="text-16 text-gray-700 mb-1"><a href="#" class="dark:text-gray-100">{{ $dat->nama }}</a></h5>
-                                <p class="text-gray-500 dark:text-zinc-100 mb-2">
-                                    {{ $dat->dapil->nama }}
-                                </p>
-                               @foreach ($dat->kecamatans as $kecamatan)
-                                    <div class="text-11 bg-violet-50/50 hover:bg-violet-50 cursor-pointer transition-all duration-300 inline-block text-violet-500 px-1 py-[1px] rounded font-medium dark:bg-violet-500/20 dark:text-violet-300">
-                                        {{ $kecamatan->nama }}
-                                    </div>
-                               @endforeach
+                            <div class="inline-flex w-full rounded-md" role="group">
+                                <button type="button" wire:click="openModal('{{ $dat->key }}')"  wire:loading.attr="disabled" class="w-full px-4 py-2 text-sm border rounded rounded-r-none btn border-gray-50 hover:bg-green-200 dark:border-zinc-600 dark:hover:bg-green-600 dark:text-gray-100">
+                                    <i class="block text-sm text-green-600 mdi mdi-pencil">
+                                    </i>
+                                </button>
+                                <button type="button" wire:click="openDell('{{ $dat->key }}')" class="w-full px-4 py-2 text-sm border border-l-0 rounded rounded-l-none btn border-gray-50 hover:bg-red-200 dark:border-zinc-600 dark:hover:bg-red-600 dark:text-gray-100">
+                                    <i class="block text-sm text-red-600 mdi mdi-trash-can">
+                                    </i>
+                                </button>
                             </div>
                         </div>
-                        <div class="inline-flex rounded-md w-full" role="group">
-                            <button type="button" wire:click="openModal('{{ $dat->key }}')"  wire:loading.attr="disabled" class="btn px-4 py-2 text-sm w-full border rounded border-gray-50 rounded-r-none hover:bg-green-200 dark:border-zinc-600 dark:hover:bg-green-600 dark:text-gray-100">
-                                <i class="block text-sm mdi mdi-pencil text-green-600">
-                                </i>
-                            </button>
-                            <button type="button" wire:click="openDell('{{ $dat->key }}')" class="btn px-4 py-2 text-sm w-full border rounded border-gray-50 border-l-0 rounded-l-none hover:bg-red-200 dark:border-zinc-600 dark:hover:bg-red-600 dark:text-gray-100">
-                                <i class="block text-sm mdi mdi-trash-can text-red-600">
-                                </i>
-                            </button>
-                        </div>
-
                     </div>
-                </div>
 
             @endforeach
 
@@ -167,7 +171,7 @@
                     <div class="mt-1 position-absolute w-100">
                         @if (!empty($query))
                             @if (isset($results->id))
-                                <div wire:click="selectResult({{ $results->id }})" class="p-2 text-sm cursor-pointer">
+                                <div wire:click="selectResult('{{ $results->id }}')" class="p-2 text-sm cursor-pointer">
                                     {{ $results->nama }} </div>
                             @endif
                         @endif

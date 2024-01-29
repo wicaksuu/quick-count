@@ -7,14 +7,17 @@ use App\Models\wilayah\kecamatan;
 use App\Models\wilayah\kota;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use App\Models\User;
 
 class dapilDPRD extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUlids;
     protected $fillable = [
         'nama',
         'kota_id',
-        'kursi'
+        'kursi',
+        'user_id'
     ];
 
     public function kecamatans()
@@ -36,5 +39,9 @@ class dapilDPRD extends Model
     public function kota()
     {
         return $this->belongsTo(kota::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
