@@ -37,9 +37,9 @@ class TabelTPS extends Component
 
                 $cek_tps = desa::with('tpss')->where('id',$desa_id)->first();
                 foreach ($cek_tps->tpss as $cek) {
+                    tps::destroy($cek->id);
                     $user =  User::find($cek->user_id);
                     $user->delete();
-                    tps::destroy($cek->id);
                 }
                 for ($i=1; $i <= $this->tps ; $i++) {
                     $pass = Str::random(10);
