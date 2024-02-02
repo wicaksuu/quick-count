@@ -3,11 +3,13 @@
 namespace App\Livewire\Componen\Setting;
 
 use App\Models\tps;
+use App\Models\User;
 use App\Models\wilayah\desa;
 use App\Models\wilayah\kecamatan;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Str;
 
 class TabelTPS extends Component
 {
@@ -38,10 +40,20 @@ class TabelTPS extends Component
                     tps::destroy($cek->id);
                 }
                 for ($i=1; $i <= $this->tps ; $i++) {
+                    $pass = Str::random(10);
                     $nama = 'TPS '.$i;
+                    $user = User::factory()->create([
+                        'name' => "Admin ".$nama." ".$cek_tps->nama,
+                        'email' => $this->faker->unique()->safeEmail(),
+                        'role' => 'user',
+                        'is_dumy'=> true,
+                        'password' => bcrypt($pass),
+                        'password_dumy'=> $pass
+                        ]);
                     tps::create([
                         'nama' => $nama,
-                        'desa_id' => $desa_id
+                        'desa_id' => $desa_id,
+                        'user_id' => $user->id
                     ]);
                 }
 
