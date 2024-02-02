@@ -44,7 +44,7 @@ class TabelTPS extends Component
                     $nama = 'TPS '.$i;
                     $user = User::factory()->create([
                         'name' => "Admin ".$nama." ".$cek_tps->nama,
-                        'email' => $this->faker->unique()->safeEmail(),
+                        'email' => strtolower(str_replace(' ','', $nama.$cek_tps->nama)),
                         'role' => 'user',
                         'is_dumy'=> true,
                         'password' => bcrypt($pass),
