@@ -118,6 +118,7 @@ class TabelDapil extends Component
                 $dapil = dapilDPRD::create([
                     'nama' => $this->nama.' '.$kota,
                     'kursi' => $this->kursi,
+                    'user_id'=>'',
                     'kota_id' => $kota_id
                 ]);
                 kecamatan::whereIn('id', array_column($this->kecamatan, 'id'))
