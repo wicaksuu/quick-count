@@ -172,9 +172,15 @@
                             </div>
                             <hr class="border-gray-50 dark:border-gray-700">
                             <div class="dropdown-item dark:text-gray-100">
-                                <a class="block p-3 hover:bg-gray-50/50 dark:hover:bg-zinc-700/50" href="logout.html">
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                @csrf
+
+                                <a class="block p-3 hover:bg-gray-50/50 dark:hover:bg-zinc-700/50"  href="{{ route('logout') }}" @click.prevent="$root.submit();">>
                                     <i class="mr-1 align-middle mdi mdi-logout text-16"></i> Logout
                                 </a>
+                            </form>
                             </div>
                         </div>
                     </div>
