@@ -24,7 +24,9 @@
               <th class="items-center py-6 text-center border-b" colspan='4'>
                     <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 pt-3 mx-auto rounded">
                     <div class="text-extrabold">{{ $part->nama }}</div>
-                    <p>{{ $calons[0]->dapil->nama }}</p>
+                    @if (isset($calons[0]))
+                        <p>{{ $calons[0]->dapil->nama }}</p>
+                    @endif
                     <p>{{ $dataTPS->nama }} ({{ $kecamatan->nama }},{{ $desa->nama }})</p>
 
               </th>
