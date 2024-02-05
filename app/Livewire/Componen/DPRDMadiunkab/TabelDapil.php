@@ -7,6 +7,7 @@ use App\Models\wilayah\kecamatan;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Auth;
 
 
 class TabelDapil extends Component
@@ -118,7 +119,7 @@ class TabelDapil extends Component
                 $dapil = dapilDPRD::create([
                     'nama' => $this->nama.' '.$kota,
                     'kursi' => $this->kursi,
-                    'user_id'=>'',
+                    'user_id'=>Auth::user()->id,
                     'kota_id' => $kota_id
                 ]);
                 kecamatan::whereIn('id', array_column($this->kecamatan, 'id'))
