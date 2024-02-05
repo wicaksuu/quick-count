@@ -25,12 +25,18 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'isDumy:false'
+])->group(function () {
+    Route::get('/dashboard', [RouteController::class, 'dashboard'])->name('dashboard');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
     'role:admin',
     'isDumy:false'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
 
     Route::get('/setting/tps', [RouteController::class, 'settingTps'])->name('setting-tps');

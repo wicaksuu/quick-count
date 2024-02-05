@@ -29,6 +29,11 @@ class Calon extends Model
         return $this->belongsTo(dapilDPRD::class);
     }
 
+    public function partai()
+    {
+        return $this->belongsTo(DaftarPartai::class);
+    }
+
     public function kecamatans()
     {
         return $this->hasManyThrough(
