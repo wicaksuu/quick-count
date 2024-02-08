@@ -21,6 +21,7 @@ class Calon extends Model
         'partai_id',
         'dapil_id',
         'tahun',
+        'lock',
         'is_active'
     ];
 

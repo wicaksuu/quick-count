@@ -14,13 +14,13 @@ class TabelPartai extends Component
 {
     use WithFileUploads;
 
-    public $data=[],$button,$title, $nama,$logo,$isEdit,$dataEdit,$tmp,$isDell,$dataDell;
+    public $data=[],$button,$title, $nama,$logo,$isEdit,$dataEdit,$tmp,$isDell,$dataDell,$no;
     public $isOpen = false;
 
     public function load()
     {
         $this->dispatch('partai-edit');
-        $this->data=DaftarPartai::get();
+        $this->data=DaftarPartai::orderBy('no', 'asc')->get();
     }
 
     public function tambahPartai()
@@ -41,6 +41,7 @@ class TabelPartai extends Component
                     $name = $this->tmp;
                 }
                 DaftarPartai::where('id',$this->dataEdit->id)->update([
+                    'no' => $this->no,
                     'nama' => $this->nama,
                     'logo' => $name
                 ]);
@@ -49,7 +50,7 @@ class TabelPartai extends Component
 
                 $name = 'logo-partai/'.md5($this->logo . microtime()).'.'.$this->logo->extension();
                 $this->logo->storeAs('public', $name );
-                DaftarPartai::create(['nama'=>$this->nama,'logo'=>$name]);
+                DaftarPartai::create(['nama'=>$this->nama,'logo'=>$name,'no'=>$this->no]);
                 Toaster::success('Sukses menambah ' . $this->nama);
             }
 
@@ -77,6 +78,7 @@ class TabelPartai extends Component
 
         if ($id != null) {
             $this->dataEdit = DaftarPartai::find($id);
+            $this->no = $this->dataEdit->no;
             $this->nama = $this->dataEdit->nama;
             $this->tmp = $this->dataEdit->logo;
             $this->isEdit = true;

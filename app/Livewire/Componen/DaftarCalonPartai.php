@@ -14,7 +14,7 @@ class DaftarCalonPartai extends Component
 {
     use AuthorizesRequests;
     use WithFileUploads;
-    public $isOpen = false;
+    public $isOpen = false,$no;
     public $suara, $title,$button,$isEdit,$foto,$tmp,$nama,$dapil=[],$results,$query,$partai,$data, $tahun,$tahuns,$status,$isDell,$isDells;
 
 
@@ -106,6 +106,7 @@ class DaftarCalonPartai extends Component
                 foreach ($data as $dataEdit) {
                     $calon = Calon::find($dataEdit->id);
                     $calon->foto = $name;
+                    $calon->no = $this->no;
                     $calon->nama = $this->nama;
                     $calon->tahun = $this->tahun;
                     $calon->dapil_id = $this->dapil['id'];
@@ -129,6 +130,7 @@ class DaftarCalonPartai extends Component
                         if (isset($value->id)) {
                             $save[] = [
                                 'nama' => $this->nama,
+                                'no' => $this->no,
                                 'foto' => $name,
                                 'key' => $key,
                                 'tps_id' => $value->id,
@@ -139,6 +141,7 @@ class DaftarCalonPartai extends Component
                             ];
                             $sad = [
                                 'nama' => $this->nama,
+                                'no' => $this->no,
                                 'foto' => $name,
                                 'key' => $key,
                                 'tps_id' => $value->id,
@@ -180,12 +183,14 @@ class DaftarCalonPartai extends Component
             $this->dataEdits = Calon::with('dapil')->where('partai_id', $this->partai->id)->where('key', $id)->first();
             $this->tmp = $this->dataEdits->foto;
             $this->nama = $this->dataEdits->nama;
+            $this->no = $this->dataEdits->no;
             $this->tahun = $this->dataEdits->tahun;
             $this->status = $this->dataEdits->is_active;
             if (isset($this->dataEdits->dapil->id)) {
                 $this->dapil = [
                     'id' => $this->dataEdits->dapil->id,
                     'nama' => $this->dataEdits->dapil->nama,
+                    'no' => $this->dataEdits->dapil->no,
                 ];
             }
             $this->isEdit = true;
@@ -210,7 +215,7 @@ class DaftarCalonPartai extends Component
 
     public function load()
     {
-        $query = Calon::where('partai_id', $this->partai->id);
+        $query = Calon::where('partai_id', $this->partai->id)->orderBy('no', 'asc');
         $this->tahuns=$query->select('tahun')->distinct()->get();
         $this->dapils= $query
         ->with('dapil')
@@ -227,7 +232,7 @@ class DaftarCalonPartai extends Component
 
         $this->data = $query
             ->with('dapil', 'kecamatans')
-            ->select('nama', 'dapil_id', 'key', 'tahun', 'foto','is_active')
+            ->select('nama', 'dapil_id', 'key', 'tahun', 'foto','is_active','no')
             ->distinct()
             ->get();
     }

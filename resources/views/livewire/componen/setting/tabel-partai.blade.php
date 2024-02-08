@@ -26,6 +26,9 @@
             <table class="w-full">
                 <thead class="border-b cursor-pointer border-gray-50 dark:border-zinc-600">
                     <tr class="text-gray-700 dark:text-gray-100">
+                        <th class="relative py-4 text-start dark:text-gray-100">
+                            Nomor Urut
+                        </th>
                         <th class="relative p-4 text-start dark:text-gray-100">
                             Logo Partai
                         </th>
@@ -40,6 +43,7 @@
                 <tbody>
                     @foreach ($data as $datas)
                     <tr class="text-gray-600 border-b border-gray-50 dark:border-zinc-600">
+                        <td class="p-4 font-semibold dark:text-zinc-50">{{ $datas->no }}</td>
                         <td class="inline-flex items-center p-4">
                             <img class="h-20 rounded w-w-auto rtl:ml-3" src="{{ asset('storage/' . $datas->logo) }}" alt="">
                         </td>
@@ -95,6 +99,14 @@
                     <img class="w-auto h-20 rounded rtl:ml-3" src="{{ asset('storage/' . $tmp) }}" alt="">
                 @endif
                 <div class="w-full dark:text-white">
+                    <div class="font-medium text-gray-700 text-17 dark:text-gray-100">
+                        Nomor Urut Partai
+                    </div>
+                    <div class="mt-1">
+                        <input type="number" wire:model="no"
+                        class="bg-gray-800/5 border border-gray-100 text-gray-900 dark:text-gray-100 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder-gray-400 dark:placeholder:text-zinc-100/60 dark:text-"
+                        placeholder="Nomor Urut" required>
+                    </div>
                     <div class="font-medium text-gray-700 text-17 dark:text-gray-100">
                         Nama Partai
                     </div>

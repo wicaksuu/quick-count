@@ -39,14 +39,19 @@
                     <div class="col-span-12 md:col-span-6 xl:col-span-3">
                         <div class="mb-0 card dark:bg-zinc-800 dark:border-zinc-600">
                             <div class="card-body">
-                                <div class="relative dropstart text-end">
-                                    <span class="inline-block font-medium @if($dat->is_active == true) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-0.5 rounded ltr:ml-0 rtl:ml-2">@if($dat->is_active) <i class="align-middle bx bx-check-double text-16 "></i> @else <i class="align-middle bx bx-block text-16"></i> @endif</span>
-                                    <span class="badge font-medium bg-violet-500 text-white text-11 px-1.5 py-[1.5px] rounded">{{ $dat->tahun }}</span>
-                                    @php
-                                    $suara = App\Models\Calon::where('key', $dat->key)->sum('suara');
-                                    @endphp
-                                    <span class="badge font-medium @if($suara>0) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-[1.5px] rounded-full">{{ $suara }}</span>
+                                <div class="flex justify-between">
+                                    <div class="relative dropstart text-start">
+                                        <span class="badge font-medium bg-blue-500 text-white text-11 px-1.5 py-[1.5px] rounded">{{ $dat->no }}</span>
+                                    </div>
+                                    <div class="relative dropstart text-end">
+                                        <span class="inline-block font-medium @if($dat->is_active == true) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-0.5 rounded ltr:ml-0 rtl:ml-2">@if($dat->is_active) <i class="align-middle bx bx-check-double text-16 "></i> @else <i class="align-middle bx bx-block text-16"></i> @endif</span>
+                                        <span class="badge font-medium bg-violet-500 text-white text-11 px-1.5 py-[1.5px] rounded">{{ $dat->tahun }}</span>
+                                        @php
+                                        $suara = App\Models\Calon::where('key', $dat->key)->sum('suara');
+                                        @endphp
+                                        <span class="badge font-medium @if($suara>0) bg-green-500 @else bg-red-500 @endif text-white text-11 px-1.5 py-[1.5px] rounded-full">{{ $suara }}</span>
 
+                                    </div>
                                 </div>
                                 <div class="mb-4">
                                     @if ($dat->foto == null)
@@ -56,7 +61,7 @@
                                     @endif
                                 </div>
                                 <div class="text-center">
-                                    <h5 class="mb-1 text-gray-700 text-16"><a href="#" class="dark:text-gray-100">{{ $dat->nama }}</a></h5>
+                                    <h5 class="mb-1 text-gray-700 text-16"><p  class="dark:text-gray-100">{{ $dat->nama }}</p></h5>
                                     <p class="mb-2 text-gray-500 dark:text-zinc-100">
                                         @if (isset($dat->dapil->nama))
                                             {{ $dat->dapil->nama }}
@@ -131,6 +136,15 @@
                                 </label>
                                 <input wire:model='status' type="checkbox" id="square-switch3" switch="bool">
                                 <label for="square-switch3" data-on-label="On" data-off-label="Off"></label>
+                            </div>
+                            <div class="w-full pl-4">
+                                <label for="no"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100 ltr:text-left rtl:text-right">
+                                    Nomor Urut
+                                </label>
+                                <input type="number" wire:model="no"
+                                    class="bg-gray-800/5 border border-gray-100 text-gray-900 dark:text-gray-100 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder-gray-400 dark:placeholder:text-zinc-100/60 dark:text-"
+                                    placeholder="Nomor Urut" required>
                             </div>
                             <div class="w-full pl-4">
                                 <label for="tahun"

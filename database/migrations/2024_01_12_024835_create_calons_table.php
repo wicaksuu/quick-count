@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('dapil_id')->nullable();
             $table->integer('suara')->default(0);
             $table->boolean('is_active')->default(true);
+            $table->boolean('lock')->default(false);
 
             $table->timestamps();
         });
