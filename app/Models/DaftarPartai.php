@@ -10,6 +10,7 @@ class DaftarPartai extends Model
 {
     use HasFactory, HasUlids;
     protected $fillable = [
+        'no',
         'nama',
         'logo',
     ];

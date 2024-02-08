@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('calons', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->integer('no');
             $table->string('nama');
             $table->string('key');
             $table->string('tahun');

@@ -22,6 +22,13 @@
                             class="bg-gray-800/5 border border-gray-100 text-gray-900 dark:text-gray-100 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder-gray-400 dark:placeholder:text-zinc-100/60 dark:text-"
                             placeholder="Ketik Kecamatan">
                     </div>
+                    <div>
+                        <button wire:click="openModalDesa()" wire:loading.attr="disabled"
+                            class="btn bg-gray-50 border-gray-50 dark:bg-zinc-600/50 dark:border-zinc-600 dark:text-gray-100"><i
+                                class="bx bx-plus me-1"></i>
+                            Tambah
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,6 +52,12 @@
                     </th>
 
                     <th class="relative p-4 text-start dark:text-gray-100">
+                        User Mail
+                    </th>
+                    <th class="relative p-4 text-start dark:text-gray-100">
+                        User Pass
+                    </th>
+                    <th class="relative p-4 text-start dark:text-gray-100">
                         Total TPS
                     </th>
 
@@ -65,15 +78,40 @@
                         <td class="p-4 dark:text-zinc-50">
                             {{ $datas->nama }}
                         </td>
+
+                        <td class="p-4 dark:text-zinc-50">
+                            {{ str_replace('@madiunkab.go.id','',$datas->user->email) }}
+                        </td>
+
+                        <td class="p-4 dark:text-zinc-50">
+                            {{ $datas->user->password_dumy }}
+                        </td>
                         <td class="p-4 dark:text-zinc-50">
                             <span class=" px-1.5 @if (count($datas->tpss)==0) bg-red-500 @else bg-green-500 @endif text-white font-bold rounded-full">{{ count($datas->tpss) }}</span>
                         </td>
                         <td>
                             <div class="flex">
+
+                                <div class="m-1">
+                                    <button wire:click="ResetPass('{{ $datas->user->id }}')" wire:loading.attr="disabled"
+                                        type="button" class="px-3 text-white bg-blue-600 border-0 btn">
+                                        <i class="block text-sm mdi mdi-lock-reset">
+                                        </i>
+                                    </button>
+                                </div>
+
                                 <div class="m-1">
                                     <button wire:click="openModal({{ $datas->id }})" wire:loading.attr="disabled"
                                         type="button" class="px-3 text-white bg-green-600 border-0 btn">
                                         <i class="block text-sm mdi mdi-pencil">
+                                        </i>
+                                    </button>
+                                </div>
+
+                                <div class="m-1">
+                                    <button wire:click="HapusDesa({{ $datas->id }})" wire:loading.attr="disabled"
+                                        type="button" class="px-3 text-white bg-red-600 border-0 btn">
+                                        <i class="block text-sm mdi mdi-trash-can-outline">
                                         </i>
                                     </button>
                                 </div>
@@ -116,6 +154,41 @@
             <button type="button" wire:click="save" wire:loading.attr="disabled"
                 class="text-white bg-green-500 border-green-500 rounded-full ms-3 btn hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600">
                 {{ $button }}
+            </button>
+        </x-slot>
+    </x-dialog-modal>
+
+
+    <x-dialog-modal wire:model.live="isopenModalDesa">
+        <x-slot name="title">
+            Tambah Desa di {{ $data[0]->kecamatan->nama }}
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="mt-4">
+                <div class="space-y-4">
+                    <div>
+                        <label for="desa"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100 ltr:text-left rtl:text-right">
+                            Nama Desa di {{ $data[0]->kecamatan->nama }}
+                        </label>
+                        <input type="text" wire:model="desa"
+                            class="bg-gray-800/5 border border-gray-100 text-gray-900 dark:text-gray-100 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder-gray-400 dark:placeholder:text-zinc-100/60 dark:text-"
+                            placeholder="Nama Desa" required>
+                    </div>
+
+                </div>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <button type="button" wire:click="closeModal()" wire:loading.attr="disabled"
+                class="text-white bg-yellow-500 border-yellow-500 rounded-full btn hover:bg-yellow-600 hover:border-yellow-600 focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-500/30 active:bg-yellow-600 active:border-yellow-600">
+                Cancel
+            </button>
+            <button type="button" wire:click="addDesa" wire:loading.attr="disabled"
+                class="text-white bg-green-500 border-green-500 rounded-full ms-3 btn hover:bg-green-600 hover:border-green-600 focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-500/30 active:bg-green-600 active:border-green-600">
+                Tambah
             </button>
         </x-slot>
     </x-dialog-modal>

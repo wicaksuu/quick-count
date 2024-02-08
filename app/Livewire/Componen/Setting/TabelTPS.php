@@ -13,9 +13,47 @@ use Illuminate\Support\Str;
 
 class TabelTPS extends Component
 {
-    public $data=[],$query,$results,$isEdit,$dataEdit,$button,$title,$id,$tps,$desa_id,$total_tps;
+    public $data=[],$query,$results,$isEdit,$dataEdit,$button,$title,$id,$tps,$desa_id,$total_tps,$desa;
 
-    public $isOpen = false;
+    public $isOpen = false,$isopenModalDesa=false;
+
+    public function ResetPass($id){
+        try {
+            $pass = Str::random(10);
+            $user = User::find($id);
+            $user->is_dumy = true;
+            $user->password = bcrypt($pass);
+            $user->password_dumy = $pass;
+            $user->save();
+            Toaster::success('Password Berhasil Di Reset');
+        } catch (\Throwable $th) {
+            Toaster::error($th->getMessage());
+        }
+    }
+
+    public function HapusDesa($id){
+        try {
+            desa::destroy($id);
+            Toaster::success('Data berhasil dihapus');
+            $this->mount();
+        } catch (\Throwable $th) {
+            Toaster::error($th->getMessage());
+        }
+    }
+
+    public function capitalizeAfterSpace($string) {
+
+        $string = strtolower($string);
+        $data = explode(" ", $string);
+        $out=[];
+        foreach ($data as $value) {
+            $firstLetter = substr($value, 0, 1);
+            $result = substr($value, 1);
+            $replace = strtoupper($firstLetter);
+            $out[] = $replace.$result;
+        }
+        return implode(" ", $out);
+    }
 
     public function openModal($id = null)
     {
@@ -26,6 +64,43 @@ class TabelTPS extends Component
         $this->desa_id=$id;
         $cek_tps = desa::with('tpss')->where('id',$id)->first();
         $this->tps = count($cek_tps->tpss);
+    }
+
+    public function openModalDesa(){
+
+        $this->isopenModalDesa = true;
+    }
+
+    public function addDesa(){
+        if ($this->desa=='') {
+            Toaster::error('Nama desa tidak boleh kosong');
+            return;
+        }
+        try {
+            $desa = $this->desa;
+            $kecamatan = $this->data[0]->kecamatan;
+            $add = [
+                'kecamatan_id' =>$kecamatan->id,
+                'nama' => $this->capitalizeAfterSpace($desa),
+            ];
+            $desa_id = desa::create($add);
+
+            $pass = Str::random(10);
+            User::factory()->create([
+                'name' => "Admin ".$this->capitalizeAfterSpace($desa),
+                'email' => strtolower(str_replace(' ','', $kecamatan->nama))."_".strtolower(str_replace(' ','', $desa))."@madiunkab.go.id",
+                'role' => 'desa',
+                'current_team_id'=>$desa_id->id,
+                'is_dumy'=> true,
+                'password' => bcrypt($pass),
+                'password_dumy'=> $pass
+                ]);
+            Toaster::success("Berhasil menambah desa.");
+            $this->closeModal();
+
+        } catch (\Throwable $th) {
+            Toaster::error($th->getMessage());
+        }
     }
 
     public function save()
@@ -73,6 +148,7 @@ class TabelTPS extends Component
 
     }
 
+
     public function closeModal()
     {
         $query = $this->query;
@@ -97,7 +173,7 @@ class TabelTPS extends Component
     {
         $this->id = $id;
         $this->total_tps = tps::count();
-        $this->data=desa::where('kecamatan_id', $id)->with('kecamatan','tpss')->get();
+        $this->data=desa::where('kecamatan_id', $id)->with('kecamatan','tpss','user')->get();
     }
 
     public function refresh()

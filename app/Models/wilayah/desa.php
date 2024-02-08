@@ -3,6 +3,7 @@
 namespace App\Models\wilayah;
 
 use App\Models\tps;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,5 +31,10 @@ class desa extends Model
     public function tpss()
     {
         return $this->hasMany(tps::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'current_team_id', 'id');
     }
 }

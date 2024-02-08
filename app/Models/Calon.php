@@ -11,6 +11,7 @@ class Calon extends Model
 {
     use HasFactory, HasUlids;
     protected $fillable = [
+        'no',
         'nama',
         'key',
         'type',

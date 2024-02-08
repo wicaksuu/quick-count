@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('daftar_partais', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->integer('no');
             $table->string('nama');
             $table->string('logo', 2048)->nullable();
             $table->timestamps();
