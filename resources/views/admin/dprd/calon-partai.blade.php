@@ -6,7 +6,7 @@ Setting {{ $partai->nama }}
 
 @section('page')
 <h4 class="text-lg font-semibold text-gray-800 mb-sm-0 grow dark:text-gray-100">
-    Setting Calon {{ $type }} {{ $partai->nama }} ({{ $partai->nama }})
+    Setting Calon {{ $type }} {{ $partai->nama }} ({{ $partai->no }})
 </h4>
 <nav class="flex" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 ltr:md:space-x-3 rtl:md:space-x-0">
