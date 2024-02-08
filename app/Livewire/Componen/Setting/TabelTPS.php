@@ -77,6 +77,7 @@ class TabelTPS extends Component
             return;
         }
         try {
+            DB::beginTransaction();
             $desa = $this->desa;
             $kecamatan = $this->data[0]->kecamatan;
             $add = [
@@ -95,10 +96,13 @@ class TabelTPS extends Component
                 'password' => bcrypt($pass),
                 'password_dumy'=> $pass
                 ]);
+
+            DB::commit();
             Toaster::success("Berhasil menambah desa.");
             $this->closeModal();
 
         } catch (\Throwable $th) {
+            DB::rollBack();
             Toaster::error($th->getMessage());
         }
     }
