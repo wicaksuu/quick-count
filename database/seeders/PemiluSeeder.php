@@ -38,7 +38,7 @@ class PemiluSeeder extends Seeder
 
 
         Setting::create([
-            'nama'=>'DPRD Prov.',
+            'nama'=>'DPRD Provinsi',
             'status'=>1,
             'description'=>'Pemilu DPRD Prov.',
             'key'=>'type'
@@ -46,7 +46,7 @@ class PemiluSeeder extends Seeder
 
 
         Setting::create([
-            'nama'=>'DPRD Kota/Kab.',
+            'nama'=>'DPRD',
             'status'=>1,
             'description'=>'Pemilu DPRD Kota/Kab.',
             'key'=>'type'

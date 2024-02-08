@@ -8,11 +8,8 @@ use Livewire\Component;
 class Walikota extends Component
 {
 
-    public $partais=[];
-
-    public function mount($partais)
+    public function mount()
     {
-        $this->partais = $partais;
     }
     public function render()
     {

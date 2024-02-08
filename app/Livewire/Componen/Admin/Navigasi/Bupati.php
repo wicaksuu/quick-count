@@ -7,11 +7,9 @@ use Livewire\Component;
 
 class Bupati extends Component
 {
-    public $partais=[];
 
-    public function mount($partais)
+    public function mount()
     {
-        $this->partais = $partais;
     }
     public function render()
     {

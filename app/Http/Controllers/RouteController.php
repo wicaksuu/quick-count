@@ -52,31 +52,43 @@ class RouteController extends Controller
         switch (Route::currentRouteName()) {
             case 'setting-calon-presiden':
                 $data = 'Presiden';
+                $type = 'Pilkada';
                 break;
             case 'setting-calon-dpr-ri':
                 $data = 'DPR RI';
+                $type = 'Pileg';
                 break;
             case 'setting-calon-dpd-ri':
                 $data = 'DPD RI';
+                $type = 'Pileg';
                 break;
             case 'setting-calon-dprd-provinsi':
                 $data = 'DPRD Provinsi';
+                $type = 'Pileg';
                 break;
             case 'setting-calon-dprd':
                 $data = 'DPRD';
+                $type = 'Pileg';
                 break;
             case 'setting-calon-gubernur':
                 $data = 'Gubernur';
+                $type = 'Pilkada';
                 break;
             case 'setting-calon-bupati':
                 $data = 'Bupati';
+                $type = 'Pilkada';
                 break;
             case 'setting-calon-walikota':
                 $data = 'Walikota';
+                $type = 'Pilkada';
                 break;
         }
-        $partai = DaftarPartai::find($id);
-        return view('admin.dprd.calon-partai', ['partai' => $partai, 'type' => $data]);
+        if ($type == 'Pileg') {
+            $partai = DaftarPartai::find($id);
+            return view('admin.dprd.calon-partai', ['partai' => $partai, 'type' => $data]);
+        }else{
+            return view('admin.pilkada.pilkada', ['type' => $data]);
+        }
     }
 
     public function settingGlobal()

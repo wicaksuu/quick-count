@@ -8,11 +8,9 @@ use Livewire\Component;
 class Gubernur extends Component
 {
 
-    public $partais=[];
 
-    public function mount($partais)
+    public function mount()
     {
-        $this->partais = $partais;
     }
     public function render()
     {

@@ -13,14 +13,14 @@
                     <span data-key="t-dashboard"> Dashboard</span>
                 </a>
             </li>
-            <livewire:componen.admin.navigasi.presiden :partais="$partais" />
+            <livewire:componen.admin.navigasi.presiden />
             <livewire:componen.admin.navigasi.d-p-r-r-i  :partais="$partais" />
             <livewire:componen.admin.navigasi.d-p-d-r-i  :partais="$partais" />
             <livewire:componen.admin.navigasi.d-p-r-d-prov  :partais="$partais" />
             <livewire:componen.admin.navigasi.d-p-r-d  :partais="$partais" />
-            <livewire:componen.admin.navigasi.gubernur  :partais="$partais" />
-            <livewire:componen.admin.navigasi.bupati  :partais="$partais" />
-            <livewire:componen.admin.navigasi.walikota  :partais="$partais" />
+            <livewire:componen.admin.navigasi.gubernur   />
+            <livewire:componen.admin.navigasi.bupati   />
+            <livewire:componen.admin.navigasi.walikota   />
 
 
 
