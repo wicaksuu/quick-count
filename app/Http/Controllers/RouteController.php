@@ -33,9 +33,9 @@ class RouteController extends Controller
                 break;
 
             case 'desa':
-                $desa_id = Auth::user()->current_team_id;
-                $desa = desa::find($desa_id);
-                $kecamatan = kecamatan::find($desa->kecamatan_id);
+                $desa_id    = Auth::user()->current_team_id;
+                $desa       = desa::find($desa_id);
+                $kecamatan  = kecamatan::find($desa->kecamatan_id);
                 $data = [
                     'kecamatan'=>$kecamatan,
                     'desa'=>$desa,
