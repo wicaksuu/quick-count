@@ -4,6 +4,7 @@ namespace App\Livewire\Componen;
 
 use App\Models\Calon;
 use App\Models\dapilDPRD;
+use App\Models\tps;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -18,7 +19,7 @@ class DaftarCalonPartai extends Component
     public $suara, $title,$button,$isEdit,$foto,$tmp,$nama,$dapil=[],$results,$query,$partai,$data, $tahun,$tahuns,$status,$isDell,$isDells;
 
 
-    public $selectedYear, $pilihdapil, $dapils, $dataEdits;
+    public $selectedYear, $pilihdapil, $dapils, $dataEdits,$type;
 
     public function openDell($key)
     {
@@ -49,9 +50,10 @@ class DaftarCalonPartai extends Component
     {
         $this->load();
     }
-    public function mount($partai)
+    public function mount($partai,$type)
     {
         $this->partai = $partai;
+        $this->type = $type;
     }
 
     public function updatedFoto()
@@ -109,7 +111,9 @@ class DaftarCalonPartai extends Component
                     $calon->no = $this->no;
                     $calon->nama = $this->nama;
                     $calon->tahun = $this->tahun;
-                    $calon->dapil_id = $this->dapil['id'];
+                    if ($this->type == 'DPRD') {
+                        $calon->dapil_id = $this->dapil['id'];
+                    }
                     $calon->is_active = $this->status;
                     $calon->save();
                 }
@@ -122,38 +126,52 @@ class DaftarCalonPartai extends Component
                 }else{
                     $name = null;
                 }
-                $tpss = dapilDPRD::with('daftarTps')->find($this->dapil['id']);
+
                 $save=[];
                 $key = md5($this->nama);
-                foreach ($tpss->daftarTps as $values) {
-                    foreach ($values->tpss as $value) {
-                        if (isset($value->id)) {
-                            $save[] = [
-                                'nama' => $this->nama,
-                                'no' => $this->no,
-                                'foto' => $name,
-                                'key' => $key,
-                                'tps_id' => $value->id,
-                                'partai_id' => $this->partai->id,
-                                'tahun' => $this->tahun,
-                                'dapil_id' => $this->dapil['id'],
-                                'is_active' => $this->status
-                            ];
-                            $sad = [
-                                'nama' => $this->nama,
-                                'no' => $this->no,
-                                'foto' => $name,
-                                'key' => $key,
-                                'tps_id' => $value->id,
-                                'partai_id' => $this->partai->id,
-                                'tahun' => $this->tahun,
-                                "type" => "DPRD",
-                                'dapil_id' => $this->dapil['id'],
-                                'is_active' => $this->status
-                            ];
-                Calon::create($sad);
+                if ($this->type == 'DPRD') {
+                    $tpss = dapilDPRD::with('daftarTps')->find($this->dapil['id']);
+                    foreach ($tpss->daftarTps as $values) {
+                        foreach ($values->tpss as $value) {
+                            if (isset($value->id)) {
+                                $save[] = [
+                                    'nama' => $this->nama,
+                                ];
+                                $sad = [
+                                    'nama' => $this->nama,
+                                    'no' => $this->no,
+                                    'foto' => $name,
+                                    'key' => $key,
+                                    'tps_id' => $value->id,
+                                    'partai_id' => $this->partai->id,
+                                    'tahun' => $this->tahun,
+                                    "type" => $this->type,
+                                    'is_active' => $this->status,
+                                    'dapil_id' => $this->dapil['id']
+                                ];
+                                Calon::create($sad);
 
+                            }
                         }
+                    }
+                }else{
+                    $tpss = tps::get();
+                    foreach ($tpss as $tps) {
+                        $save[] = [
+                            'nama' => $this->nama,
+                        ];
+                        $sad = [
+                            'nama' => $this->nama,
+                            'no' => $this->no,
+                            'foto' => $name,
+                            'key' => $key,
+                            'tps_id' => $tps->id,
+                            'partai_id' => $this->partai->id,
+                            'tahun' => $this->tahun,
+                            "type" => $this->type,
+                            'is_active' => $this->status,
+                        ];
+                        Calon::create($sad);
                     }
                 }
                 if (count($save) == 0) {
@@ -206,9 +224,11 @@ class DaftarCalonPartai extends Component
     {
         $partai = $this->partai;
         $status = $this->status;
+        $type = $this->type;
         $this->isOpen = false;
         $this->reset();
         $this->partai = $partai;
+        $this->type = $type;
         $this->status = $status;
         $this->load();
     }
@@ -217,11 +237,15 @@ class DaftarCalonPartai extends Component
     {
         $query = Calon::where('partai_id', $this->partai->id)->orderBy('no', 'asc');
         $this->tahuns=$query->select('tahun')->distinct()->get();
-        $this->dapils= $query
-        ->with('dapil')
-        ->select('dapil_id')
-        ->distinct()
-        ->get();
+        if ($this->type == 'DPRD') {
+            $this->dapils= $query
+            ->with('dapil')
+            ->select('dapil_id')
+            ->distinct()
+            ->get();
+        }
+
+        $query->where('type', $this->type);
 
         if ($this->selectedYear != null) {
             $query->where('tahun', $this->selectedYear);
@@ -229,12 +253,18 @@ class DaftarCalonPartai extends Component
         if ($this->pilihdapil != null) {
             $query->where('dapil_id', $this->pilihdapil);
         }
-
-        $this->data = $query
-            ->with('dapil', 'kecamatans')
-            ->select('nama', 'dapil_id', 'key', 'tahun', 'foto','is_active','no')
-            ->distinct()
-            ->get();
+        if ($this->type == 'DPRD') {
+            $this->data = $query
+                ->with('dapil', 'kecamatans')
+                ->select('nama', 'dapil_id', 'key', 'tahun', 'foto','is_active','no')
+                ->distinct()
+                ->get();
+        }else{
+            $this->data = $query
+                ->select('nama', 'key', 'tahun', 'foto','is_active','no')
+                ->distinct()
+                ->get();
+        }
     }
     public function render()
     {

@@ -24,12 +24,6 @@
                         @endforeach
                 </ul>
             </li>
-            <li>
-                <a href="{{ route('setting-dpd-ri') }}"
-                    class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if (Route::currentRouteName() == 'setting-dpd-ri') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
-                    Setting Dapil
-                </a>
-            </li>
         </ul>
     </li>
 </div>

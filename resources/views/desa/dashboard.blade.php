@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Input Suara DPRD') }} ({{ $kecamatan->nama }},{{ $desa->nama }} )
+            {{ __('Input Suara') }} ({{ $kecamatan->nama }},{{ $desa->nama }} )
         </h2>
     </x-slot>
 

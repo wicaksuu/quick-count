@@ -1,5 +1,10 @@
 <div>
     <div class="flex items-center space-x-4">
+        <select wire:model="set" wire:click="updateSelectPartai" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+            @foreach ($setting as $settings)
+                <option value="{{ $settings->nama }}">{{ $settings->nama }}</option>
+            @endforeach
+        </select>
         <select wire:model="SelectPartai" wire:click="updateSelectPartai" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
             @foreach ($partai as $partais)
                 <option value="{{ $partais->id }}">{{ $partais->nama }}</option>
@@ -21,12 +26,15 @@
         <table class="w-full bg-white border border-gray-300 rounded table-auto">
           <thead>
             <tr>
-              <th class="items-center py-6 text-center border-b" colspan='4'>
-                    <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 pt-3 mx-auto rounded">
-                    <div class="text-extrabold">{{ $part->nama }}</div>
-                    @if (isset($calons[0]))
+              <th class="items-center py-6 text-center border-b {{ $collor }}" colspan='4'>
+                    <div class="text-extrabold">Input Suara {{ $set }}</div>
+                    @isset($part->logo)
+                        <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 pt-3 mx-auto rounded">
+                        <div class="text-extrabold">{{ $part->nama }}</div>
+                    @endisset
+                    @isset($calons[0]->dapil->nama)
                         <p>{{ $calons[0]->dapil->nama }}</p>
-                    @endif
+                    @endisset
                     <p>{{ $dataTPS->nama }} ({{ $kecamatan->nama }},{{ $desa->nama }})</p>
 
               </th>

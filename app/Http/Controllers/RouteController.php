@@ -63,7 +63,7 @@ class RouteController extends Controller
                 $data = 'DPRD Provinsi';
                 break;
             case 'setting-calon-dprd':
-                $data = 'DPRD Daerah';
+                $data = 'DPRD';
                 break;
             case 'setting-calon-gubernur':
                 $data = 'Gubernur';

@@ -14,16 +14,20 @@
                             @endforeach
                         </select>
                     </div>
-                    <div>
-                        <select wire:model="pilihdapil" wire:click='updateDapil' class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-                            <option value="">Pilih Dapil</option>
-                            @foreach ($dapils as $dapilx)
-                                @if (isset($dapilx->dapil->id))
-                                    <option value="{{ $dapilx->dapil->id }}">{{ $dapilx->dapil->nama }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
+                    @if ($type == 'DPRD')
+
+                        <div>
+                            <select wire:model="pilihdapil" wire:click='updateDapil' class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+                                <option value="">Pilih Dapil</option>
+                                @foreach ($dapils as $dapilx)
+                                    @if (isset($dapilx->dapil->id))
+                                        <option value="{{ $dapilx->dapil->id }}">{{ $dapilx->dapil->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+
+                    @endif
                     <div>
                         <button wire:click="openModal()" wire:loading.attr="disabled"
                             class="btn bg-gray-50 border-gray-50 dark:bg-zinc-600/50 dark:border-zinc-600 dark:text-gray-100"><i
@@ -60,20 +64,23 @@
                                         <img src="{{ asset('storage/' . $dat->foto) }}" alt="null" class="h-20 mx-auto rounded">
                                     @endif
                                 </div>
+
                                 <div class="text-center">
                                     <h5 class="mb-1 text-gray-700 text-16"><p  class="dark:text-gray-100">{{ $dat->nama }}</p></h5>
-                                    <p class="mb-2 text-gray-500 dark:text-zinc-100">
-                                        @if (isset($dat->dapil->nama))
-                                            {{ $dat->dapil->nama }}
-                                        @else
-                                            {{ 'Dapil Telah Dirubah' }}
-                                        @endif
-                                    </p>
-                                @foreach ($dat->kecamatans as $kecamatan)
-                                        <div class="text-11 bg-violet-50/50 hover:bg-violet-50 cursor-pointer transition-all duration-300 inline-block text-violet-500 px-1 py-[1px] rounded font-medium dark:bg-violet-500/20 dark:text-violet-300">
-                                            {{ $kecamatan->nama }}
-                                        </div>
-                                @endforeach
+                                    @if ($type == 'DPRD')
+                                        <p class="mb-2 text-gray-500 dark:text-zinc-100">
+                                            @if (isset($dat->dapil->nama))
+                                                {{ $dat->dapil->nama }}
+                                            @else
+                                                {{ 'Dapil Telah Dirubah' }}
+                                            @endif
+                                        </p>
+                                        @foreach ($dat->kecamatans as $kecamatan)
+                                            <div class="text-11 bg-violet-50/50 hover:bg-violet-50 cursor-pointer transition-all duration-300 inline-block text-violet-500 px-1 py-[1px] rounded font-medium dark:bg-violet-500/20 dark:text-violet-300">
+                                                {{ $kecamatan->nama }}
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <div class="inline-flex w-full rounded-md" role="group">
@@ -157,41 +164,44 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <label for="kursi"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100 ltr:text-left rtl:text-right">
-                            Pilih Dapil
-                        </label>
-                        @if ($dapil)
-                            <div class="pb-2">
-                                <div class="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <span
-                                                class="inline-block font-medium bg-green-500 text-white text-11 px-1.5 py-0.5  rounded">
-                                                 {{ $dapil['nama'] }}
-                                                <button wire:click="hapusdapil()">
-                                                    <i class="align-middle mdi mdi-close"></i>
-                                                </button>
-                                            </span>
-                                        </div>
+                    @if ($type == 'DPRD')
+
+                        <div>
+                            <label for="kursi"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100 ltr:text-left rtl:text-right">
+                                Pilih Dapil
+                            </label>
+                            @if ($dapil)
+                                <div class="pb-2">
+                                    <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <span
+                                                    class="inline-block font-medium bg-green-500 text-white text-11 px-1.5 py-0.5  rounded">
+                                                    {{ $dapil['nama'] }}
+                                                    <button wire:click="hapusdapil()">
+                                                        <i class="align-middle mdi mdi-close"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
-                        <input type="text" wire:model.lazy="query" wire:keydown="refresh()"
-                            class="bg-gray-800/5 border border-gray-100 text-gray-900 dark:text-gray-100 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder-gray-400 dark:placeholder:text-zinc-100/60 dark:text-"
-                            placeholder="Ketik Dapil">
-                    </div>
-
-                    <div class="mt-1 position-absolute w-100">
-                        @if (!empty($query))
-                            @if (isset($results->id))
-                                <div wire:click="selectResult('{{ $results->id }}')" class="p-2 text-sm cursor-pointer">
-                                    {{ $results->nama }} </div>
                             @endif
-                        @endif
+                            <input type="text" wire:model.lazy="query" wire:keydown="refresh()"
+                                class="bg-gray-800/5 border border-gray-100 text-gray-900 dark:text-gray-100 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder-gray-400 dark:placeholder:text-zinc-100/60 dark:text-"
+                                placeholder="Ketik Dapil">
+                        </div>
 
-                    </div>
+                        <div class="mt-1 position-absolute w-100">
+                            @if (!empty($query))
+                                @if (isset($results->id))
+                                    <div wire:click="selectResult('{{ $results->id }}')" class="p-2 text-sm cursor-pointer">
+                                        {{ $results->nama }} </div>
+                                @endif
+                            @endif
 
+                        </div>
+
+                    @endif
                 </div>
             </div>
         </x-slot>
