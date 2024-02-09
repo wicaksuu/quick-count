@@ -21,6 +21,9 @@ class RouteController extends Controller
     {
         return view('admin.setting.tps');
     }
+    public function daftarTps(){
+        return view('admin.setting.daftarTps');
+    }
     public function settingPartai()
     {
         return view('admin.setting.partai');

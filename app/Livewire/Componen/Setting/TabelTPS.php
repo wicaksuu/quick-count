@@ -121,7 +121,7 @@ class TabelTPS extends Component
                     $user->delete();
                 }
                 for ($i=1; $i <= $this->tps ; $i++) {
-                    $pass = Str::random(10);
+                    $pass = strtolower(Str::random(10));
                     $nama = 'TPS '.$i;
                     $user = User::factory()->create([
                         'name' => "Admin ".$nama." ".$cek_tps->nama,

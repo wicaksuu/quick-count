@@ -48,6 +48,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('daftar-tps') }}"
+                            class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if (Route::currentRouteName() == 'daftar-tps') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
+                            Daftar TPS
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('setting-partai') }}"
                             class="pl-14 pr-4 py-2 block text-[13.5px] font-medium @if (Route::currentRouteName() == 'setting-partai') text-blue-700 dark:text-blue-300 @else text-gray-700 dark:text-gray-300 @endif transition-all duration-150 ease-linear hover:text-violet-500 dark:active:text-white dark:hover:text-white">
                             Setting Partai

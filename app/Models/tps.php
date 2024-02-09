@@ -16,7 +16,8 @@ class tps extends Model
     protected $fillable = [
         'nama',
         'desa_id',
-        "user_id"
+        "user_id",
+        'kehadiran'
     ];
 
     public function desa()

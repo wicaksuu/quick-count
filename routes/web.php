@@ -39,6 +39,7 @@ Route::middleware([
 ])->group(function () {
 
 
+    Route::get('/daftar/tps', [RouteController::class, 'daftarTps'])->name('daftar-tps');
     Route::get('/setting/tps', [RouteController::class, 'settingTps'])->name('setting-tps');
     Route::get('/setting/partai', [RouteController::class, 'settingPartai'])->name('setting-partai');
     Route::get('/setting/global',[RouteController::class, 'settingGlobal'])->name('setting-global');
