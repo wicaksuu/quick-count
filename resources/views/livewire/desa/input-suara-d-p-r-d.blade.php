@@ -83,7 +83,9 @@
                         <td class="py-2 text-center border-b">{{ $calon->no }}</td>
                         <td class="py-2 font-extrabold border-b">
                             @if ($calon->foto == null)
-                                <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-10 mx-auto rounded">
+                                @if (file_exists(asset('storage/' . $part->logo)))
+                                    <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-10 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $calon->foto) }}" alt="null" class="h-10 mx-auto rounded">
                             @endif
