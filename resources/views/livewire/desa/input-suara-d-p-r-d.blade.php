@@ -57,7 +57,9 @@
                         <td class="py-2 text-center border-b">-</td>
                         <td class="py-2 font-extrabold border-b">
                             @if ($calon->foto == null)
-                                <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-10 mx-auto rounded">
+                                @if (file_exists(asset('storage/' . $part->logo)))
+                                    <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-10 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $calon->foto) }}" alt="null" class="h-10 mx-auto rounded">
                             @endif
@@ -68,7 +70,7 @@
                         </td>
                     </tr>
                     <tr class="py-2">
-                        <td colspan="4" class="text-center items-center">
+                        <td colspan="4" class="items-center text-center">
                             <br>
                                 <hr>
                             <br>
@@ -102,8 +104,8 @@
         </table>
 
         @if ($verifikasi == true)
-            <div class="pt-10 pb-10 text-center items-center">
-                <p class="p-5"><i class="text-semibold text-yellow-400">Setelah data yang anda input telah selesai dan benar silahkan menekan tombol di bawah ini, setelah melakukan verifikasi data maka data tidak akan bisa dirubah</i></p>
+            <div class="items-center pt-10 pb-10 text-center">
+                <p class="p-5"><i class="text-yellow-400 text-semibold">Setelah data yang anda input telah selesai dan benar silahkan menekan tombol di bawah ini, setelah melakukan verifikasi data maka data tidak akan bisa dirubah</i></p>
                 <x-danger-button wire:click="OpenModal()" wire:loading.attr="disabled">
                     {{ __('Verifikasi Data') }}
                 </x-danger-button>
