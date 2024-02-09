@@ -87,7 +87,7 @@ class InputSuaraUser extends Component
         if ($this->SelectPartai == null) {
             $sel = null;
             $sel = DaftarPartai::where('no','13')->first();
-            dd($sel);
+
             if ($sel == null) {
                 $this->SelectPartai = $partai[0]->id;
             }else {
