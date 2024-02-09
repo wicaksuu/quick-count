@@ -32,7 +32,7 @@
                     <div class="text-extrabold">Input Suara {{ $set }}</div>
 
                     @if (isset($part->logo))
-                        @if (file_exists(asset('storage/' . $part->logo)))
+                        @if ($part->logo)
                             <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 mx-auto rounded">
                         @endif
                     @else
@@ -59,7 +59,7 @@
                         <td class="py-2 text-center border-b">-</td>
                         <td class="py-2 font-extrabold border-b">
                             @if ($calon->foto == null)
-                                @if (file_exists(asset('storage/' . $part->logo)))
+                                @if ($part->logo)
                                     <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-10 mx-auto rounded">
                                 @endif
                             @else
@@ -83,7 +83,7 @@
                         <td class="py-2 text-center border-b">{{ $calon->no }}</td>
                         <td class="py-2 font-extrabold border-b">
                             @if ($calon->foto == null)
-                                @if (file_exists(asset('storage/' . $part->logo)))
+                                @if ($part->logo)
                                     <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-10 mx-auto rounded">
                                 @endif
                             @else
