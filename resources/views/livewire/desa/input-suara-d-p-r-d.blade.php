@@ -32,7 +32,9 @@
                     <div class="text-extrabold">Input Suara {{ $set }}</div>
 
                     @if (isset($part->logo))
-                        <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                        @if (file_exists(asset('storage/' . $part->logo)))
+                            <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                        @endif
                     @else
                         <img src="{{ asset('storage/' . $logo) }}" alt="null" class="h-20 mx-auto rounded">
                     @endif
