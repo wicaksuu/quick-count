@@ -86,15 +86,11 @@ class InputSuaraUser extends Component
         }
         if ($this->SelectPartai == null) {
             $sel = null;
-            foreach ($partai as $value) {
-                if ($value->nama == 'Partai Demokrasi Indonesia Perjuangan') {
-                    $sel = $value->id;
-                }
-            }
+            $sel = DaftarPartai::where('nama','Partai Demokrasi Indonesia Perjuangan')->first();
             if ($sel == null) {
                 $this->SelectPartai = $partai[0]->id;
             }else {
-                $this->SelectPartai = $sel;
+                $this->SelectPartai = $sel->id;
             }
         }
         $type = $this->set;
