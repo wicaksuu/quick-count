@@ -85,7 +85,17 @@ class InputSuaraUser extends Component
             $this->SelectTPS = $tps->id;
         }
         if ($this->SelectPartai == null) {
-            $this->SelectPartai = $partai[0]->id;
+            $sel = null;
+            foreach ($partai as $value) {
+                if ($value->nama == 'Partai Demokrasi Indonesia Perjuangan') {
+                    $sel = $value->id;
+                }
+            }
+            if ($sel == null) {
+                $this->SelectPartai = $partai[0]->id;
+            }else {
+                $this->SelectPartai = $sel;
+            }
         }
         $type = $this->set;
         $pemilu = null;
