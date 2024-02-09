@@ -86,7 +86,7 @@
                         </td>
 
                         <td class="p-4 dark:text-zinc-50">
-                            {{ str_replace('@madiunkab.go.id','',$datas->user->email) }}
+                            {{ $datas->user->email }}
                         </td>
 
                         <td class="p-4 dark:text-zinc-50">

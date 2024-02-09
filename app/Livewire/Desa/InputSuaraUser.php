@@ -5,23 +5,22 @@ namespace App\Livewire\Desa;
 use App\Models\Calon;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use App\Models\wilayah\desa;
-use App\Models\wilayah\kecamatan;
 use App\Models\DaftarPartai;
 use App\Models\Setting;
 use App\Models\tps;
+use App\Models\User;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 
-class InputSuaraDPRD extends Component
+class InputSuaraUser extends Component
 {
     use WithFileUploads;
 
-    public $partai = [];
-    public $tps = [];
+    public $partai ;
+    public $tps ;
     public $calons;
 
-    public $desa,$kecamatan,$SelectPartai,$SelectTPS,$TotalSuara,$part,$dataTPS,$setting,$set,$collor,$pemilu,$ModalIsOpen=false,$verifikasi=true,$logo;
+    public $kehadiran=0,$desa,$kecamatan,$SelectPartai,$SelectTPS,$TotalSuara,$part,$dataTPS,$setting,$set,$collor,$pemilu,$ModalIsOpen=false,$verifikasi=true,$logo;
 
     protected $listeners = ['suaraUpdated'];
     public function suaraUpdated()
@@ -29,6 +28,13 @@ class InputSuaraDPRD extends Component
         $this->load();
     }
 
+    public function updateSelect($set){
+        if ($set == 'Replace') {
+            $this->set = null;
+        }else{
+            $this->set = $set;
+        }
+    }
     public function Verifikasi(){
         try {
             $calons = $this->calons;
@@ -51,40 +57,38 @@ class InputSuaraDPRD extends Component
     public function CloseModal(){
         $this->ModalIsOpen = false;
     }
-    public function export(){
-
-        $data = [
-            'title' => 'Contoh Export PDF dengan Laravel',
-            'content' => 'Ini adalah contoh konten untuk PDF.'
-        ];
-
+    public function updateKehadiran(){
+        try {
+            $tps = tps::find($this->tps->id);
+            $tps->kehadiran = $this->kehadiran;
+            $tps->save();
+            Toaster::success('Berhasil melakukan update kehadiran.');
+            $this->load();
+        } catch (\Throwable $th) {
+            Toaster::error($th->getMessage());
+        }
     }
-
     public function load(){
 
         $setting    = Setting::where('key', 'type')->where('status',true)->get();
-        $desa_id    = Auth::user()->current_team_id;
-        $desa       = desa::find($desa_id);
-        $kecamatan  = kecamatan::find($desa->kecamatan_id);
+        $user       = User::with('tps')->find(Auth::user()->id);
+        $desa       = $user->tps->desa;
+        $kecamatan  = $user->tps->kecamatan;
         $partai     = DaftarPartai::get();
-        $tps        = tps::where('desa_id',$desa_id)->get();
+        $tps        = $user->tps;
 
         $SelectPartai = null;
         $SelectTPS = null;
         $part = null;
         $TotalSuara=0;
         if ($this->SelectTPS == null) {
-            $this->SelectTPS = $tps[0]->id;
+            $this->SelectTPS = $tps->id;
         }
         if ($this->SelectPartai == null) {
             $this->SelectPartai = $partai[0]->id;
         }
-        if ($this->set == null) {
-            $type = Setting::where('key', 'type')->where('status',true)->first()->nama;
-        }else {
-            $type = $this->set;
-        }
-
+        $type = $this->set;
+        $pemilu = null;
         switch ($type) {
             case 'Presiden':
                 $pemilu = 'Pilkada';
@@ -111,35 +115,37 @@ class InputSuaraDPRD extends Component
                 $pemilu = 'Pilkada';
                 break;
         }
-        if ($pemilu == 'Pileg') {
-            if ($this->SelectPartai != null) {
-                $SelectPartai   = $this->SelectPartai;
-                $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('partai_id',$SelectPartai)->with('partai','dapil')->get();
-                $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('partai_id',$SelectPartai)->sum('suara');
-                if (isset($calons[0])) {
-                    $part           = $calons[0]->partai;
+        if ($pemilu) {
+            if ($pemilu == 'Pileg') {
+                if ($this->SelectPartai != null) {
+                    $SelectPartai   = $this->SelectPartai;
+                    $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('partai_id',$SelectPartai)->with('partai','dapil')->get();
+                    $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('partai_id',$SelectPartai)->sum('suara');
+                    if (isset($calons[0])) {
+                        $part           = $calons[0]->partai;
+                    }
+                }
+                if ($this->SelectTPS != null) {
+                    $SelectTPS      = $this->SelectTPS;
+                    $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->with('partai','dapil')->get();
+                    $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->sum('suara');
+                }
+
+                if ($this->SelectPartai != null && $this->SelectTPS != null) {
+                    $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->where('partai_id',$SelectPartai)->with('partai','dapil')->get();
+                    $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->where('partai_id',$SelectPartai)->sum('suara');
+                }
+            }else{
+                if ($this->SelectTPS != null) {
+                    $SelectTPS      = $this->SelectTPS;
+                    $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->get();
+                    $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->sum('suara');
                 }
             }
-            if ($this->SelectTPS != null) {
-                $SelectTPS      = $this->SelectTPS;
-                $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->with('partai','dapil')->get();
-                $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->sum('suara');
-            }
-
-            if ($this->SelectPartai != null && $this->SelectTPS != null) {
-                $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->where('partai_id',$SelectPartai)->with('partai','dapil')->get();
-                $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->where('partai_id',$SelectPartai)->sum('suara');
-            }
-        }else{
-            if ($this->SelectTPS != null) {
-                $SelectTPS      = $this->SelectTPS;
-                $calons         = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->get();
-                $TotalSuara     = Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$SelectTPS)->sum('suara');
-            }
-
         }
         $modal = $this->ModalIsOpen;
         $this->reset();
+        $this->kehadiran=$tps->kehadiran;
         $this->ModalIsOpen=$modal;
         $this->pemilu=$pemilu;
         $this->set=$type;
@@ -152,7 +158,10 @@ class InputSuaraDPRD extends Component
         $this->tps = $tps;
         $this->SelectPartai = $SelectPartai;
         $this->SelectTPS = $SelectTPS;
-        $this->calons = $calons;
+
+        if ($pemilu) {
+            $this->calons = $calons;
+        }
         $this->part = $part;
         if (isset($calons[0]->lock)) {
             if ($calons[0]->lock == true) {
@@ -162,7 +171,7 @@ class InputSuaraDPRD extends Component
         switch ($type) {
             case 'Presiden':
                 $this->logo ="indonesia.svg";
-                $this->collor = 'bg-grey-700';
+                $this->collor = 'bg-gray-700';
                 break;
             case 'DPR RI':
                 $this->logo ="indonesia.svg";
@@ -210,6 +219,6 @@ class InputSuaraDPRD extends Component
     public function render()
     {
         $this->load();
-        return view('livewire.desa.input-suara-d-p-r-d');
+        return view('livewire.desa.input-suara-user');
     }
 }

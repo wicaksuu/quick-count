@@ -100,7 +100,7 @@
                             </td>
 
                             <td class="p-4 dark:text-zinc-50">
-                                {{ str_replace('@madiunkab.go.id','',$tps->user->email) }}
+                                {{ $tps->user->email }}
                             </td>
 
                             <td class="p-4 dark:text-zinc-50">

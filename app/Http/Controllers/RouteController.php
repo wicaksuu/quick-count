@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\tps;
+use App\Models\User;
 use App\Models\wilayah\kecamatan;
 
 class RouteController extends Controller
@@ -46,6 +47,17 @@ class RouteController extends Controller
                 ];
                 return view('desa.dashboard',$data);
                 break;
+
+                case 'user':
+                    $user = User::with('tps')->find(Auth::user()->id);
+                    $data = [
+                        'kecamatan'=>$user->tps->kecamatan,
+                        'desa'=>$user->tps->desa,
+                        'tps'=>$user->tps
+
+                    ];
+                    return view('user.dashboard',$data);
+                    break;
 
         }
     }
