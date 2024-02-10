@@ -125,7 +125,7 @@ class TabelTPS extends Component
                     $nama = 'TPS '.$i;
                     $user = User::factory()->create([
                         'name' => "Admin ".$nama." ".$cek_tps->nama,
-                        'email' => strtolower(str_replace(' ','', $nama."_".$cek_tps->nama."_".$cek_tps->kecamatan->nama))."_".$pass.ENV("MAIL","@madiunkab.go.id"),
+                        'email' => strtolower(str_replace(' ','', $nama."_".$cek_tps->nama."_".$cek_tps->kecamatan->nama)).ENV("MAIL","@madiunkab.go.id"),
                         'role' => 'user',
                         'is_dumy'=> true,
                         'password' => bcrypt($pass),
