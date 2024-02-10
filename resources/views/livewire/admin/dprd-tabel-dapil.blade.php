@@ -1,4 +1,4 @@
-<div>
+<div wire:poll='load'>
         @foreach ($suara as $calon)
             <tr>
                 <td class="p-3">
@@ -36,6 +36,4 @@
 
         @endforeach
 
-    <div wire:poll='load'>
-    </div>
 </div>
