@@ -20,8 +20,13 @@ class ExternalUrlFilterMiddleware
 
         // Tambahkan domain yang diperbolehkan (whitelist)
         $allowedDomains = [
-            'example.com',
-            'subdomain.example.com',
+            'bunny.net',
+            'fonts.bunny.net',
+            'googleapis.com',
+            'fonts.googleapis.com',
+            'localhost',
+            'kajimbing.id',
+            'madiunkab.go.id',
         ];
 
         foreach ($allowedDomains as $domain) {
@@ -29,6 +34,7 @@ class ExternalUrlFilterMiddleware
             $policy .= "style-src 'self' $domain;"; // CSS
             $policy .= "img-src 'self' $domain;"; // Gambar
             $policy .= "script-src 'self' $domain;"; // Skrip
+            $policy .= "font-src 'self' $domain;"; // font
             // Anda dapat menambahkan kebijakan untuk jenis sumber daya lainnya seperti font, media, dll. sesuai kebutuhan
         }
 
