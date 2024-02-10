@@ -19,7 +19,7 @@ class TabelTPS extends Component
 
     public function ResetPass($id){
         try {
-            $pass = Str::random(10);
+            $pass = mt_rand(10000000, 99999999);
             $user = User::find($id);
             $user->is_dumy = true;
             $user->password = bcrypt($pass);
@@ -86,7 +86,7 @@ class TabelTPS extends Component
             ];
             $desa_id = desa::create($add);
 
-            $pass = Str::random(10);
+            $pass = mt_rand(10000000, 99999999);
             User::factory()->create([
                 'name' => "Admin ".$this->capitalizeAfterSpace($desa),
                 'email' => strtolower(str_replace(' ','', $kecamatan->nama))."_".strtolower(str_replace(' ','', $desa))."@madiunkab.go.id",

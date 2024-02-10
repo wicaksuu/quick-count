@@ -76,7 +76,7 @@ class DaftarTps extends Component
                 $nama = $this->NamaTPS.' '.$this->selectDesa->nama;
                 $user = User::factory()->create([
                     'name' => "Admin ".$nama." ",
-                    'email' => strtolower(str_replace(' ','', $this->NamaTPS.'_'.$this->selectDesa->nama))."_".$pass."@madiunkab.go.id",
+                    'email' => strtolower(str_replace(' ','', $this->NamaTPS.'_'.$this->selectDesa->nama.'_'.$this->selectDesa->kecamatan->nama))."@madiunkab.go.id",
                     'role' => 'user',
                     'is_dumy'=> true,
                     'password' => bcrypt($pass),
@@ -115,7 +115,7 @@ class DaftarTps extends Component
 
     public function ResetPass($id){
         try {
-            $pass = Str::random(10);
+            $pass = mt_rand(10000000, 99999999);
             $user = User::find($id);
             $user->is_dumy = true;
             $user->password = bcrypt($pass);

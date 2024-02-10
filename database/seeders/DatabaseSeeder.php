@@ -25,6 +25,22 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('Jack03061997')
         ]);
 
+        \App\Models\User::factory()->create([
+            'name' => 'Fandy',
+            'email' => 'amirul@wicak.id',
+            'role' => 'admin',
+            'is_dumy'=> true,
+            'password' => bcrypt('123456789')
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Amirul',
+            'email' => 'amirul@wicak.id',
+            'role' => 'admin',
+            'is_dumy'=> true,
+            'password' => bcrypt('123456789')
+        ]);
+
         $this->call([
             ProvinsiSeeder::class,
             KotaSeeder::class,
