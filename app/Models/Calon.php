@@ -25,6 +25,27 @@ class Calon extends Model
         'is_active'
     ];
 
+    public static function suaraTerbanyak($type,$i=1)
+    {
+        $data = static::select('key')
+            ->selectRaw('SUM(suara) as total_suara')
+            ->where('type', $type)
+            ->groupBy('key')
+            ->orderByDesc('total_suara')
+            ->take($i)
+            ->first();
+        if ($data) {
+            if (isset($data[0])) {
+                $key = $data[0]->key;
+            }else{
+                $key = $data->key;
+            }
+            $calon = Calon::where('key',$key)->with('partai','dapil')->first();
+            return ['calon' => $calon,'total_suara'=>$data->total_suara];
+        }else{
+            return null;
+        }
+    }
 
     public function dapil()
     {
