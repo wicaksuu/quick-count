@@ -43,9 +43,7 @@ Dashboard Admin
     </div>
     <div class="m-3">
         <div class="container-fluid px-[0.625rem]">
-            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3">
-                @livewire('admin.dprd-dapil')
-            </div>
+            @livewire('admin.dprd-dapil')
         </div>
     </div>
 </div>
