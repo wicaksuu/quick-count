@@ -13,11 +13,7 @@
                     <div class="tab-content">
                         <div class="block tab-pane" id="all-tab1" role="tabpanel">
                             <div class="px-3" data-simplebar style="max-height: 352px;">
-                                <table class="table w-full">
-                                    <tbody>
-                                        @livewire('admin.dprd-tabel-dapil',['dapil'=>$dapil])
-                                    </tbody>
-                                </table>
+                                @livewire('admin.dprd-tabel-dapil',['dapil'=>$dapil])
                             </div>
                         </div>
 

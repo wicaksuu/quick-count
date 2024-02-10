@@ -9,7 +9,7 @@ class DprdTabelDapil extends Component
 {
     public $dapil,$suara=[];
 
-    public function load(){
+    public function loadDprd(){
         $dapil = $this->dapil;
         $this->reset();
         $this->dapil = $dapil;
@@ -21,7 +21,6 @@ class DprdTabelDapil extends Component
     }
     public function render()
     {
-        $this->load();
         return view('livewire.admin.dprd-tabel-dapil');
     }
 }

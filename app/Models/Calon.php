@@ -61,7 +61,11 @@ class Calon extends Model
             $result = [];
             foreach ($data as $item) {
                 $calon = Calon::where('key', $item->key)->with('partai', 'dapil')->first();
-                $persentase = number_format($item->total_suara / $jumlah_suara * 100, 2);
+                if ($jumlah_suara != 0) {
+                    $persentase = number_format($item->total_suara / $jumlah_suara * 100, 2);
+                }else{
+                    $persentase = 0;
+                }
                 if ($calon) {
                     $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara,'jumlah_suara'=>$jumlah_suara,'persentase_suara'=>$persentase];
                 }
