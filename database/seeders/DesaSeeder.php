@@ -58,7 +58,7 @@ class DesaSeeder extends Seeder
                     $pass = mt_rand(10000000, 99999999);
                     User::factory()->create([
                         'name' => "Admin ".$this->capitalizeAfterSpace($row[2]),
-                        'email' => strtolower(str_replace(' ','', $kec->nama))."_".strtolower(str_replace(' ','', $row[2]))."@madiunkab.go.id",
+                        'email' => strtolower(str_replace(' ','', $kec->nama))."_".strtolower(str_replace(' ','', $row[2])).ENV("MAIL","@madiunkab.go.id"),
                         'role' => 'desa',
                         'current_team_id'=>$row[0],
                         'is_dumy'=> true,

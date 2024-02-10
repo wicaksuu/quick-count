@@ -76,7 +76,7 @@ class DaftarTps extends Component
                 $nama = $this->NamaTPS.' '.$this->selectDesa->nama;
                 $user = User::factory()->create([
                     'name' => "Admin ".$nama." ",
-                    'email' => strtolower(str_replace(' ','', $this->NamaTPS.'_'.$this->selectDesa->nama.'_'.$this->selectDesa->kecamatan->nama))."@madiunkab.go.id",
+                    'email' => strtolower(str_replace(' ','', $this->NamaTPS.'_'.$this->selectDesa->nama.'_'.$this->selectDesa->kecamatan->nama)).ENV("MAIL","@madiunkab.go.id"),
                     'role' => 'user',
                     'is_dumy'=> true,
                     'password' => bcrypt($pass),

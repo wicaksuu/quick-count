@@ -89,7 +89,7 @@ class TabelTPS extends Component
             $pass = mt_rand(10000000, 99999999);
             User::factory()->create([
                 'name' => "Admin ".$this->capitalizeAfterSpace($desa),
-                'email' => strtolower(str_replace(' ','', $kecamatan->nama))."_".strtolower(str_replace(' ','', $desa))."@madiunkab.go.id",
+                'email' => strtolower(str_replace(' ','', $kecamatan->nama))."_".strtolower(str_replace(' ','', $desa)).ENV("MAIL","@madiunkab.go.id"),
                 'role' => 'desa',
                 'current_team_id'=>$desa_id->id,
                 'is_dumy'=> true,
@@ -125,7 +125,7 @@ class TabelTPS extends Component
                     $nama = 'TPS '.$i;
                     $user = User::factory()->create([
                         'name' => "Admin ".$nama." ".$cek_tps->nama,
-                        'email' => strtolower(str_replace(' ','', $nama.$cek_tps->nama))."_".$pass."@madiunkab.go.id",
+                        'email' => strtolower(str_replace(' ','', $nama.$cek_tps->nama))."_".$pass.ENV("MAIL","@madiunkab.go.id"),
                         'role' => 'user',
                         'is_dumy'=> true,
                         'password' => bcrypt($pass),
