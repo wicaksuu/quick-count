@@ -114,18 +114,18 @@ class TabelTPS extends Component
             try {
                 DB::beginTransaction();
 
-                $cek_tps = desa::with('tpss')->where('id',$desa_id)->first();
+                $cek_tps = desa::with('tpss','kecamatan')->where('id',$desa_id)->first();
                 foreach ($cek_tps->tpss as $cek) {
                     tps::destroy($cek->id);
                     $user =  User::find($cek->user_id);
                     $user->delete();
                 }
                 for ($i=1; $i <= $this->tps ; $i++) {
-                    $pass = strtolower(Str::random(10));
+                    $pass = mt_rand(10000000, 99999999);
                     $nama = 'TPS '.$i;
                     $user = User::factory()->create([
                         'name' => "Admin ".$nama." ".$cek_tps->nama,
-                        'email' => strtolower(str_replace(' ','', $nama.$cek_tps->nama))."_".$pass.ENV("MAIL","@madiunkab.go.id"),
+                        'email' => strtolower(str_replace(' ','', $nama."_".$cek_tps->nama."_".$cek_tps->kecamatan->nama))."_".$pass.ENV("MAIL","@madiunkab.go.id"),
                         'role' => 'user',
                         'is_dumy'=> true,
                         'password' => bcrypt($pass),
