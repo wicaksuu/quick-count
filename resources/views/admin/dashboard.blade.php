@@ -43,7 +43,7 @@ Dashboard Admin
     </div>
     <div class="m-3">
         <div class="container-fluid px-[0.625rem]">
-            @livewire('admin.dprd-dapil')
+            @include('admin.dprd.dashboard')
         </div>
     </div>
 </div>

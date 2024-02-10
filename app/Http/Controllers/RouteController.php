@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DaftarPartai;
+use App\Models\dapilDPRD;
 use App\Models\wilayah\desa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +34,8 @@ class RouteController extends Controller
 
         switch (Auth::user()->role) {
             case 'admin':
-                return view('admin.dashboard');
+                $dapils = dapilDPRD::get();
+                return view('admin.dashboard',['dapils'=> $dapils]);
                 break;
 
             case 'desa':
