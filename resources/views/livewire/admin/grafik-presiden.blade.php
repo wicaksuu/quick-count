@@ -59,11 +59,18 @@
 
                 grafikPresiden.suara.forEach((presiden) => {
                     var idPresiden = 'Presiden' + presiden.calon.no;
+                    var idPresiden2 = '2Presiden' + presiden.calon.no;
                     var idSuaraPresiden = 'SuaraPresiden' + presiden.calon.no;
+                    var idSuaraPresiden2 = '2SuaraPresiden' + presiden.calon.no;
                     var divPresiden = document.getElementById(idPresiden);
+                    var divPresiden2 = document.getElementById(idPresiden2);
                     var divSuaraPresiden = document.getElementById(idSuaraPresiden);
+                    var divSuaraPresiden2 = document.getElementById(idSuaraPresiden2);
+
                     divPresiden.innerHTML = '('+presiden.calon.no+') '+presiden.calon.nama;
+                    divPresiden2.innerHTML = '('+presiden.calon.no+') '+presiden.calon.nama;
                     divSuaraPresiden.innerHTML = '('+presiden.persentase_suara+'%) '+presiden.total_suara+' Suara';
+                    divSuaraPresiden2.innerHTML = '('+presiden.persentase_suara+'%) '+presiden.total_suara+' Suara';
                 });
             });
         });
