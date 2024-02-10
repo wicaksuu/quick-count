@@ -41,5 +41,10 @@ Dashboard Admin
             @livewire('admin.dashboard')
         </div>
     </div>
+    <div class="m-3">
+        <div class="container-fluid px-[0.625rem]">
+            @livewire('admin.dprd-dapil')
+        </div>
+    </div>
 </div>
 @endsection
