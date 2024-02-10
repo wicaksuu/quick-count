@@ -4,6 +4,9 @@
             @foreach ($suara as $calon)
                 <tr>
                     <td class="p-3">
+                        #{{ $loop->iteration }}
+                    </td>
+                    <td class="p-3">
                         <div>
                             @if ($calon['calon']->foto == null)
                                 <img src="{{ asset('storage/' . $calon['calon']->partai->logo) }}" alt="null" class="h-10 mx-auto rounded">

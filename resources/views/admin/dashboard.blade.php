@@ -43,8 +43,15 @@ Dashboard Admin
     </div>
     <div class="m-3">
         <div class="container-fluid px-[0.625rem]">
+            @include('admin.pilkada.grafik-presiden')
+        </div>
+    </div>
+    <div class="m-3">
+        <div class="container-fluid px-[0.625rem]">
             @include('admin.dprd.dashboard')
         </div>
     </div>
 </div>
+
 @endsection
+
