@@ -73,7 +73,7 @@ class RouteController extends Controller
                 break;
             case 'setting-calon-dpd-ri':
                 $data = 'DPD RI';
-                $type = 'Pileg';
+                $type = 'Pilkada';
                 break;
             case 'setting-calon-dprd-provinsi':
                 $data = 'DPRD Provinsi';
@@ -117,7 +117,7 @@ class RouteController extends Controller
                 break;
             case 'dpd-ri':
                 $data = 'DPD RI';
-                $type = 'Pileg';
+                $type = 'Pilkada';
                 break;
             case 'dprd-provinsi':
                 $data = 'DPRD Provinsi';
