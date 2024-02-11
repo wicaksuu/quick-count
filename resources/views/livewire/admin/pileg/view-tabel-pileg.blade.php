@@ -1,7 +1,7 @@
 <div>
     <script>
-        setInterval(() => Livewire.dispatch('updateDataFilter'), 1000);
         document.addEventListener('livewire:init', () => {
+            setInterval(() => Livewire.dispatch('updateDataFilter'), 1000);
             Livewire.on('update', (event) => {
                 var Calons = JSON.parse(event);
                 if (Calons.data.data) {
