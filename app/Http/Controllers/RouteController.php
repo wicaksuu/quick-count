@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calon;
 use App\Models\DaftarPartai;
 use App\Models\dapilDPRD;
+use App\Models\tps;
 use App\Models\wilayah\desa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\wilayah\kecamatan;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
@@ -154,5 +158,50 @@ class RouteController extends Controller
     public function settingGlobal()
     {
         return view('admin.setting.global');
+    }
+
+    public function export($type){
+
+        switch ($type) {
+            case 'Presiden':
+                $pemilu = 'Pilkada';
+                break;
+            case 'DPR RI':
+                $pemilu = 'Pileg';
+                break;
+            case 'DPD RI':
+                $pemilu = 'Pileg';
+                break;
+            case 'DPRD Provinsi':
+                $pemilu = 'Pileg';
+                break;
+            case 'DPRD':
+                $pemilu = 'Pileg';
+                break;
+            case 'Gubernur':
+                $pemilu = 'Pilkada';
+                break;
+            case 'Bupati':
+                $pemilu = 'Pilkada';
+                break;
+            case 'Walikota':
+                $pemilu = 'Pilkada';
+                break;
+        }
+        $partais    = DaftarPartai::get();
+        $desa_id    = Auth::user()->current_team_id;
+        $desa       = desa::find($desa_id);
+        $tpss       = tps::where('desa_id',$desa_id)->get();
+        $title      = 'Export '.$type.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama;
+        $data = [
+            'title' => $title,
+            'type' => $type,
+            'tpss' => $tpss,
+            'desa' => $desa,
+            'pemilu'=>$pemilu,
+            'partais'=>$partais
+        ];
+        $pdf        = Pdf::loadView('desa/dprd/exportPerDesa', $data);
+        return $pdf->stream($title.'.pdf');
     }
 }

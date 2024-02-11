@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center space-x-4">
+    <div class="flex flex-col md:flex-row md:items-start md:space-x-4 gap-2">
         <select wire:model="set" wire:click="updateSelectPartai" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
             @foreach ($setting as $settings)
                 <option value="{{ $settings->nama }}">{{ $settings->nama }}</option>
@@ -17,9 +17,11 @@
                 <option value="{{ $tpss->id }}">{{ $tpss->nama }}</option>
             @endforeach
         </select>
-        <x-button class="ml-auto" wire:click='export'>
+        <a href="{{ route('export',['type'=>$set]) }}" target="__blank">
+            <x-button class="ml-auto" class="mt-1">
             {{ __('Export') }}
         </x-button>
+    </a>
     </div>
 
 
@@ -36,7 +38,11 @@
                             <img src="{{ asset('storage/' . $part->logo) }}" alt="null" class="h-20 mx-auto rounded">
                         @endif
                     @else
-                        <img src="{{ asset('storage/' . $logo) }}" alt="null" class="h-20 mx-auto rounded">
+                        @if ($logo!='indonesia.svg')
+                            <img src="{{ asset('storage/' . $logo) }}" alt="null" class="h-20 mx-auto rounded">
+                        @else
+                            <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                        @endif
                     @endif
                     @isset($calons[0]->dapil->nama)
                         <p>{{ $calons[0]->dapil->nama }}</p>
@@ -45,7 +51,7 @@
 
               </th>
             </tr>
-            <tr class="{!! $collor !!}  text-white">
+            <tr class="text-white {!! $collor !!}">
               <th class="py-2 border-b">No. Urut</th>
               <th class="py-2 border-b">Foto</th>
               <th class="px-4 py-2 border-b">Nama Calon</th>

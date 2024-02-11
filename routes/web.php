@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
     return view('auth.login');
 });
+
 Route::get('/halaman-error', function(){
     return back();
 })->name('halaman-error');
@@ -27,6 +28,7 @@ Route::middleware([
     'verified',
     'isDumy:false'
 ])->group(function () {
+    Route::get('/export/{type}', [RouteController::class, 'export'])->name('export');
     Route::get('/dashboard', [RouteController::class, 'dashboard'])->name('dashboard');
 });
 
@@ -77,4 +79,6 @@ Route::middleware([
     // Route::get('/dashboard/walikota', [RouteController::class, 'Overview'])->name('dashboard-walikota');
     Route::get('/dashboard/{id}', [RouteController::class, 'Overview'])->name('dashboard-over-view');
 
+
 });
+

@@ -13,6 +13,8 @@ use App\Models\tps;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class InputSuaraDPRD extends Component
 {
     use WithFileUploads;
@@ -51,12 +53,10 @@ class InputSuaraDPRD extends Component
     public function CloseModal(){
         $this->ModalIsOpen = false;
     }
+
     public function export(){
 
-        $data = [
-            'title' => 'Contoh Export PDF dengan Laravel',
-            'content' => 'Ini adalah contoh konten untuk PDF.'
-        ];
+        return redirect()->route('export',['type' => $this->set]);
 
     }
 
@@ -162,7 +162,7 @@ class InputSuaraDPRD extends Component
         switch ($type) {
             case 'Presiden':
                 $this->logo ="indonesia.svg";
-                $this->collor = 'bg-grey-700';
+                $this->collor = 'bg-gray-700';
                 break;
             case 'DPR RI':
                 $this->logo ="indonesia.svg";
