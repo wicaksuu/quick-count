@@ -64,8 +64,11 @@
                                     <img src="{{ asset('storage/' . $part->logo) }}" alt="null"
                                         class="h-20 mx-auto rounded">
                                 @else
-                                    <img src="{{ asset('storage/' . $logo) }}" alt="null"
-                                        class="h-20 mx-auto rounded">
+                                    @if ($logo!='indonesia.svg')
+                                        <img src="{{ asset('storage/' . $logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                    @else
+                                        <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                    @endif
                                 @endif
                                 @isset($calons[0]->dapil->nama)
                                     <p>{{ $calons[0]->dapil->nama }}</p>
