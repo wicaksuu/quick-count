@@ -1,10 +1,13 @@
 <div>
     <script>
+        setInterval(() => Livewire.dispatch('updateDataFilter'), 1000);
         document.addEventListener('livewire:init', () => {
             Livewire.on('update', (event) => {
                 var Calons = JSON.parse(event);
-                parseDataToTable(Calons.data.data,Calons.key);
+                if (Calons.data.data) {
+                    parseDataToTable(Calons.data.data,Calons.key);
 
+                }
             });
         });
 
@@ -13,7 +16,6 @@
             tableBody.innerHTML = "";
 
             data.forEach(function(item) {
-                console.log(item);
                 var row = document.createElement("tr");
                 row.className = "text-gray-600border-b border-gray-50 dark:border-zinc-600";
 

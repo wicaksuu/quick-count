@@ -29,6 +29,7 @@ class SelectDapilKecDesa extends Component
             $dapil = dapilDPRD::find($this->pilihDapil);
             $this->kecamatans = $dapil->kecamatans;
             $this->dispatch('GetDapil',dapil_id: $this->pilihDapil);
+            $this->pilihKecamatan=null;
         }
     }
     public function GetDataKecamatan(){
@@ -36,6 +37,7 @@ class SelectDapilKecDesa extends Component
             $kecamatan = kecamatan::find($this->pilihKecamatan);
             $this->desas = $kecamatan->desas;
             $this->dispatch('GetKecamatan',kecamatan_id: $this->pilihKecamatan);
+            $this->pilihDesa=null;
         }
     }
     public function GetDataDesa(){
@@ -43,6 +45,7 @@ class SelectDapilKecDesa extends Component
             $desa = desa::with('tpss')->find($this->pilihDesa);
             $this->tpss = $desa->tpss;
             $this->dispatch('GetDesa',desa_id: $this->pilihDesa);
+            $this->pilihtps=null;
 
         }
     }

@@ -13,50 +13,76 @@ use Masmerise\Toaster\Toaster;
 
 class ViewTabelPileg extends Component
 {
-    public $calons=[];
-    public $type,$key,$dapil_id=null,$kecamatan_id=null,$desa_id=null,$tps_id=null;
+    public $calons = [];
+    public $type,
+        $key,
+        $dapil_id = null,
+        $kecamatan_id = null,
+        $desa_id = null,
+        $tps_id = null;
 
     #[On('GetDapil')]
-    public function GetDapil($dapil_id){
-        $dapil = dapilDPRD::find($dapil_id);
-        $this->dapil_id = $dapil_id;
-        $calon['data'] = Calon::getSuara( $this->type,$dapil_id);
-        $calon['key'] = $this->key;
-        $this->dispatch('update', json_encode($calon));
-        Toaster::success('Berhasil memilih dapil '.$dapil->nama);
+    public function GetDapil($dapil_id)
+    {
+        if ($dapil_id) {
+            $dapil = dapilDPRD::find($dapil_id);
+            $this->dapil_id = $dapil_id;
+            $calon['data'] = Calon::getSuara($this->type, $dapil_id);
+            $calon['key'] = $this->key;
+            $this->dispatch('update', json_encode($calon));
+            Toaster::success('Berhasil memilih dapil ' . $dapil->nama);
+        }
     }
 
     #[On('GetKecamatan')]
-    public function GetKecamatan($kecamatan_id){
-        $kecamatan = kecamatan::find($kecamatan_id);
-        $this->kecamatan_id = $kecamatan_id;
-        $calon['data'] = Calon::getSuara( $this->type,$this->dapil_id,$this->kecamatan_id,null,null,null,10,1);
-        $calon['key'] = $this->key;
-        $this->dispatch('update', json_encode($calon));
-        Toaster::success('Berhasil memilih kecamatan '.$kecamatan->nama);
+    public function GetKecamatan($kecamatan_id)
+    {
+        if ($kecamatan_id) {
+            $kecamatan = kecamatan::find($kecamatan_id);
+            $this->kecamatan_id = $kecamatan_id;
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, null, null, null, 100, 1);
+            $calon['key'] = $this->key;
+            $this->dispatch('update', json_encode($calon));
+            Toaster::success('Berhasil memilih kecamatan ' . $kecamatan->nama);
+        }
     }
 
     #[On('GetDesa')]
-    public function GetDesa($desa_id){
-        $desa = desa::find($desa_id);
-        $this->desa_id = $desa_id;
-        $calon['data'] = Calon::getSuara( $this->type,$this->dapil_id,$this->kecamatan_id,$this->desa_id,null,null,10,1);
-        $calon['key'] = $this->key;
-        $this->dispatch('update', json_encode($calon));
-        Toaster::success('Berhasil memilih desa '.$desa->nama);
+    public function GetDesa($desa_id)
+    {
+        if ($desa_id) {
+            $desa = desa::find($desa_id);
+            $this->desa_id = $desa_id;
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, null, null, 100, 1);
+            $calon['key'] = $this->key;
+            $this->dispatch('update', json_encode($calon));
+            Toaster::success('Berhasil memilih desa ' . $desa->nama);
+        }
     }
 
     #[On('GetTps')]
-    public function GetTps($tps_id){
-        $tps = tps::find($tps_id);
-        $this->tps_id = $tps_id;
-        $calon['data'] = Calon::getSuara( $this->type,$this->dapil_id,$this->kecamatan_id,$this->desa_id,$tps_id,null,10,1);
-        $calon['key'] = $this->key;
-        $this->dispatch('update', json_encode($calon));
-        Toaster::success('Berhasil memilih tps '.$tps->nama);
+    public function GetTps($tps_id)
+    {
+        if ($tps_id) {
+            $tps = tps::find($tps_id);
+            $this->tps_id = $tps_id;
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $tps_id, null, 100, 1);
+            $calon['key'] = $this->key;
+            $this->dispatch('update', json_encode($calon));
+            Toaster::success('Berhasil memilih tps ' . $tps->nama);
+        }
     }
 
-    public function mount($type,$key){
+    #[On('updateDataFilter')]
+    public function updateDataFilter()
+    {
+        $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, null, 100, 1);
+        $calon['key'] = $this->key;
+        $this->dispatch('update', json_encode($calon));
+    }
+
+    public function mount($type, $key)
+    {
         $this->type = $type;
         $this->key = $key;
     }

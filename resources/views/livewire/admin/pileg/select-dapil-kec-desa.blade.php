@@ -30,9 +30,9 @@
             </select>
         </div>
         <div>
-            <select wire:model="pilihtps" wire:click='GetDataDesa'
+            <select wire:model="pilihtps" wire:click='GetDataTps'
                 class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-                <option value="">Pilih Tps</option>
+                <option value="">Pilih TPS</option>
                     @foreach ($tpss as $tps)
                         <option value="{{ $tps->id }}">{{ $tps->nama }}</option>
                     @endforeach
