@@ -10,69 +10,89 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 class Calon extends Model
 {
     use HasFactory, HasUlids;
-    protected $fillable = [
-        'no',
-        'nama',
-        'key',
-        'type',
-        'foto',
-        'suara',
-        'tps_id',
-        'partai_id',
-        'dapil_id',
-        'tahun',
-        'lock',
-        'is_active'
-    ];
+    protected $fillable = ['no', 'nama', 'key', 'type', 'foto', 'suara', 'tps_id', 'partai_id', 'dapil_id', 'tahun', 'lock', 'is_active'];
 
     public static function suaraTerbanyak($type)
     {
-        $data = static::select('key')
-            ->selectRaw('SUM(suara) as total_suara')
-            ->where('type', $type)
-            ->groupBy('key')
-            ->orderByDesc('total_suara')
-            ->first();
+        $data = static::select('key')->selectRaw('SUM(suara) as total_suara')->where('type', $type)->groupBy('key')->orderByDesc('total_suara')->first();
         if ($data) {
             if (isset($data[0])) {
                 $key = $data[0]->key;
-            }else{
+            } else {
                 $key = $data->key;
             }
-            $calon = Calon::where('key',$key)->with('partai','dapil')->first();
-            return ['calon' => $calon,'total_suara'=>$data->total_suara];
-        }else{
+            $calon = Calon::where('key', $key)->with('partai', 'dapil')->first();
+            return ['calon' => $calon, 'total_suara' => $data->total_suara];
+        } else {
             return null;
         }
     }
 
-    public static function suaraTerbanyakDapilDPRD($type,$dapil_id,$i=1)
+    public static function suaraTerbanyakDapilDPRD($type, $dapil_id, $i = 1)
     {
-        $data = static::select('key')
-            ->selectRaw('SUM(suara) as total_suara')
-            ->where('dapil_id', $dapil_id)
-            ->where('type', $type)
-            ->groupBy('key')
-            ->orderByDesc('total_suara')
-            ->take($i)
-            ->get();
-            $jumlah_suara = Calon::where('dapil_id', $dapil_id)->where('type', $type)->sum('suara');
+        $data = static::select('key')->selectRaw('SUM(suara) as total_suara')->where('dapil_id', $dapil_id)->where('type', $type)->groupBy('key')->orderByDesc('total_suara')->take($i)->get();
+        $jumlah_suara = Calon::where('dapil_id', $dapil_id)->where('type', $type)->sum('suara');
         if ($data) {
             $result = [];
             foreach ($data as $item) {
-                $calon = Calon::where('key', $item->key)->with('partai', 'dapil')->first();
+                $calon = Calon::where('key', $item->key)
+                    ->with('partai', 'dapil')
+                    ->first();
                 if ($jumlah_suara != 0) {
-                    $persentase = number_format($item->total_suara / $jumlah_suara * 100, 2);
-                }else{
+                    $persentase = number_format(($item->total_suara / $jumlah_suara) * 100, 2);
+                } else {
                     $persentase = 0;
                 }
                 if ($calon) {
-                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara,'jumlah_suara'=>$jumlah_suara,'persentase_suara'=>$persentase];
+                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara, 'jumlah_suara' => $jumlah_suara, 'persentase_suara' => $persentase];
                 }
             }
             return $result;
-        }else{
+        } else {
             return null;
+        }
+    }
+    public static function getSuara($type, $dapil_id = null, $tps_id = null, $nama = null, $perPage = 10, $page = 1)
+    {
+        $query = static::select('key')->selectRaw('SUM(suara) as total_suara');
+
+        if ($tps_id) {
+            $query->where('tps_id', $tps_id);
+        }
+        if ($dapil_id) {
+            $query->where('dapil_id', $dapil_id);
+        }
+
+        if ($nama) {
+            $query->whereHas('calon', function ($query) use ($nama) {
+                $query->where('nama', 'like', '%' . $nama . '%');
+            });
+        }
+
+        $query->where('type', $type)->groupBy('key')->orderByDesc('total_suara');
+
+        $data = $query->paginate($perPage, ['*'], 'page', $page);
+
+        $jumlah_suara = Calon::where('dapil_id', $dapil_id)->where('type', $type)->sum('suara');
+
+        if ($data->isNotEmpty()) {
+            $result = [];
+            foreach ($data as $item) {
+                $calon = Calon::where('key', $item->key)
+                    ->with('partai', 'dapil')
+                    ->first();
+                if ($jumlah_suara != 0) {
+                    $persentase = number_format(($item->total_suara / $jumlah_suara) * 100, 2);
+                } else {
+                    $persentase = 0;
+                }
+                if ($calon) {
+                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara, 'jumlah_suara' => $jumlah_suara, 'persentase_suara' => $persentase];
+                }
+            }
+            return ['data' => $result, 'pagination' => $data];
+        } else {
+            return ['data' => null, 'pagination' => null];
         }
     }
 
@@ -94,7 +114,7 @@ class Calon extends Model
             'id', // Foreign key on dapilDPRD table
             'dapil_id', // Foreign key on kecamatan table
             'dapil_id', // Local key on Calon model
-            'id' // Local key on dapilDPRD model
+            'id', // Local key on dapilDPRD model
         );
     }
 }

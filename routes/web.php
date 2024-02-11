@@ -67,13 +67,14 @@ Route::middleware([
     Route::get('/setting/walikota', [RouteController::class, 'settingDPRD'])->name('setting-walikota');
 
 
-    Route::get('/dashboard/presiden', [RouteController::class, 'settingDPRD'])->name('dashboard-presiden');
-    Route::get('/dashboard/dpr/ri', [RouteController::class, 'settingDPRD'])->name('dashboard-dpr-ri');
-    Route::get('/dashboard/dpd/ri', [RouteController::class, 'settingDPRD'])->name('dashboard-dpd-ri');
-    Route::get('/dashboard/dprd/provinsi', [RouteController::class, 'settingDPRD'])->name('dashboard-dprd-provinsi');
-    Route::get('/dashboard/dprd-madiun-kab', [RouteController::class, 'settingDPRD'])->name('dashboard-dprd-madiunkab');
-    Route::get('/dashboard/gubernur', [RouteController::class, 'settingDPRD'])->name('dashboard-gubernur');
-    Route::get('/dashboard/bupati', [RouteController::class, 'settingDPRD'])->name('dashboard-bupati');
-    Route::get('/dashboard/walikota', [RouteController::class, 'settingDPRD'])->name('dashboard-walikota');
+    // Route::get('/dashboard/presiden', [RouteController::class, 'Overview'])->name('dashboard-presiden');
+    // Route::get('/dashboard/dpr/ri', [RouteController::class, 'Overview'])->name('dashboard-dpr-ri');
+    // Route::get('/dashboard/dpd/ri', [RouteController::class, 'Overview'])->name('dashboard-dpd-ri');
+    // Route::get('/dashboard/dprd/provinsi', [RouteController::class, 'Overview'])->name('dashboard-dprd-provinsi');
+    // Route::get('/dashboard/dprd-madiun-kab', [RouteController::class, 'Overview'])->name('dashboard-dprd-madiunkab');
+    // Route::get('/dashboard/gubernur', [RouteController::class, 'Overview'])->name('dashboard-gubernur');
+    // Route::get('/dashboard/bupati', [RouteController::class, 'Overview'])->name('dashboard-bupati');
+    // Route::get('/dashboard/walikota', [RouteController::class, 'Overview'])->name('dashboard-walikota');
+    Route::get('/dashboard/{id}', [RouteController::class, 'Overview'])->name('dashboard-over-view');
 
 });
