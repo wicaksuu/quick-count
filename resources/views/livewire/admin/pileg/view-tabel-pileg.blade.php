@@ -13,6 +13,7 @@
             tableBody.innerHTML = "";
 
             data.forEach(function(item) {
+                console.log(item);
                 var row = document.createElement("tr");
                 row.className = "text-gray-600border-b border-gray-50 dark:border-zinc-600";
 
@@ -21,8 +22,8 @@
                     dapilNamaCell.textContent = item.calon.dapil.nama;
                     dapilNamaCell.className = "p-4 dark:text-zinc-50";
                     row.appendChild(dapilNamaCell);
-
                 }
+
                 var namaPartia = document.createElement("td");
                 namaPartia.textContent = '('+item.calon.partai.no+') '+item.calon.partai.nama;
                 namaPartia.className = "p-4 dark:text-zinc-50";

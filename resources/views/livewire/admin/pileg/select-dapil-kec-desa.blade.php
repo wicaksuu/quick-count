@@ -21,9 +21,12 @@
             </select>
         </div>
         <div>
-            <select
+            <select wire:model="pilihDesa" wire:click='GetDataDesa'
                 class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
                 <option value="">Pilih Desa</option>
+                    @foreach ($desas as $desa)
+                        <option value="{{ $desa->id }}">{{ $desa->nama }}</option>
+                    @endforeach
             </select>
         </div>
     </div>

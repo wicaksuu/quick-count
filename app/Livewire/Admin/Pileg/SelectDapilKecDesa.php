@@ -33,6 +33,13 @@ class SelectDapilKecDesa extends Component
         if ($this->pilihKecamatan) {
             $kecamatan = kecamatan::find($this->pilihKecamatan);
             $this->desas = $kecamatan->desas;
+            $this->dispatch('GetKecamatan',kecamatan_id: $this->pilihKecamatan);
+        }
+    }
+    public function GetDataDesa(){
+        if ($this->pilihDesa) {
+            $this->dispatch('GetDesa',desa_id: $this->pilihDesa);
+
         }
     }
 

@@ -12,6 +12,28 @@ class Calon extends Model
     use HasFactory, HasUlids;
     protected $fillable = ['no', 'nama', 'key', 'type', 'foto', 'suara', 'tps_id', 'partai_id', 'dapil_id', 'tahun', 'lock', 'is_active'];
 
+    public function dapil()
+    {
+        return $this->belongsTo(dapilDPRD::class);
+    }
+
+    public function partai()
+    {
+        return $this->belongsTo(DaftarPartai::class);
+    }
+
+    public function kecamatans()
+    {
+        return $this->hasManyThrough(
+            kecamatan::class,
+            dapilDPRD::class,
+            'id', // Foreign key on dapilDPRD table
+            'dapil_id', // Foreign key on kecamatan table
+            'dapil_id', // Local key on Calon model
+            'id', // Local key on dapilDPRD model
+        );
+    }
+
     public static function suaraTerbanyak($type)
     {
         $data = static::select('key')->selectRaw('SUM(suara) as total_suara')->where('type', $type)->groupBy('key')->orderByDesc('total_suara')->first();
@@ -52,7 +74,7 @@ class Calon extends Model
             return null;
         }
     }
-    public static function getSuara($type, $dapil_id = null, $tps_id = null, $nama = null, $perPage = 10, $page = 1)
+    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null,$tps_id = null, $nama = null,  $perPage = 10, $page = 1)
     {
         $query = static::select('key')->selectRaw('SUM(suara) as total_suara');
 
@@ -69,25 +91,30 @@ class Calon extends Model
             });
         }
 
-        $query->where('type', $type)->groupBy('key')->orderByDesc('total_suara');
+        if ($kecamatan_id) {
+            // Menambahkan kondisi where untuk mencari calon berdasarkan kecamatan ID
+            $query->whereHas('kecamatans', function ($query) use ($kecamatan_id) {
+                $query->where('kecamatans.id', $kecamatan_id); // Sesuaikan dengan nama kolom yang tepat
+            });
+        }
+
+        $query->where('type', $type)
+              ->groupBy('key')
+              ->orderByDesc('total_suara');
 
         $data = $query->paginate($perPage, ['*'], 'page', $page);
 
-        $jumlah_suara = Calon::where('dapil_id', $dapil_id)->where('type', $type)->sum('suara');
+        // Sisipkan logika penghitungan jumlah suara sesuai kebutuhan
 
         if ($data->isNotEmpty()) {
             $result = [];
             foreach ($data as $item) {
                 $calon = Calon::where('key', $item->key)
-                    ->with('partai', 'dapil')
+                    ->with('partai', 'dapil','kecamatans')
                     ->first();
-                if ($jumlah_suara != 0) {
-                    $persentase = number_format(($item->total_suara / $jumlah_suara) * 100, 2);
-                } else {
-                    $persentase = 0;
-                }
+                // Sisipkan logika perhitungan persentase suara sesuai kebutuhan
                 if ($calon) {
-                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara, 'jumlah_suara' => $jumlah_suara, 'persentase_suara' => $persentase];
+                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara];
                 }
             }
             return ['data' => $result, 'pagination' => $data];
@@ -96,25 +123,4 @@ class Calon extends Model
         }
     }
 
-    public function dapil()
-    {
-        return $this->belongsTo(dapilDPRD::class);
-    }
-
-    public function partai()
-    {
-        return $this->belongsTo(DaftarPartai::class);
-    }
-
-    public function kecamatans()
-    {
-        return $this->hasManyThrough(
-            kecamatan::class,
-            dapilDPRD::class,
-            'id', // Foreign key on dapilDPRD table
-            'dapil_id', // Foreign key on kecamatan table
-            'dapil_id', // Local key on Calon model
-            'id', // Local key on dapilDPRD model
-        );
-    }
 }
