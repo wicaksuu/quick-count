@@ -80,7 +80,7 @@ class Calon extends Model
             return null;
         }
     }
-    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null,$tps_id = null, $nama = null,  $perPage = 100, $page = 1)
+    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null, $desa_id=null, $tps_id = null, $nama = null,  $perPage = 100, $page = 1)
     {
         $query = static::select('key')->selectRaw('SUM(suara) as total_suara');
 
@@ -97,12 +97,22 @@ class Calon extends Model
             });
         }
 
+        // buatkan saya filter berdasarkan kecamatan id, saya mendapat kecamatan apabila menggunakan kodingan seperti ini $calon = Calon::where('key', $item->key)->with('partai', 'dapil','tps')->first();
         if ($kecamatan_id) {
-            $query->whereHas('kecamatans', function ($query) use ($kecamatan_id) {
-                $query->where('kecamatans.id', $kecamatan_id);
+            $query->whereHas('tps.desa.kecamatan', function ($query) use ($kecamatan_id) {
+                $query->where('id', $kecamatan_id);
             });
         }
-
+        if ($desa_id) {
+            $query->whereHas('tps.desa', function ($query) use ($desa_id) {
+                $query->where('id', $desa_id);
+            });
+        }
+        if ($tps_id) {
+            $query->whereHas('tps', function ($query) use ($tps_id) {
+                $query->where('id', $tps_id);
+            });
+        }
         $query->where('type', $type)
               ->groupBy('key')
               ->orderByDesc('total_suara');
@@ -114,7 +124,7 @@ class Calon extends Model
             $result = [];
             foreach ($data as $item) {
                 $calon = Calon::where('key', $item->key)
-                    ->with('partai', 'dapil','kecamatans','tps')
+                    ->with('partai', 'dapil','tps')
                     ->first();
 
                 if ($jumlah_suara != 0) {

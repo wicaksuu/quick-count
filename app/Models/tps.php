@@ -22,7 +22,7 @@ class tps extends Model
 
     public function desa()
     {
-        return $this->belongsTo(desa::class);
+        return $this->belongsTo(desa::class)->with('kecamatan');
     }
 
     public function kecamatan()

@@ -25,7 +25,7 @@
                     row.appendChild(dapilNamaCell);
                 }
                 var namaKecamatan = document.createElement("td");
-                namaKecamatan.textContent = item.calon.kecamatans[0].nama;
+                namaKecamatan.textContent = item.calon.tps.desa.kecamatan.nama;
                 namaKecamatan.className = "p-4 dark:text-zinc-50";
                 row.appendChild(namaKecamatan);
 
