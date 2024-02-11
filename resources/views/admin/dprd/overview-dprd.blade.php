@@ -8,6 +8,16 @@
             </div>
         </div>
     </div>
+    <div class="card-body">
+        <div class="flex flex-wrap items-center mb-2">
+            <h6 class="mb-1 text-gray-600 text-15 dark:text-gray-100">Simulasi Grafik {{ $data }}</h6>
+        </div>
+        <div style="height: 50vh; max-height: 50vh; overflow: hidden;">
+            <canvas id="GrafikOverView" style="width: 100%; height: 100%;"></canvas>
+        </div>
+    </div>
+
+
     <div class="relative mt-5 overflow-x-auto">
         <table class="w-full">
             <thead class="border-b cursor-pointer border-gray-50 dark:border-zinc-600">
