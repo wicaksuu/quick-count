@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Pileg;
 
 use App\Models\Calon;
+use App\Models\DaftarPartai;
 use App\Models\dapilDPRD;
 use App\Models\tps;
 use App\Models\wilayah\desa;
@@ -16,6 +17,7 @@ class ViewTabelPileg extends Component
     public $calons = [];
     public $type,
         $key,
+        $partai_id = null,
         $dapil_id = null,
         $kecamatan_id = null,
         $desa_id = null,
@@ -27,10 +29,25 @@ class ViewTabelPileg extends Component
         if ($dapil_id) {
             $dapil = dapilDPRD::find($dapil_id);
             $this->dapil_id = $dapil_id;
-            $calon['data'] = Calon::getSuara($this->type, $dapil_id);
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, $this->partai_id, 100, 1);
+            $calon['type'] = $this->type;
             $calon['key'] = $this->key;
             $this->dispatch('update', json_encode($calon));
             Toaster::success('Berhasil memilih dapil ' . $dapil->nama);
+        }
+    }
+
+    #[On('GetPartai')]
+    public function GetPartai($partai_id)
+    {
+        if ($partai_id) {
+            $partai = DaftarPartai::find($partai_id);
+            $this->partai_id = $partai_id;
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, $this->partai_id, 100, 1);
+            $calon['type'] = $this->type;
+            $calon['key'] = $this->key;
+            $this->dispatch('update', json_encode($calon));
+            Toaster::success('Berhasil memilih partai ' . $partai->nama);
         }
     }
 
@@ -40,7 +57,8 @@ class ViewTabelPileg extends Component
         if ($kecamatan_id) {
             $kecamatan = kecamatan::find($kecamatan_id);
             $this->kecamatan_id = $kecamatan_id;
-            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, null, null, null, 100, 1);
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, $this->partai_id, 100, 1);
+            $calon['type'] = $this->type;
             $calon['key'] = $this->key;
             $this->dispatch('update', json_encode($calon));
             Toaster::success('Berhasil memilih kecamatan ' . $kecamatan->nama);
@@ -53,7 +71,8 @@ class ViewTabelPileg extends Component
         if ($desa_id) {
             $desa = desa::find($desa_id);
             $this->desa_id = $desa_id;
-            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, null, null, 100, 1);
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, $this->partai_id, 100, 1);
+            $calon['type'] = $this->type;
             $calon['key'] = $this->key;
             $this->dispatch('update', json_encode($calon));
             Toaster::success('Berhasil memilih desa ' . $desa->nama);
@@ -66,7 +85,8 @@ class ViewTabelPileg extends Component
         if ($tps_id) {
             $tps = tps::find($tps_id);
             $this->tps_id = $tps_id;
-            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $tps_id, null, 100, 1);
+            $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, $this->partai_id, 100, 1);
+            $calon['type'] = $this->type;
             $calon['key'] = $this->key;
             $this->dispatch('update', json_encode($calon));
             Toaster::success('Berhasil memilih tps ' . $tps->nama);
@@ -76,7 +96,8 @@ class ViewTabelPileg extends Component
     #[On('updateDataFilter')]
     public function updateDataFilter()
     {
-        $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, null, 100, 1);
+        $calon['data'] = Calon::getSuara($this->type, $this->dapil_id, $this->kecamatan_id, $this->desa_id, $this->tps_id, $this->partai_id, 100, 1);
+        $calon['type'] = $this->type;
         $calon['key'] = $this->key;
         $this->dispatch('update', json_encode($calon));
     }

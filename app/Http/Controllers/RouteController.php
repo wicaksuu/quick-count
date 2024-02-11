@@ -147,7 +147,7 @@ class RouteController extends Controller
         if ($type == 'Pileg') {
             return view('admin.overview-pileg', ['data' => $data, 'type' => $type ,'key'=>$id]);
         } else {
-            return view('admin.overview-pilkada', ['data' => $data, 'type' => $type ,'key'=>$id]);
+            return view('admin.overview-pileg', ['data' => $data, 'type' => $type ,'key'=>$id]);
         }
     }
 

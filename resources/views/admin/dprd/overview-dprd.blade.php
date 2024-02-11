@@ -16,10 +16,10 @@
                         <th class="relative p-4 text-start dark:text-gray-100">
                             Dapil
                         </th>
+                        <th class="relative p-4 text-start dark:text-gray-100">
+                            Partai
+                        </th>
                     @endif
-                    <th class="relative p-4 text-start dark:text-gray-100">
-                        Partai
-                    </th>
                     <th class="relative p-4 text-start dark:text-gray-100">
                         Nama
                     </th>

@@ -80,21 +80,18 @@ class Calon extends Model
             return null;
         }
     }
-    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null, $desa_id=null, $tps_id = null, $nama = null,  $perPage = 100, $page = 1)
+    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null, $desa_id=null, $tps_id = null, $partai_id = null,  $perPage = 100, $page = 1)
     {
         $query = static::select('key')->selectRaw('SUM(suara) as total_suara');
 
+        if ($partai_id) {
+            $query->where('partai_id', $partai_id);
+        }
         if ($tps_id) {
             $query->where('tps_id', $tps_id);
         }
         if ($dapil_id) {
             $query->where('dapil_id', $dapil_id);
-        }
-
-        if ($nama) {
-            $query->whereHas('calon', function ($query) use ($nama) {
-                $query->where('nama', 'like', '%' . $nama . '%');
-            });
         }
 
         if ($kecamatan_id) {
@@ -107,17 +104,11 @@ class Calon extends Model
                 $query->where('id', $desa_id);
             });
         }
-        if ($tps_id) {
-            $query->whereHas('tps', function ($query) use ($tps_id) {
-                $query->where('id', $tps_id);
-            });
-        }
         $query->where('type', $type)
               ->groupBy('key')
               ->orderByDesc('total_suara');
 
         $data = $query->paginate($perPage, ['*'], 'page', $page);
-
         $jumlah_suara = Calon::where('dapil_id', $dapil_id)->where('type', $type)->sum('suara');
         if ($data->isNotEmpty()) {
             $result = [];

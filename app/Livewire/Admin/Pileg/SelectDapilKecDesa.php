@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Pileg;
 
+use App\Models\DaftarPartai;
 use App\Models\dapilDPRD;
 use App\Models\wilayah\desa;
 use App\Models\wilayah\kecamatan;
@@ -9,6 +10,7 @@ use Livewire\Component;
 
 class SelectDapilKecDesa extends Component
 {
+    public $partais=[],$pilihPartai;
     public $dapils=[],$pilihDapil;
     public $kecamatans=[],$pilihKecamatan;
     public $desas=[],$pilihDesa;
@@ -16,12 +18,29 @@ class SelectDapilKecDesa extends Component
     public $type,$key;
 
     public function mount($type,$key){
+        $this->reset();
         $this->type = $type;
         $this->key = $key;
     }
 
     public function load(){
-        $this->dapils = dapilDPRD::get();
+        if ($this->type == 'DPRD') {
+            $this->dapils = dapilDPRD::get();
+        }
+        // dd($this->key);
+        if ($this->key == 'Pileg') {
+            $this->partais = DaftarPartai::get();
+            $this->kecamatans = kecamatan::where('kota_id',3519)->get();
+        }else{
+            $this->kecamatans = kecamatan::where('kota_id',3519)->get();
+        }
+
+    }
+
+    public function GetDataPartai(){
+        if ($this->pilihPartai) {
+            $this->dispatch('GetPartai',partai_id: $this->pilihPartai);
+        }
     }
 
     public function GetDataDapil(){

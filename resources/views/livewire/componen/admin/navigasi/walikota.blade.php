@@ -9,6 +9,11 @@
         </a>
         <ul>
             <li>
+                <a href="{{ route('dashboard-over-view',['id'=>'walikota']) }}" class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                    Dashboard
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('setting-calon-walikota',['id'=>'pilkada']) }}" class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
                     Paslon
                 </a>

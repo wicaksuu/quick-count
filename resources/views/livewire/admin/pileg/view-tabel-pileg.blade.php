@@ -5,13 +5,13 @@
             Livewire.on('update', (event) => {
                 var Calons = JSON.parse(event);
                 if (Calons.data.data) {
-                    parseDataToTable(Calons.data.data,Calons.key);
+                    parseDataToTable(Calons.data.data,Calons.type,Calons.key);
 
                 }
             });
         });
 
-        function parseDataToTable(data,key) {
+        function parseDataToTable(data,type,key) {
             var tableBody = document.getElementById("ViewColonSuara");
             tableBody.innerHTML = "";
 
@@ -19,16 +19,18 @@
                 var row = document.createElement("tr");
                 row.className = "text-gray-600border-b border-gray-50 dark:border-zinc-600";
 
-                if (key == 'Pileg') {
+                if (type == 'DPRD') {
                 var dapilNamaCell = document.createElement("td");
                     dapilNamaCell.textContent = item.calon.dapil.nama;
                     dapilNamaCell.className = "p-4 dark:text-zinc-50";
                     row.appendChild(dapilNamaCell);
                 }
-                var namaPartia = document.createElement("td");
-                namaPartia.textContent = '('+item.calon.partai.no+') '+item.calon.partai.nama;
-                namaPartia.className = "p-4 dark:text-zinc-50";
-                row.appendChild(namaPartia);
+                if (key == 'Pileg') {
+                    var namaPartia = document.createElement("td");
+                    namaPartia.textContent = '('+item.calon.partai.no+') '+item.calon.partai.nama;
+                    namaPartia.className = "p-4 dark:text-zinc-50";
+                    row.appendChild(namaPartia);
+                }
 
                 var namaCell = document.createElement("td");
                 namaCell.textContent = '('+item.calon.no+') '+item.calon.nama;

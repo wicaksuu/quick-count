@@ -1,6 +1,7 @@
 <div>
     <div class="flex flex-wrap items-center gap-2 mt-5 lg:mt-0 lg:justify-end">
-        @if ($this->key=='Pileg')
+
+        @if ($this->type == 'DPRD')
             <div>
                 <select wire:model="pilihDapil" wire:click='GetDataDapil'
                     class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
@@ -10,6 +11,17 @@
                         @endforeach
                 </select>
             </div>
+        @endif
+        @if ($this->key == 'Pileg')
+        <div>
+            <select  wire:model="pilihPartai" wire:click='GetDataPartai'
+                class="dark:bg-zinc-800 dark:border-zinc-700 w-full rounded border-gray-100 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
+                <option value="">Pilih Partai</option>
+                    @foreach ($partais as $partai)
+                        <option value="{{ $partai->id }}">{{ $partai->nama }}</option>
+                    @endforeach
+            </select>
+        </div>
         @endif
         <div>
             <select  wire:model="pilihKecamatan" wire:click='GetDataKecamatan'

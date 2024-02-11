@@ -9,6 +9,11 @@
         </a>
         <ul>
             <li>
+                <a href="{{ route('dashboard-over-view',['id'=>'dpr-ri']) }}" class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                    Dashboard
+                </a>
+            </li>
+            <li>
                 @if (isset($partais[0]))
                     <a href="javascript: void(0);" aria-expanded="false" class="block py-2 pr-4 text-sm font-medium text-gray-700 transition-all duration-150 ease-linear nav-menu pl-14 hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
                         <span data-key="t-calon">Calon</span>
