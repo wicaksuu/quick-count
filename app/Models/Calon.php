@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\wilayah\desa;
 use App\Models\wilayah\kecamatan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,11 @@ class Calon extends Model
 {
     use HasFactory, HasUlids;
     protected $fillable = ['no', 'nama', 'key', 'type', 'foto', 'suara', 'tps_id', 'partai_id', 'dapil_id', 'tahun', 'lock', 'is_active'];
+
+    public function tps()
+    {
+        return $this->belongsTo(tps::class)->with('desa');
+    }
 
     public function dapil()
     {
@@ -27,10 +33,10 @@ class Calon extends Model
         return $this->hasManyThrough(
             kecamatan::class,
             dapilDPRD::class,
-            'id', // Foreign key on dapilDPRD table
-            'dapil_id', // Foreign key on kecamatan table
-            'dapil_id', // Local key on Calon model
-            'id', // Local key on dapilDPRD model
+            'id',
+            'dapil_id',
+            'dapil_id',
+            'id',
         );
     }
 
@@ -74,7 +80,7 @@ class Calon extends Model
             return null;
         }
     }
-    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null,$tps_id = null, $nama = null,  $perPage = 10, $page = 1)
+    public static function getSuara($type, $dapil_id = null, $kecamatan_id = null,$tps_id = null, $nama = null,  $perPage = 100, $page = 1)
     {
         $query = static::select('key')->selectRaw('SUM(suara) as total_suara');
 
@@ -92,9 +98,8 @@ class Calon extends Model
         }
 
         if ($kecamatan_id) {
-            // Menambahkan kondisi where untuk mencari calon berdasarkan kecamatan ID
             $query->whereHas('kecamatans', function ($query) use ($kecamatan_id) {
-                $query->where('kecamatans.id', $kecamatan_id); // Sesuaikan dengan nama kolom yang tepat
+                $query->where('kecamatans.id', $kecamatan_id);
             });
         }
 
@@ -104,17 +109,21 @@ class Calon extends Model
 
         $data = $query->paginate($perPage, ['*'], 'page', $page);
 
-        // Sisipkan logika penghitungan jumlah suara sesuai kebutuhan
-
+        $jumlah_suara = Calon::where('dapil_id', $dapil_id)->where('type', $type)->sum('suara');
         if ($data->isNotEmpty()) {
             $result = [];
             foreach ($data as $item) {
                 $calon = Calon::where('key', $item->key)
-                    ->with('partai', 'dapil','kecamatans')
+                    ->with('partai', 'dapil','kecamatans','tps')
                     ->first();
-                // Sisipkan logika perhitungan persentase suara sesuai kebutuhan
+
+                if ($jumlah_suara != 0) {
+                    $persentase = number_format(($item->total_suara / $jumlah_suara) * 100, 2);
+                } else {
+                    $persentase = 0;
+                }
                 if ($calon) {
-                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara];
+                    $result[] = ['calon' => $calon, 'total_suara' => $item->total_suara, 'jumlah_suara' => $jumlah_suara, 'persentase_suara' => $persentase];
                 }
             }
             return ['data' => $result, 'pagination' => $data];

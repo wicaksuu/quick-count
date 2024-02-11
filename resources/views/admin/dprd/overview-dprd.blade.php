@@ -18,6 +18,12 @@
                         </th>
                     @endif
                     <th class="relative p-4 text-start dark:text-gray-100">
+                        Kecamatan
+                    </th>
+                    <th class="relative p-4 text-start dark:text-gray-100">
+                        Desa
+                    </th>
+                    <th class="relative p-4 text-start dark:text-gray-100">
                         Partai
                     </th>
                     <th class="relative p-4 text-start dark:text-gray-100">
