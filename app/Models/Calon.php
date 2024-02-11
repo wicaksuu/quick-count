@@ -97,7 +97,6 @@ class Calon extends Model
             });
         }
 
-        // buatkan saya filter berdasarkan kecamatan id, saya mendapat kecamatan apabila menggunakan kodingan seperti ini $calon = Calon::where('key', $item->key)->with('partai', 'dapil','tps')->first();
         if ($kecamatan_id) {
             $query->whereHas('tps.desa.kecamatan', function ($query) use ($kecamatan_id) {
                 $query->where('id', $kecamatan_id);

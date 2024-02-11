@@ -9,7 +9,6 @@
         });
 
         function parseDataToTable(data,key) {
-            console.log(data);
             var tableBody = document.getElementById("ViewColonSuara");
             tableBody.innerHTML = "";
 
@@ -24,16 +23,6 @@
                     dapilNamaCell.className = "p-4 dark:text-zinc-50";
                     row.appendChild(dapilNamaCell);
                 }
-                var namaKecamatan = document.createElement("td");
-                namaKecamatan.textContent = item.calon.tps.desa.kecamatan.nama;
-                namaKecamatan.className = "p-4 dark:text-zinc-50";
-                row.appendChild(namaKecamatan);
-
-                var namaDesa = document.createElement("td");
-                namaDesa.textContent = item.calon.tps.desa.nama;
-                namaDesa.className = "p-4 dark:text-zinc-50";
-                row.appendChild(namaDesa);
-
                 var namaPartia = document.createElement("td");
                 namaPartia.textContent = '('+item.calon.partai.no+') '+item.calon.partai.nama;
                 namaPartia.className = "p-4 dark:text-zinc-50";
