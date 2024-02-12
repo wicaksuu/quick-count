@@ -160,48 +160,105 @@ class RouteController extends Controller
         return view('admin.setting.global');
     }
 
-    public function export($type){
+    public function export($type,$tps_dapil,$opsi){
 
+        $tps_id   = explode('-',$tps_dapil)[0];
+        $partai_id = explode('-',$tps_dapil)[1];
         switch ($type) {
             case 'Presiden':
+                $color = "#737172";
                 $pemilu = 'Pilkada';
                 break;
             case 'DPR RI':
+                $color = "#fdf307";
                 $pemilu = 'Pileg';
                 break;
             case 'DPD RI':
-                $pemilu = 'Pileg';
+                $color = "#e30116";
+                $pemilu = 'Pilkada';
                 break;
             case 'DPRD Provinsi':
+                $color = "#0b6fba";
                 $pemilu = 'Pileg';
                 break;
             case 'DPRD':
+                $color = "#06a53d";
                 $pemilu = 'Pileg';
                 break;
             case 'Gubernur':
+                $color = "#737172";
                 $pemilu = 'Pilkada';
                 break;
             case 'Bupati':
+                $color = "#737172";
                 $pemilu = 'Pilkada';
                 break;
             case 'Walikota':
+                $color = "#737172";
                 $pemilu = 'Pilkada';
                 break;
         }
-        $partais    = DaftarPartai::get();
+        $partai     = DaftarPartai::find($partai_id);
         $desa_id    = Auth::user()->current_team_id;
         $desa       = desa::find($desa_id);
-        $tpss       = tps::where('desa_id',$desa_id)->get();
-        $title      = 'Export '.$type.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama;
+        $tps        = tps::find($tps_id);
+
+        if ($pemilu == 'Pileg') {
+            $new_title = $tps->nama.' '.$partai->nama;
+        }else{
+            $new_title = $tps->nama;
+
+        }
+
+        switch ($opsi) {
+            case 'view-kosong':
+                $title      = 'Export '.$type.' '.$new_title.' '.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama.' Tanpa Hasil';
+                break;
+            case 'view-isi':
+                $title      = 'Export '.$type.' '.$new_title.' '.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama.' Dengan Hasil';
+                break;
+            case 'download-kosong':
+                $title      = 'Export '.$type.' '.$new_title.' '.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama.' Tanpa Hasil';
+                break;
+            case 'download-isi':
+                $title      = 'Export '.$type.' '.$new_title.' '.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama.' Dengan Hasil';
+                break;
+
+            default:
+            $title      = 'Export '.$type.' '.$new_title.' '.' Desa '.$desa->nama.' Kecamatan '.$desa->kecamatan->nama.' Tanpa Hasil';
+                break;
+        }
         $data = [
             'title' => $title,
             'type' => $type,
-            'tpss' => $tpss,
+            'tps' => $tps,
             'desa' => $desa,
             'pemilu'=>$pemilu,
-            'partais'=>$partais
+            'partai'=>$partai,
+            'tps_id' => $tps_id,
+            'partai_id' => $partai_id,
+            'color'=>$color,
+            'opsi'=>explode('-',$opsi)[1],
         ];
         $pdf        = Pdf::loadView('desa/dprd/exportPerDesa', $data);
-        return $pdf->stream($title.'.pdf');
+
+        switch ($opsi) {
+            case 'view-kosong':
+                return $pdf->stream($title.'.pdf');
+                break;
+            case 'view-isi':
+                return $pdf->stream($title.'.pdf');
+                break;
+            case 'download-kosong':
+                return $pdf->download($title.'.pdf');
+                break;
+            case 'download-isi':
+                return $pdf->download($title.'.pdf');
+                break;
+
+            default:
+            return $pdf->stream($title.'.pdf');
+                break;
+        }
     }
 }

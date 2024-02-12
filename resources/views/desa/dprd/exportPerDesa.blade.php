@@ -8,12 +8,10 @@
 </head>
 
 <body>
-@foreach ($tpss as $tps)
     @if ($pemilu == 'Pileg')
-        @foreach ($partais as $partai)
-        <table class="full-width-table">
+        <table class="full-width-table" style="border: 2px solid black;">
             <thead>
-                <tr>
+                <tr style="background-color: {!! $color !!}">
                     <th colspan="3" style="font-size: 30px; ">
                        {{ $type }}
                     </th>
@@ -21,6 +19,12 @@
                 <tr>
                     <th colspan="3" style="border-top: none; border-bottom: none; font-size: 20px;">
                         {{ $partai->nama }}
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="3" style="border-top: none; border-bottom: none; font-size: 20px;">
+
+                        <img src="{{ public_path('storage/'.$partai->logo) }}" alt="logo" height="75px">
                     </th>
                 </tr>
                 <tr>
@@ -40,7 +44,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (App\Models\Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$tps->id)->where('partai_id',$partai->id)->get() as $calon)
+                @php
+                    $i=0;
+                @endphp
+                @foreach (App\Models\Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$tps_id)->where('partai_id',$partai->id)->get() as $calon)
+                @php
+                    $i=$i+$calon->suara;
+                @endphp
                 <tr>
                     @if ($calon->no == 0)
                         <td>-</td>
@@ -49,30 +59,42 @@
                         <td>{{ $calon->no }}</td>
                         <td>{{ $calon->nama }}</td>
                     @endif
-                    <td>
-                    </td>
+                    @if ($opsi == 'isi')
+                        <td>{{ $calon->suara }}</td>
+                    @else
+                        <td></td>
+                    @endif
                 </tr>
                 @endforeach
-                <tr>
+                <tr style="border: 2px solid black;">
                     <td>-</td>
                     <td style="font-weight: bold;">Total Suara</td>
-                    <td></td>
+
+                    @if ($opsi == 'isi')
+                        <td style="font-weight: bold;">{{ $i }}</td>
+                    @else
+                        <td></td>
+                    @endif
                 </tr>
             </tbody>
         </table>
-        @endforeach
     @else
 
-    <table class="full-width-table">
+    <table class="full-width-table" style="border: 2px solid black;">
         <thead>
-            <tr>
-                <th colspan="3" style="font-size: 30px; border-bottom: none;">
+            <tr style="background-color: {!! $color !!}">
+                <th colspan="3" style="font-size: 30px; border: 2px solid black;">
                    {{ $type }}
                 </th>
             </tr>
             <tr>
+                <th colspan="3" style="border-top: none; border-bottom: none; font-size: 20px;">
+                    {{ $tps->nama }}
+                </th>
+            </tr>
+            <tr>
                 <th colspan="3" style="border-top: none;">
-                    {{ $tps->nama }} ({{ $desa->nama }},{{ $desa->kecamatan->nama }})
+                     ({{ $desa->nama }},{{ $desa->kecamatan->nama }})
                 </th>
             </tr>
             <tr>
@@ -82,29 +104,43 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $i=0;
+            @endphp
             @foreach (App\Models\Calon::orderBy('no', 'asc')->where('type',$type)->where('is_active',true)->where('tps_id',$tps->id)->get() as $calon)
+            @php
+                    $i=$i+$calon->suara;
+                @endphp
             <tr>
-                @if ($calon->no == 0)
-                    <td>-</td>
-                    <td style="font-weight: bold;">{{ $calon->nama }}</td>
-                @else
-                    <td>{{ $calon->no }}</td>
-                    <td>{{ $calon->nama }}</td>
-                @endif
-                <td>
-                </td>
+            @if ($calon->no == 0)
+                <td>-</td>
+                <td style="font-weight: bold;">{{ $calon->nama }}</td>
+            @else
+                <td>{{ $calon->no }}</td>
+                <td>{{ $calon->nama }}</td>
+            @endif
+
+            @if ($opsi == 'isi')
+                <td>{{ $calon->suara }}</td>
+            @else
+                <td></td>
+            @endif
             </tr>
             @endforeach
-            <tr>
+            <tr style="border: 2px solid black;">
                 <td>-</td>
                 <td style="font-weight: bold;">Total Suara</td>
-                <td></td>
+
+                @if ($opsi == 'isi')
+                    <td style="font-weight: bold;">{{ $i }}</td>
+                @else
+                    <td></td>
+                @endif
             </tr>
         </tbody>
     </table>
     @endif
-    <div class="page-break"></div>
-@endforeach
+    {{-- <div class="page-break"></div> --}}
 </body>
 
 </html>

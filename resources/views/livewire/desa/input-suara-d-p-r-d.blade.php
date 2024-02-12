@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col md:flex-row md:items-start md:space-x-4 gap-2">
+    <div class="flex flex-col gap-2 md:flex-row md:items-start md:space-x-4">
         <select wire:model="set" wire:click="updateSelectPartai" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
             @foreach ($setting as $settings)
                 <option value="{{ $settings->nama }}">{{ $settings->nama }}</option>
@@ -17,11 +17,37 @@
                 <option value="{{ $tpss->id }}">{{ $tpss->nama }}</option>
             @endforeach
         </select>
-        <a href="{{ route('export',['type'=>$set]) }}" target="__blank">
-            <x-button class="ml-auto" class="mt-1">
-            {{ __('Export') }}
-        </x-button>
-    </a>
+                <!-- Settings Dropdown -->
+                <div class="relative ms-3">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <x-button class="ml-auto" class="mt-1">
+                                {{ __('Export') }}
+                            </x-button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Account Management -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Pilih Menu') }}
+                            </div>
+
+                            <x-dropdown-link target="__blank" href="{{ route('export',['type'=>$set,'tps_dapil'=>$SelectTPS.'-'.$SelectPartai,'opsi'=>'view-kosong']) }}">
+                                {{ __('Tampilkan Tanpa Suara') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link target="__blank" href="{{ route('export',['type'=>$set,'tps_dapil'=>$SelectTPS.'-'.$SelectPartai,'opsi'=>'view-isi']) }}">
+                                {{ __('Tampilkan Dengan Suara') }}
+                            </x-dropdown-link>
+                            <div class="border-t border-gray-200"></div>
+                            <x-dropdown-link href="{{ route('export',['type'=>$set,'tps_dapil'=>$SelectTPS.'-'.$SelectPartai,'opsi'=>'download-kosong']) }}">
+                                {{ __('Download Tanpa Suara') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('export',['type'=>$set,'tps_dapil'=>$SelectTPS.'-'.$SelectPartai,'opsi'=>'download-isi']) }}">
+                                {{ __('Download Dengan Suara') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
     </div>
 
 

@@ -13,8 +13,6 @@ use App\Models\tps;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 
-use Barryvdh\DomPDF\Facade\Pdf;
-
 class InputSuaraDPRD extends Component
 {
     use WithFileUploads;

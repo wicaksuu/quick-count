@@ -28,7 +28,7 @@ Route::middleware([
     'verified',
     'isDumy:false'
 ])->group(function () {
-    Route::get('/export/{type}', [RouteController::class, 'export'])->name('export');
+    Route::get('/export/{type}/{tps_dapil}/{opsi}', [RouteController::class, 'export'])->name('export');
     Route::get('/dashboard', [RouteController::class, 'dashboard'])->name('dashboard');
 });
 
