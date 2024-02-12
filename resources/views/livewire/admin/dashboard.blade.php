@@ -43,7 +43,11 @@
                         </div>
                         <div class="col-span-6">
                             @if ($dpr_ri['calon']->foto == null)
-                                <img src="{{ asset('storage/' . $dpr_ri['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @if (isset($dpr_ri['calon']->partai->logo))
+                                    <img src="{{ asset('storage/' . $dpr_ri['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @else
+                                    <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $dpr_ri['calon']->foto) }}" alt="null" class="h-20 mx-auto rounded">
                             @endif
@@ -71,7 +75,11 @@
                         </div>
                         <div class="col-span-6">
                             @if ($dpd_ri['calon']->foto == null)
-                                <img src="{{ asset('storage/' . $dpd_ri['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @if (isset($dpd_ri['calon']->partai->logo))
+                                    <img src="{{ asset('storage/' . $dpd_ri['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @else
+                                    <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $dpd_ri['calon']->foto) }}" alt="null" class="h-20 mx-auto rounded">
                             @endif
@@ -99,7 +107,11 @@
                         </div>
                         <div class="col-span-6">
                             @if ($dprd_provinsi['calon']->foto == null)
-                                <img src="{{ asset('storage/' . $dprd_provinsi['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @if (isset($dprd_provinsi['calon']->partai->logo))
+                                    <img src="{{ asset('storage/' . $dprd_provinsi['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @else
+                                    <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $dprd_provinsi['calon']->foto) }}" alt="null" class="h-20 mx-auto rounded">
                             @endif
@@ -127,7 +139,11 @@
                         </div>
                         <div class="col-span-6">
                             @if ($dprd['calon']->foto == null)
-                                <img src="{{ asset('storage/' . $dprd['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @if (isset($dprd['calon']->partai->logo))
+                                    <img src="{{ asset('storage/' . $dprd['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @else
+                                    <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $dprd['calon']->foto) }}" alt="null" class="h-20 mx-auto rounded">
                             @endif
@@ -155,7 +171,11 @@
                         </div>
                         <div class="col-span-6">
                             @if ($gubernur['calon']->foto == null)
-                                <img src="{{ asset('storage/' . $gubernur['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @if (isset($gubernur['calon']->partai->logo))
+                                    <img src="{{ asset('storage/' . $gubernur['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @else
+                                    <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $gubernur['calon']->foto) }}" alt="null" class="h-20 mx-auto rounded">
                             @endif
@@ -183,7 +203,11 @@
                         </div>
                         <div class="col-span-6">
                             @if ($bupati['calon']->foto == null)
-                                <img src="{{ asset('storage/' . $bupati['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @if (isset($bupati['calon']->partai->logo))
+                                    <img src="{{ asset('storage/' . $bupati['calon']->partai->logo) }}" alt="null" class="h-20 mx-auto rounded">
+                                @else
+                                    <img src="{{ url('assets/images/indonesian.webp') }}" alt="null" class="h-20 mx-auto rounded">
+                                @endif
                             @else
                                 <img src="{{ asset('storage/' . $bupati['calon']->foto) }}" alt="null" class="h-20 mx-auto rounded">
                             @endif
