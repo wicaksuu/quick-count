@@ -91,7 +91,7 @@
                         @endphp
                         <tr class="text-gray-600border-b border-gray-50 dark:border-zinc-600">
                             <td class="p-4 dark:text-zinc-50">
-                                #{{ $loop->iteration }}
+                                {{ $loop->iteration }}
                             </td>
                             <td class="p-4 dark:text-zinc-50">
                                 {{ $tps->kota->nama }}
