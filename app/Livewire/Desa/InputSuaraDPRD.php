@@ -93,7 +93,7 @@ class InputSuaraDPRD extends Component
                 $pemilu = 'Pileg';
                 break;
             case 'DPD RI':
-                $pemilu = 'Pileg';
+                $pemilu = 'Pilkada';
                 break;
             case 'DPRD Provinsi':
                 $pemilu = 'Pileg';
