@@ -152,7 +152,7 @@
                 </div>
                 <div class="flex items-center pt-2">
                     <span class="text-xs py-[1px] px-1 bg-green-50/60 text-green-500 rounded font-medium dark:bg-green-500/30">DPRD Kabupaten/Kota</span>
-                    @if ($dprd['calon']->dapil->nama)
+                    @if (isset($dprd['calon']->dapil->nama))
                         <span class="ltr:ml-1.5 rtl:mr-1.5 text-gray-700 text-13 dark:text-zinc-100">{{ $dprd['calon']->dapil->nama }}</span>
                     @else
                         <span class="ltr:ml-1.5 rtl:mr-1.5 text-gray-700 text-13 dark:text-zinc-100">Kabupaten Madiun</span>
