@@ -67,10 +67,16 @@
 
                                 <div class="text-center">
                                     <h5 class="mb-1 text-gray-700 text-16"><p  class="dark:text-gray-100">{{ $dat->nama }}</p></h5>
+                                    @php
+                                        $dpl_id =null;
+                                    @endphp   
                                     @if ($type == 'DPRD')
                                         <p class="mb-2 text-gray-500 dark:text-zinc-100">
                                             @if (isset($dat->dapil->nama))
                                                 {{ $dat->dapil->nama }}
+                                                @php
+                                                    $dpl_id =$dat->dapil->id;
+                                                @endphp    
                                             @else
                                                 {{ 'Dapil Telah Dirubah' }}
                                             @endif
@@ -88,7 +94,7 @@
                                     <i class="block text-sm text-green-600 mdi mdi-pencil">
                                     </i>
                                 </button>
-                                <button type="button" wire:click="openDell('{{ $dat->key }}')" class="w-full px-4 py-2 text-sm border border-l-0 rounded rounded-l-none btn border-gray-50 hover:bg-red-200 dark:border-zinc-600 dark:hover:bg-red-600 dark:text-gray-100">
+                                <button type="button" wire:click="openDell('{{ $dat->nama }}','{{ $dpl_id }}')" class="w-full px-4 py-2 text-sm border border-l-0 rounded rounded-l-none btn border-gray-50 hover:bg-red-200 dark:border-zinc-600 dark:hover:bg-red-600 dark:text-gray-100">
                                     <i class="block text-sm text-red-600 mdi mdi-trash-can">
                                     </i>
                                 </button>

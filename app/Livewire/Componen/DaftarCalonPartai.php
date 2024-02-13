@@ -21,9 +21,13 @@ class DaftarCalonPartai extends Component
 
     public $selectedYear, $pilihdapil, $dapils, $dataEdits,$type;
 
-    public function openDell($key)
+    public function openDell($key,$dapil_id)
     {
-        $this->isDells = Calon::where('partai_id', $this->partai->id)->where('key', $key)->get();
+        if ($this->type == 'DPRD') {
+            $this->isDells = Calon::where('partai_id', $this->partai->id)->where('dapil_id', $dapil_id)->where('nama', $key)->get();
+        }else{
+            $this->isDells = Calon::where('partai_id', $this->partai->id)->where('nama', $key)->get();
+        }
         $this->isDell = true;
     }
 
