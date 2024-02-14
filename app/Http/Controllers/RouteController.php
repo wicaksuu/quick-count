@@ -39,7 +39,7 @@ class RouteController extends Controller
         switch (Auth::user()->role) {
             case 'admin':
                 $dapils = dapilDPRD::get();
-                $jumlah_kehadiran = tps::count('kehadiran');
+                $jumlah_kehadiran = tps::sum('kehadiran');
                 return view('admin.dashboard', ['dapils' => $dapils,'jumlah_kehadiran'=>$jumlah_kehadiran]);
                 break;
 
