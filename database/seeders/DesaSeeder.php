@@ -56,12 +56,13 @@ class DesaSeeder extends Seeder
                 if ($empatAngkaTerdepan==3519) {
                     $kec = kecamatan::find($row[1]);
                     $pass = mt_rand(10000000, 99999999);
+                    $pass = "123456789";
                     User::factory()->create([
                         'name' => "Admin ".$this->capitalizeAfterSpace($row[2]),
                         'email' => strtolower(str_replace(' ','', $kec->nama))."_".strtolower(str_replace(' ','', $row[2])).ENV("MAIL","@madiunkab.go.id"),
                         'role' => 'desa',
                         'current_team_id'=>$row[0],
-                        'is_dumy'=> true,
+                        'is_dumy'=> false,
                         'password' => bcrypt($pass),
                         'password_dumy'=> $pass
                         ]);
