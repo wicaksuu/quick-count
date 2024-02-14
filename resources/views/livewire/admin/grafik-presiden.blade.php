@@ -39,6 +39,7 @@
             }
         });
 
+
         setInterval(() => Livewire.dispatch('load'), 1000);
 
         document.addEventListener('livewire:init', () => {
@@ -66,6 +67,7 @@
 
                     divPresiden.innerHTML = '('+presiden.calon.no+') '+presiden.calon.nama;
                     divSuaraPresiden.innerHTML = '('+presiden.persentase_suara+'%) '+presiden.total_suara+' Suara';
+
                 });
             });
         });

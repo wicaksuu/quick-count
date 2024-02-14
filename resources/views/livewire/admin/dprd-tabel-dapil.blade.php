@@ -1,4 +1,6 @@
 <div>
+    {{ $update }}
+    <hr>
     <table class="table w-full">
         <tbody>
             @foreach ($suara as $calon)

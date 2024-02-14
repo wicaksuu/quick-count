@@ -14,6 +14,7 @@ class GrafikPresiden extends Component
     #[On('load')]
     public function load()
     {
+        
         $suaras = Calon::suaraTerbanyakDapilDPRD('Presiden', null, 3);
         usort($suaras, function ($a, $b) {
             return $a['calon']->no - $b['calon']->no;
@@ -33,6 +34,7 @@ class GrafikPresiden extends Component
         $this->grafikPresiden = json_encode($grafikPresiden);
         $this->dispatch('update', $this->grafikPresiden);
     }
+
     public function render()
     {
         $this->load();

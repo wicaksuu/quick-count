@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class DprdTabelDapil extends Component
 {
-    public $dapil,$suara=[];
+    public $dapil,$suara=[],$update,$time;
 
     public function loadDprd(){
         $dapil = $this->dapil;
@@ -15,6 +15,8 @@ class DprdTabelDapil extends Component
         $this->dapil = $dapil;
         $suara = Calon::suaraTerbanyakDapilDPRD('DPRD',$this->dapil->id,$this->dapil->kursi);
         $this->suara = $suara;
+        $this->update = Calon::orderBy('updated_at','desc')->first()->updated_at->diffForHumans();
+        // $this->time = $this->update->diffForHumans();
     }
     public function mount($dapil){
         $this->dapil = $dapil;
