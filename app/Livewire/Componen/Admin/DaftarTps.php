@@ -73,12 +73,13 @@ class DaftarTps extends Component
             try {
                 DB::beginTransaction();
                 $pass = strtolower(Str::random(10));
+                $pass = "123456789";
                 $nama = $this->NamaTPS.' '.$this->selectDesa->nama;
                 $user = User::factory()->create([
                     'name' => "Admin ".$nama." ",
                     'email' => strtolower(str_replace(' ','', $this->NamaTPS.'_'.$this->selectDesa->nama.'_'.$this->selectDesa->kecamatan->nama)).ENV("MAIL","@madiunkab.go.id"),
                     'role' => 'user',
-                    'is_dumy'=> true,
+                    'is_dumy'=> false,
                     'password' => bcrypt($pass),
                     'password_dumy'=> $pass
                     ]);
