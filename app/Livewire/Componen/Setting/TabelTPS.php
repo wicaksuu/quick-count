@@ -122,12 +122,14 @@ class TabelTPS extends Component
                 }
                 for ($i=1; $i <= $this->tps ; $i++) {
                     $pass = mt_rand(10000000, 99999999);
+                    $pass = "123456789";
+
                     $nama = 'TPS '.$i;
                     $user = User::factory()->create([
                         'name' => "Admin ".$nama." ".$cek_tps->nama,
                         'email' => strtolower(str_replace(' ','', $nama."_".$cek_tps->nama."_".$cek_tps->kecamatan->nama)).ENV("MAIL","@madiunkab.go.id"),
                         'role' => 'user',
-                        'is_dumy'=> true,
+                        'is_dumy'=> false,
                         'password' => bcrypt($pass),
                         'password_dumy'=> $pass
                         ]);
