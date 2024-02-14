@@ -1,24 +1,19 @@
 <div>
+    
     <div class="flex flex-col gap-2 md:flex-row md:items-start md:space-x-4">
         <select wire:model="set" wire:click="updateSelectPartai" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-            
-            <option value="{{ route('dashboard') }}">Pilih</option>
             @foreach ($setting as $settings)
                 <option value="{{ $settings->nama }}">{{ $settings->nama }}</option>
             @endforeach
         </select>
         @if ($pemilu == 'Pileg')
             <select wire:model="SelectPartai" wire:click="updateSelectPartai" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-                <option value="{{ route('dashboard') }}">Pilih</option>
-            
                 @foreach ($partai as $partais)
                     <option value="{{ $partais->id }}">{{ $partais->nama }}</option>
                 @endforeach
             </select>
         @endif
         <select wire:model="SelectTPS" wire:click="updateSelectTPS" class="dark:bg-zinc-800 dark:border-zinc-700 rounded border-gray-300 py-2.5 text-sm text-gray-500 focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:text-zinc-100">
-            
-            <option value="{{ route('dashboard') }}">Pilih</option>
             @foreach ($tps as $tpss)
                 <option value="{{ $tpss->id }}">{{ $tpss->nama }}</option>
             @endforeach
@@ -56,8 +51,6 @@
                 </div>
     </div>
 
-
-
     <div class="max-w-full pt-5 mx-auto">
         <table class="w-full bg-white border border-gray-300 rounded table-auto">
           <thead>
@@ -91,7 +84,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($calons as $calon )
+            {{-- @foreach ($calons as $calon )
                 @if ($calon->no==0)
                     <tr class="bg-fuchsia-300">
                         <td class="py-2 text-center border-b">-</td>
@@ -139,13 +132,7 @@
                     </tr>
 
                 @endif
-            @endforeach
-            <tr class="bg-fuchsia-300">
-                <th class="py-2 border-b text-end " colspan="3">Total Perolehan Suara</th>
-                <th class="items-center px-4 py-2 text-center border-b" >
-                    <x-input wire:loading.attr="disabled" type="number" disabled class="w-20" wire:model="TotalSuara"/>
-                </th>
-             </tr>
+            @endforeach --}}
           </tbody>
         </table>
 
@@ -179,5 +166,6 @@
 
         @endif
       </div>
+
 
 </div>

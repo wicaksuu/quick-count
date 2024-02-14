@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Calon;
 use App\Models\DaftarPartai;
 use App\Models\dapilDPRD;
+use App\Models\Setting;
 use App\Models\tps;
 use App\Models\wilayah\desa;
 use Illuminate\Support\Facades\Route;
@@ -38,17 +39,21 @@ class RouteController extends Controller
         switch (Auth::user()->role) {
             case 'admin':
                 $dapils = dapilDPRD::get();
-                return view('admin.dashboard', ['dapils' => $dapils]);
+                $jumlah_kehadiran = tps::count('kehadiran');
+                return view('admin.dashboard', ['dapils' => $dapils,'jumlah_kehadiran'=>$jumlah_kehadiran]);
                 break;
 
             case 'desa':
                 $desa_id = Auth::user()->current_team_id;
                 $desa = desa::find($desa_id);
                 $kecamatan = kecamatan::find($desa->kecamatan_id);
+                
                 $data = [
                     'kecamatan' => $kecamatan,
                     'desa' => $desa,
+                    'setting'=>Setting::where('key', 'type')->where('status',true)->get(),
                 ];
+                // return view('desa.dashboard2', $data);
                 return view('desa.dashboard', $data);
                 break;
 
