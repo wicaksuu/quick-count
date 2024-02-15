@@ -77,7 +77,7 @@ class Calon extends Model
     public static function suaraTerbanyakDapilDPRDAll($type, $dapil_id, $partai_id)
     {
         if ($partai_id == null) {
-            $data = static::select('key')->selectRaw('SUM(suara) as total_suara')->where('dapil_id', $dapil_id)->where('type', $type)->groupBy('key')->orderByDesc('total_suara')->get();
+            $data = static::select('key')->selectRaw('SUM(suara) as total_suara')->where('dapil_id', $dapil_id)->where('type', $type)->groupBy('key')->orderByDesc('total_suara')->take(10)->get();
         } else {
             $data = static::select('key')->selectRaw('SUM(suara) as total_suara')->where('dapil_id', $dapil_id)->where('partai_id', $partai_id)->where('type', $type)->groupBy('key')->orderByDesc('total_suara')->get();
         }

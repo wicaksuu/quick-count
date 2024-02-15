@@ -1,6 +1,6 @@
 <div>
     
-    <div class="px-3" data-simplebar style="max-height: 352px;">
+    <div class="px-3">
         @livewire('admin.user.new.dapil',['dapil'=>$dapil])
     </div>
 </div>
