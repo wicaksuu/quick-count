@@ -30,6 +30,7 @@ class Dapil extends Component
 
     }
     public function updateSelectPartai(){
+        Toaster::warning('Proses penggantian partai');
         $this->loadDprd();
     }
     public function mount($dapil){
