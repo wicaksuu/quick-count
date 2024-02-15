@@ -61,7 +61,11 @@
 
                 if (type == 'DPRD') {
                     var dapilNamaCell = document.createElement("td");
-                    dapilNamaCell.textContent = item.calon.dapil.nama;
+                    if (item && item.calon && item.calon.dapil && item.calon.dapil.nama) {
+                        dapilNamaCell.textContent = item.calon.dapil.nama;
+                    } else {
+                        dapilNamaCell.textContent = "Dapil ?";
+                    }
                     dapilNamaCell.className = "p-4 dark:text-zinc-50";
                     row.appendChild(dapilNamaCell);
                 }
