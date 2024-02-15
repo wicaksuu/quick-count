@@ -22,9 +22,8 @@
         <table class="w-full">
             <thead class="border-b cursor-pointer border-gray-50 dark:border-zinc-600">
                 <tr class="text-gray-700 dark:text-gray-100">
-                    @dd(['type'=>$type,'key'=>$key])
                     @if ($type == 'Pileg')
-                        @if ($key == 'DPRD')
+                        @if ($key == 'dprd')
                         <th class="relative p-4 text-start dark:text-gray-100">
                             Dapil
                         </th>
