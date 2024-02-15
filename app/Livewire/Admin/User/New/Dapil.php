@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\User\New;
 use App\Models\Calon;
 use App\Models\DaftarPartai;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Dapil extends Component
 {
@@ -22,6 +23,8 @@ class Dapil extends Component
             $suara = Calon::suaraTerbanyakDapilDPRDAll('DPRD',$this->dapil->id,null);
         }else{
             $suara = Calon::suaraTerbanyakDapilDPRDAll('DPRD',$this->dapil->id,$this->SelectPartai);
+            $par = DaftarPartai::find($this->SelectPartai);
+            Toaster::success('Berhasil mengganti partai '.$par->nama);
         }
         $this->suara = $suara;
 
