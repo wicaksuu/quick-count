@@ -1,5 +1,6 @@
 @php
     $partais = App\Models\DaftarPartai::get();
+    $dapils = App\Models\dapilDPRD::get();
 @endphp
 <div
     class="fixed bottom-0 z-10 h-screen border-r vertical-menu rtl:right-0 ltr:left-0 top-16 bg-slate-50 border-gray-50 print:hidden dark:bg-zinc-800 dark:border-neutral-700">
@@ -145,6 +146,24 @@
                                     class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
                                     Dashboard
                                 </a>
+                            </li>
+                            <li>
+                                @if (isset($dapils[0]))
+                                    <a href="javascript: void(0);" aria-expanded="false"
+                                        class="block py-2 pr-4 text-sm font-medium text-gray-700 transition-all duration-150 ease-linear nav-menu pl-14 hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                                        <span data-key="t-calon">Dapil View</span>
+                                    </a>
+                                @endif
+                                <ul>
+                                    @foreach ($dapils as $dapil)
+                                        <li>
+                                            <a href="{{ route('view-calon-dprd', ['id' => $dapil->id]) }}"
+                                                class="pl-14 pr-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                                                {{ $dapil->nama }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </li>
                             <li>
                                 @if (isset($partais[0]))

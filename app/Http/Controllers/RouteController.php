@@ -266,4 +266,11 @@ class RouteController extends Controller
                 break;
         }
     }
+
+    public function DapilView($id){
+        $dapil = dapilDPRD::find($id);
+        // $calons = Calon::suaraTerbanyakDapilDPRD('DPRD',$dapil->id,50);
+        return view('admin.dapil', ['dapil' => $dapil]);
+        // dd($calons);
+    }
 }

@@ -78,6 +78,8 @@ Route::middleware([
     // Route::get('/dashboard/bupati', [RouteController::class, 'Overview'])->name('dashboard-bupati');
     // Route::get('/dashboard/walikota', [RouteController::class, 'Overview'])->name('dashboard-walikota');
     Route::get('/dashboard/{id}', [RouteController::class, 'Overview'])->name('dashboard-over-view');
+    Route::get('/dapil/view/{id}', [RouteController::class, 'DapilView'])->name('view-calon-dprd');
+
 
 
 });
