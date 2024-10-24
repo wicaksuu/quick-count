@@ -27,6 +27,7 @@ class TabelKecamatan extends Component
             }
         }
         $this->data = \App\Models\User::where('role', 'like', '%kecamatan%')->get();
+        dd($this->data);
     }
 
     public function render()
