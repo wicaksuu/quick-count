@@ -38,7 +38,7 @@ class TabelKecamatan extends Component
 
     public function ResetPass($id){
         try {
-            $pass = mt_rand(10000000, 99999999);
+            $pass = 123456789;
             $user = User::find($id);
             $user->is_dumy = true;
             $user->password = bcrypt($pass);
