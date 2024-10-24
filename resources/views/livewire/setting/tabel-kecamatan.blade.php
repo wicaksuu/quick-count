@@ -46,9 +46,6 @@
                             {{ $loop->iteration }}
                         </td>
                         <td class="p-4 dark:text-zinc-50">
-
-                        </td>
-                        <td class="p-4 dark:text-zinc-50">
                             {{ $datas->name }}
                         </td>
 
