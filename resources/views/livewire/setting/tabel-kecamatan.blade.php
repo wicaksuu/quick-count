@@ -62,7 +62,7 @@
                         <td>
                             <div class="flex">
                                 <div class="m-1">
-                                    <button wire:click="ResetPass('{{ $datas->user->id }}')" wire:loading.attr="disabled"
+                                    <button wire:click="ResetPass('{{ $datas->id }}')" wire:loading.attr="disabled"
                                         type="button" class="px-3 text-white bg-blue-600 border-0 btn">
                                         <i class="block text-sm mdi mdi-lock-reset">
                                         </i>
