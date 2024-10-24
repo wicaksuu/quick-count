@@ -28,14 +28,13 @@ class KecInputSuara extends Component
 
     public function input()
     {
-        DB::beginTransaction();
         try {
-            $this->calon->suara = $this->suara;
-            $this->calon->save();
-            DB::commit();
+            DB::transaction(function () {
+                $this->calon->suara = $this->suara;
+                $this->calon->save();
+            });
             Toaster::success('Suara berhasil diupdate');
         } catch (\Exception $e) {
-            DB::rollBack();
             Toaster::error('Gagal mengupdate suara: ' . $e->getMessage());
         }
     }
