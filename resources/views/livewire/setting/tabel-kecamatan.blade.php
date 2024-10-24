@@ -49,15 +49,15 @@
 
                         </td>
                         <td class="p-4 dark:text-zinc-50">
-                            {{ $datas->nama }}
+                            {{ $datas->name }}
                         </td>
 
                         <td class="p-4 dark:text-zinc-50">
-                            {{ $datas->user->email }}
+                            {{ $datas->email }}
                         </td>
 
                         <td class="p-4 dark:text-zinc-50">
-                            {{ $datas->user->password_dumy }}
+                            {{ $datas->password_dumy }}
                         </td>
                         <td>
                             <div class="flex">
