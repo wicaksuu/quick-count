@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Setting;
 
+use App\Models\User;
 use App\Models\wilayah\kecamatan;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Masmerise\Toaster\Toaster;
 
 class TabelKecamatan extends Component
 {
@@ -12,12 +14,12 @@ class TabelKecamatan extends Component
     public function mount(){
         $kecamatans = kecamatan::where('kota_id',3519)->get();
         $kecamatanIds = $kecamatans->pluck('id')->toArray();
-        $existingUsers = \App\Models\User::whereIn(DB::raw("JSON_EXTRACT(role, '$.kecamatan_id')"), $kecamatanIds)->get()->keyBy('role->kecamatan_id');
+        $existingUsers = User::whereIn(DB::raw("JSON_EXTRACT(role, '$.kecamatan_id')"), $kecamatanIds)->get()->keyBy('role->kecamatan_id');
 
         foreach ($kecamatans as $kecamatan) {
             $email = strtolower(str_replace(' ','_',$kecamatan->nama)).'@madiunkab.go.id';
             if (!isset($existingUsers[$kecamatan->id]) && !\App\Models\User::where('email', $email)->exists()) {
-                \App\Models\User::create([
+                User::create([
                     'name' => $kecamatan->nama,
                     'email' => $email,
                     'role' => json_encode(['role' => 'kecamatan', 'kecamatan_id' => $kecamatan->id]),
@@ -26,7 +28,21 @@ class TabelKecamatan extends Component
                 ]);
             }
         }
-        $this->data = \App\Models\User::where('role', 'like', '%kecamatan%')->get();
+        $this->data = User::where('role', 'like', '%kecamatan%')->get();
+    }
+
+    public function ResetPass($id){
+        try {
+            $pass = mt_rand(10000000, 99999999);
+            $user = User::find($id);
+            $user->is_dumy = true;
+            $user->password = bcrypt($pass);
+            $user->password_dumy = $pass;
+            $user->save();
+            Toaster::success('Password Berhasil Di Reset');
+        } catch (\Throwable $th) {
+            Toaster::error($th->getMessage());
+        }
     }
 
     public function render()
