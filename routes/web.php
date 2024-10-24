@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\RouteController;
+use App\Models\wilayah\kecamatan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +38,21 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'isDumy:false'
+])->group(function () {
+    Route::get('/bupati', function(){
+        if (json_decode(Auth::user()->role)) {
+            $user_role = Auth::user()->role;
+            $user_data = json_decode($user_role,true);
+            $kecamatan_id = $user_data['kecamatan_id'];
+            $kecamatan = kecamatan::with('desas')->find($kecamatan_id);}
+        return view('bupati',compact('kecamatan'));
+    })->name('bupati');
+});
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
     'role:admin',
     'isDumy:false'
 ])->group(function () {
@@ -43,6 +60,7 @@ Route::middleware([
 
     Route::get('/daftar/tps', [RouteController::class, 'daftarTps'])->name('daftar-tps');
     Route::get('/setting/tps', [RouteController::class, 'settingTps'])->name('setting-tps');
+    Route::get('/setting/kecamatan', [RouteController::class, 'settingKecamatan'])->name('setting-kecamatan');
     Route::get('/setting/partai', [RouteController::class, 'settingPartai'])->name('setting-partai');
     Route::get('/setting/global',[RouteController::class, 'settingGlobal'])->name('setting-global');
 
@@ -83,4 +101,3 @@ Route::middleware([
 
 
 });
-

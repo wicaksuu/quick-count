@@ -19,6 +19,17 @@ class Role
             return $next($request);
         }
 
+
+        $userRole = $request->user()->role;
+        if (json_decode($userRole)) {
+            $userRole = json_decode($userRole, true);
+            if ($userRole['role'] == $role) {
+                return $next($request);
+            }
+        }
+
+
+
         // Tindakan jika pengguna tidak memiliki peran yang diperlukan
         abort(403, 'Unauthorized');
     }

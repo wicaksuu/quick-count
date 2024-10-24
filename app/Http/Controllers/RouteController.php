@@ -26,6 +26,10 @@ class RouteController extends Controller
     {
         return view('admin.setting.tps');
     }
+    public function settingKecamatan()
+    {
+        return view('admin.setting.daftarKec');
+    }
     public function daftarTps()
     {
         return view('admin.setting.daftarTps');
@@ -34,8 +38,18 @@ class RouteController extends Controller
     {
         return view('admin.setting.partai');
     }
+
     public function dashboard()
     {
+
+        if (json_decode(Auth::user()->role)) {
+            $user_role = Auth::user()->role;
+            $user_data = json_decode($user_role,true);
+            $kecamatan_id = $user_data['kecamatan_id'];
+            $kecamatan = kecamatan::with('desas')->find($kecamatan_id);
+            return view('kecamatan.dashboard', compact('kecamatan'));
+        }
+
         switch (Auth::user()->role) {
             case 'admin':
                 $dapils = dapilDPRD::get();
@@ -47,7 +61,7 @@ class RouteController extends Controller
                 $desa_id = Auth::user()->current_team_id;
                 $desa = desa::find($desa_id);
                 $kecamatan = kecamatan::find($desa->kecamatan_id);
-                
+
                 $data = [
                     'kecamatan' => $kecamatan,
                     'desa' => $desa,
