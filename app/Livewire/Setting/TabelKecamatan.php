@@ -31,6 +31,11 @@ class TabelKecamatan extends Component
         $this->data = User::where('role', 'like', '%kecamatan%')->get();
     }
 
+    public function refresh()
+    {
+        $this->data = User::where('role', 'like', '%kecamatan%')->get();
+    }
+
     public function ResetPass($id){
         try {
             $pass = mt_rand(10000000, 99999999);
@@ -40,8 +45,10 @@ class TabelKecamatan extends Component
             $user->password_dumy = $pass;
             $user->save();
             Toaster::success('Password Berhasil Di Reset');
+            $this->refresh();
         } catch (\Throwable $th) {
             Toaster::error($th->getMessage());
+            $this->refresh();
         }
     }
 
